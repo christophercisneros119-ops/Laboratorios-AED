@@ -296,6 +296,10 @@ public class UNI_Portada extends javax.swing.JPanel {
 
         drawRightGroup(g2, w, y, fm);
     }
+    
+    public UI.SidebarPanel getSidebar() {
+        return sidebar;
+    }
 
     private void drawRightGroup(java.awt.Graphics2D g2, int w, int y, java.awt.FontMetrics fm) {
         int right = w - 64;
