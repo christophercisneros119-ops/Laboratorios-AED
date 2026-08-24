@@ -23,55 +23,52 @@ public class Ejercicio4 {
 
     //Busca(V, N, X)
     public int busca(String X) {
-        int I = 0;
-        
-        while (I <= N && nombres[I].compareToIgnoreCase(X) < 0) {
-            I = I + 1;
-        }
-
-        if (I > N || nombres[I].compareToIgnoreCase(X) > 0) {
-            return -I; //No se encuentra y debería estar en la posición I
-        } else {
-            return I;  //Se encuentra en la posición I
-        }
+    int I = 0;
+    while (I <= N && nombres[I].compareToIgnoreCase(X) < 0) {
+        I = I + 1;
     }
+
+    if (I > N || nombres[I].compareToIgnoreCase(X) > 0) {
+        return -(I + 1); // Si no está, retorna un número menor a cero incluso para la posición 0 (retorna -1)
+    } else {
+        return I; // Si existe, retorna 0 o mayor
+    }
+}
 
     //Dar de alta(Inserta Ordenado)
     public boolean darDeAlta(String nombre, String direccion, int edad, char sexo, int anosAntiguedad) {
-        if (N < (Tam - 1)) {
-            int pos = busca(nombre);
+    if (N < (Tam - 1)) {
+        int pos = busca(nombre);
 
-            if (pos >= 0) {
-                JOptionPane.showMessageDialog(null, nombre + " ya existe en el sistema.");
-                return false;
-            } else {
-                N = N + 1;
-                pos = pos * (-1); //Convertir posicion negativa a su índice real
-
-                //Desplazamiento de elementos a la derecha
-                for (int I = N; I >= pos + 1; I--) {
-                    nombres[I] = nombres[I - 1];
-                    direcciones[I] = direcciones[I - 1];
-                    edades[I] = edades[I - 1];
-                    sexos[I] = sexos[I - 1];
-                    antiguedad[I] = antiguedad[I - 1];
-                }
-
-                //Insertar el nuevo registro en paralelo
-                nombres[pos] = nombre;
-                direcciones[pos] = direccion;
-                edades[pos] = edad;
-                sexos[pos] = Character.toUpperCase(sexo);
-                antiguedad[pos] = anosAntiguedad;
-                
-                JOptionPane.showMessageDialog(null, "Empleado registrado exitosamente.");
-                return true;
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "No hay espacio en el array.");
+        if (pos >= 0) {
+            JOptionPane.showMessageDialog(null, nombre + " ya existe en el sistema.");
             return false;
+        } else {
+            N = N + 1;
+            pos = (-pos) - 1; // Convierte de vuelta al índice correcto (ej. -1 se convierte en 0)
+
+            for (int I = N; I >= pos + 1; I--) {
+                nombres[I] = nombres[I - 1];
+                direcciones[I] = direcciones[I - 1];
+                edades[I] = edades[I - 1];
+                sexos[I] = sexos[I - 1];
+                antiguedad[I] = antiguedad[I - 1];
+            }
+
+            nombres[pos] = nombre;
+            direcciones[pos] = direccion;
+            edades[pos] = edad;
+            sexos[pos] = Character.toUpperCase(sexo);
+            antiguedad[pos] = anosAntiguedad;
+            
+            JOptionPane.showMessageDialog(null, "Empleado registrado exitosamente.");
+            return true; // Ahora sí retorna true y refresca el jTextArea1
         }
+    } else {
+        JOptionPane.showMessageDialog(null, "No hay espacio en el array.");
+        return false;
     }
+}
 
     //Dar de baja(Elimina Ordenado)
     public boolean darDeBaja(String nombre) {

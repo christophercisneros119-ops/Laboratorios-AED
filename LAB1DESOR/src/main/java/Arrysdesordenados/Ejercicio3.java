@@ -14,7 +14,7 @@ public class Ejercicio3 {
         this.nombres = new String[capacidad];
         this.sexos = new char[capacidad];
         this.edades = new int[capacidad];
-        this.N = -1; //Inicialmente vacio
+        this.N = -1; //Inicialmente
     }
 
     //Inserta Desordenado(V, N, Y, Tam)
