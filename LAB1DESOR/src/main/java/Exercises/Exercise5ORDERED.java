@@ -1,147 +1,165 @@
 package Exercises;
+
 import javax.swing.*;
 
+/*
+*   5. Una inmobiliaria necesita almacenar la siguiente información 
+*   sobre los  departamentos rentados que se encuentran 
+*   ordenados ascendentemente por la extensión del departamento:   
+*   • Ubicación del departamento (dirección)
+*   • Extensión del departamento (superficie en metros cuadrados de cada departamento)
+*   • Precio
+*   • Número de apartamento
+*   • Nombre de la persona que rentó el departamento
+*
+*   Escriba un programa que pueda llevar a cabo las siguientes operaciones.  
+*   1. Dar de alta a un departamento (Se renta y se pide la información)
+*   2. Dar de baja al departamento (Se libera el departamento)
+*   3. Modificar el precio de un departamento por medio de su número.
+*   4. Listar los datos de un departamento determinado.
+*   5. Listar los datos de todos los registros.
+*/
+
 public class Exercise5ORDERED {
-    public static void main(String[] args) {
-        int tam = 10, indice = -1, opc;
-        String[] ubicacion = new String[tam], area = new String[tam], precio = new String[tam], num_apartamento = new String[tam], arrendatario = new String[tam];
-        String menu = """
-            Elija una opcion:
-            *   1. Dar de alta a un departamento (Se renta y se pide la información)
-            *   2. Dar de baja al departamento (Se libera el departamento)
-            *   3. Modificar el precio de un departamento por medio de su número.
-            *   4. Listar los datos de un departamento determinado.
-            *   5. Listar los datos de todos los registros.
-            *   6. Salir 
-            """;
 
-        do {
-            opc = Integer.parseInt(JOptionPane.showInputDialog(menu));
-            switch (opc) {
-                case 1 -> {
-                    String areaAIngresar = JOptionPane.showInputDialog("Ingrese el área del departamento");
-                    String precioAIngresar = JOptionPane.showInputDialog("Ingrese el precio del departamento");
-                    String numAPIngresar = JOptionPane.showInputDialog("Ingrese el número de apartamento");
-                    String arrendatarioI = JOptionPane.showInputDialog("Ingrese el nombre del arrendatario");
-                    indice = darAltaOrdenado(area, precio, num_apartamento, arrendatario, indice, tam, areaAIngresar, precioAIngresar, numAPIngresar, arrendatarioI);
-                }
-                case 2 -> {
-                    String areaABuscar = JOptionPane.showInputDialog("Ingrese el área del departamento a eliminar");
-                    indice = darBajaOrdenado(area, precio, num_apartamento, arrendatario, indice, tam, areaABuscar);
-                }
-                case 3 -> {
-                    String numAPModificar = JOptionPane.showInputDialog("Ingrese el número de apartamento a modificar");
-                    String nuevoPrecio = JOptionPane.showInputDialog("Ingrese el nuevo precio");
-                    modificarPrecioDepartamentoOrdenado(precio, num_apartamento, indice, tam, numAPModificar, nuevoPrecio);
-                }
-                case 4 -> {
-                    String numAPListar = JOptionPane.showInputDialog("Ingrese el número de apartamento a listar");
-                    listarDepartamentoOrdenado(area, precio, num_apartamento, arrendatario, indice, tam, numAPListar);
-                }
-                case 5 -> {
-                    listarDepartamentosOrdenados(area, precio, num_apartamento, arrendatario, indice, tam);
-                }
-                case 6 -> {}
-                default -> JOptionPane.showMessageDialog(null, "Opción inválida. Ingrese una opción correcta");
-            }
-        } while (opc != 6);
+    private final String[] area;
+    private final String[] precio;
+    private final String[] num_apartamento;
+    private final String[] arrendatario;
+    private int indice = -1; // Indice del ultimo elemento (-1 si esta vacio)
+    private final int tam;   // Capacidad maxima de los arreglos
+
+    public Exercise5ORDERED(int capacidad) {
+        this.tam = capacidad;
+        this.area = new String[capacidad];
+        this.precio = new String[capacidad];
+        this.num_apartamento = new String[capacidad];
+        this.arrendatario = new String[capacidad];
     }
 
-    public static int BUSCA(String[] arr, int indice, String aBuscar) {
+    // Busca(V, N, X)
+    public int BUSCA(String[] arr, int indice, String aBuscar) {
         int i = 0;
-        while ((i <= indice) && (arr[i].compareTo(aBuscar) < 0)) i++;
-        if ((i > indice) || (arr[i].compareTo(aBuscar) > 0)) return -i; else return i;
+
+        while ((i <= indice) && (arr[i].compareTo(aBuscar) < 0)) {
+            i++;
+        }
+
+        if ((i > indice) || (arr[i].compareTo(aBuscar) > 0))
+            return -i;
+        else
+            return i;
     }
 
-    public static int darAltaOrdenado(String[] area, String[] precio, String[] num_apartamento, 
-            String[] arrendatario, int indice, int tam, String newArea, String newPrecio, 
-            String newNumAP, String newArrendatario) {
-        if (indice >= tam - 1) {
+    // Dar de alta a un departamento (InsertaOrdenado)
+    public boolean darAltaOrdenado(String a, String p, String numApt, String arr) {
+        if (indice >= (tam - 1)) {
             JOptionPane.showMessageDialog(null, "No hay espacio en el array");
-            return indice;
+            return false;
         }
-        int pos = BUSCA(area, indice, newArea);
-        if (pos >= 0 && newArea.equals(area[pos])) {
-            JOptionPane.showMessageDialog(null, "Área ya existe");
-            return indice;
+
+        int pos = BUSCA(area, indice, a);
+        if (pos >= 0 && a.equals(area[pos])) {
+            JOptionPane.showMessageDialog(null, "Area ya existe");
+            return false;
         }
+
         indice++;
-        pos = -pos;
+        pos = Math.abs(pos);
         for (int i = indice; i >= pos + 1; i--) {
             area[i] = area[i - 1];
             precio[i] = precio[i - 1];
             num_apartamento[i] = num_apartamento[i - 1];
             arrendatario[i] = arrendatario[i - 1];
         }
-        area[pos] = newArea;
-        precio[pos] = newPrecio;
-        num_apartamento[pos] = newNumAP;
-        arrendatario[pos] = newArrendatario;
-        return indice;
+        area[pos] = a;
+        precio[pos] = p;
+        num_apartamento[pos] = numApt;
+        arrendatario[pos] = arr;
+        JOptionPane.showMessageDialog(null, "Registro agregado exitosamente.");
+        return true;
     }
 
-    public static int darBajaOrdenado(String[] area, String[] precio, String[] num_apartamento, 
-            String[] arrendatario, int indice, int tam, String areaABuscar) {
+    // Dar de baja al departamento (EliminaOrdenado)
+    public boolean darBajaOrdenado(String areaABuscar) {
         if (indice < 0) {
             JOptionPane.showMessageDialog(null, "No hay elementos en el array");
-            return indice;
+            return false;
         }
+
         int pos = BUSCA(area, indice, areaABuscar);
         if (!(pos >= 0 && areaABuscar.equals(area[pos]))) {
-            JOptionPane.showMessageDialog(null, "Área " + areaABuscar + " no existe");
-            return indice;
+            JOptionPane.showMessageDialog(null, "Area " + areaABuscar + " no existe");
+            return false;
         }
+
         for (int i = pos; i < indice; i++) {
             area[i] = area[i + 1];
             precio[i] = precio[i + 1];
             num_apartamento[i] = num_apartamento[i + 1];
             arrendatario[i] = arrendatario[i + 1];
         }
-        return indice - 1;
+        area[indice] = null;
+        precio[indice] = null;
+        num_apartamento[indice] = null;
+        arrendatario[indice] = null;
+        indice--;
+        JOptionPane.showMessageDialog(null, "Departamento liberado exitosamente.");
+        return true;
     }
 
-    public static void modificarPrecioDepartamentoOrdenado(String[] precio, String[] num_apartamento, 
-            int indice, int tam, String numAPBuscar, String nuevoPrecio) {
+    // Modificar el precio de un departamento por medio de su numero
+    public boolean modificarPrecioDepartamentoOrdenado(String numApt, String nuevoPrecio) {
         if (indice < 0) {
             JOptionPane.showMessageDialog(null, "No hay elementos en el array");
-            return;
+            return false;
         }
-        int i = 0;
-        while (i <= indice && !numAPBuscar.equals(num_apartamento[i])) i++;
-        if (i > indice) JOptionPane.showMessageDialog(null, "Número no encontrado");
-        else precio[i] = nuevoPrecio;
-    }
 
-    public static void listarDepartamentoOrdenado(String[] area, String[] precio, String[] num_apartamento, 
-            String[] arrendatario, int indice, int tam, String numAPLista) {
-        if (indice < 0) {
-            JOptionPane.showMessageDialog(null, "No hay elementos en el array");
-            return;
-        }
         int i = 0;
-        while (i <= indice && !numAPLista.equals(num_apartamento[i])) i++;
+        while ((i <= indice) && (!numApt.equals(num_apartamento[i])))
+            i++;
+
         if (i > indice) {
-            JOptionPane.showMessageDialog(null, "Número no encontrado");
-            return;
+            JOptionPane.showMessageDialog(null, "No se encontro el apartamento " + numApt);
+            return false;
         }
-        String datos = "Área: " + area[i] + "\nPrecio: " + precio[i] + "\nNúmero: " + num_apartamento[i] + "\nArrendatario: " + arrendatario[i];
-        JOptionPane.showMessageDialog(null, datos);
+
+        precio[i] = nuevoPrecio;
+        JOptionPane.showMessageDialog(null, "Precio actualizado.");
+        return true;
     }
 
-    public static void listarDepartamentosOrdenados(String[] area, String[] precio, String[] num_apartamento, 
-            String[] arrendatario, int indice, int tam) {
-        if (indice < 0) {
-            JOptionPane.showMessageDialog(null, "No hay elementos en el array");
-            return;
-        }
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i <= indice; i++) {
-            sb.append("Área: ").append(area[i])
-              .append(" | Precio: ").append(precio[i])
-              .append(" | Número: ").append(num_apartamento[i])
-              .append(" | Arrendatario: ").append(arrendatario[i])
-              .append("\n");
-        }
-        JOptionPane.showMessageDialog(null, sb.toString());
+    // Listar los datos de un departamento determinado
+    public String listarDepartamentoOrdenado(String numApt) {
+        int i = 0;
+
+        while ((i <= indice) && (!numApt.equals(num_apartamento[i])))
+            i++;
+
+        if (i > indice)
+            return "No se encontro el apartamento " + numApt;
+
+        return String.format("Area: %s | Precio: %s | Numero: %s | Arrendatario: %s",
+                area[i], precio[i], num_apartamento[i], arrendatario[i]);
+    }
+
+    // Listar los datos de todos los registros
+    public String listarDepartamentosOrdenados() {
+        if (indice == -1)
+            return "No hay departamentos registrados.";
+        
+        String formatoCadena = "\t|%-8s|%-10s|%-8s|%-20s|%n";
+        String separador     = "\t+--------+----------+--------+--------------------+%n";
+
+        StringBuilder sb = new StringBuilder("\t\t--LISTA DE DEPARTAMENTOS--\n\n");
+        sb.append(String.format(separador));
+        sb.append(String.format(formatoCadena, "Area", "Precio", "Numero", "Arrendatario"));
+        sb.append(String.format(separador));
+        for (int i = 0; i <= indice; i++)
+            sb.append(String.format(formatoCadena,
+                    area[i], precio[i], num_apartamento[i], arrendatario[i]));
+        sb.append(String.format(separador));
+
+        return sb.toString();
     }
 }

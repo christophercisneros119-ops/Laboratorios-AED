@@ -31,6 +31,11 @@ public class Opciones_panel2 extends javax.swing.JPanel {
         jButton2.setFont(new java.awt.Font("Swis721 Blk BT", 0, 24)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Arreglos Desordenados");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setBackground(new java.awt.Color(0, 51, 51));
         jButton3.setFont(new java.awt.Font("Swis721 Blk BT", 0, 24)); // NOI18N
@@ -82,8 +87,26 @@ public class Opciones_panel2 extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        // Navega al panel del ejercicio de arreglos ordenados
+        javax.swing.JFrame ventana = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
+
+        if (ventana != null) {
+            ventana.setContentPane(new Panel_Ejercicio5());
+            ventana.revalidate();
+            ventana.repaint();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // Navega al panel del ejercicio de arreglos desordenados
+        javax.swing.JFrame ventana = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
+
+        if (ventana != null) {
+            ventana.setContentPane(new Panel_Ejercicio2());
+            ventana.revalidate();
+            ventana.repaint();
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // Obtiene la ventana principal que contiene a este panel
