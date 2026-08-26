@@ -14,7 +14,6 @@ public class P_MenuOrdenados extends javax.swing.JPanel {
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
@@ -25,12 +24,12 @@ public class P_MenuOrdenados extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(0, 51, 51));
 
-        jLabel1.setFont(new java.awt.Font("Swis721 Blk BT", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Swis721 Blk BT", 0, 24));
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Arreglos Ordenados");
 
         jButton1.setBackground(new java.awt.Color(0, 51, 51));
-        jButton1.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Ejercicio #4");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -40,7 +39,7 @@ public class P_MenuOrdenados extends javax.swing.JPanel {
         });
 
         jButton2.setBackground(new java.awt.Color(0, 51, 51));
-        jButton2.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18)); // NOI18N
+        jButton2.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18));
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Ejercicio #5");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -50,7 +49,7 @@ public class P_MenuOrdenados extends javax.swing.JPanel {
         });
 
         jButton3.setBackground(new java.awt.Color(0, 51, 51));
-        jButton3.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18)); // NOI18N
+        jButton3.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18));
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Ejercicio #6");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -60,7 +59,7 @@ public class P_MenuOrdenados extends javax.swing.JPanel {
         });
 
         jButton4.setBackground(new java.awt.Color(0, 51, 51));
-        jButton4.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18)); // NOI18N
+        jButton4.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18));
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("Atr\u00e1s");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -98,23 +97,23 @@ public class P_MenuOrdenados extends javax.swing.JPanel {
                 .addComponent(jButton4, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         navegarA(new P_Ejercicio4());
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         navegarA(new P_Ejercicio5());
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
         navegarA(new P_Ejercicio6());
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
         navegarA(new P_Arreglos());
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }
 
     private void navegarA(javax.swing.JPanel destino) {
         javax.swing.JFrame ventana = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
@@ -197,11 +196,9 @@ public class P_MenuOrdenados extends javax.swing.JPanel {
         g2.fillRect(0, 0, w, h);
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
-    // End of variables declaration//GEN-END:variables
 }

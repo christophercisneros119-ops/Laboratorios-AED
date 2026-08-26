@@ -33,10 +33,31 @@ public class UNI_Portada extends javax.swing.JPanel {
 
         memberTile1.setFullName("Janelly Romero");
         memberTile1.setCarnetNumber("2025-1905U");
+        try {
+            java.net.URL imgUrl = getClass().getResource("/img/Cards/JJJ.jpg");
+            if (imgUrl != null) {
+                memberTile1.setPhoto(new javax.swing.ImageIcon(imgUrl).getImage());
+            }
+        } catch (Exception ignored) {
+        }
         memberTile2.setFullName("Moises Alemán");
         memberTile2.setCarnetNumber("2025-2560U");
+        try {
+            java.net.URL imgUrlM = getClass().getResource("/img/Cards/M.jpg");
+            if (imgUrlM != null) {
+                memberTile2.setPhoto(new javax.swing.ImageIcon(imgUrlM).getImage());
+            }
+        } catch (Exception ignored) {
+        }
         memberTile3.setFullName("Christopher Cisneros");
         memberTile3.setCarnetNumber("2025-0032U");
+        try {
+            java.net.URL imgUrlC = getClass().getResource("/img/Cards/C.jpg");
+            if (imgUrlC != null) {
+                memberTile3.setPhoto(new javax.swing.ImageIcon(imgUrlC).getImage());
+            }
+        } catch (Exception ignored) {
+        }
 
         buildOverlay();
 

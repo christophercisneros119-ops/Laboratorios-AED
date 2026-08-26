@@ -20,8 +20,6 @@ public class P_Ejercicio6 extends javax.swing.JPanel {
         jTextField1.requestFocus();
     }
 
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
@@ -39,24 +37,24 @@ public class P_Ejercicio6 extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(0, 51, 51));
 
-        jLabel1.setFont(new java.awt.Font("Swis721 Blk BT", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Swis721 Blk BT", 0, 24));
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Ejercicio #6");
 
-        jLabel2.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18));
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nombre:");
 
-        jLabel3.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18));
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Total de ventas:");
 
         jTextField1.setBackground(new java.awt.Color(51, 51, 51));
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14));
         jTextField1.setForeground(new java.awt.Color(255, 255, 255));
 
         jTextField2.setBackground(new java.awt.Color(51, 51, 51));
-        jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 14));
         jTextField2.setForeground(new java.awt.Color(255, 255, 255));
 
         jButton1.setBackground(new java.awt.Color(51, 51, 51));
@@ -169,9 +167,9 @@ public class P_Ejercicio6 extends javax.swing.JPanel {
                     .addComponent(jButton5))
                 .addGap(15, 15, 15))
         );
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         String n = jTextField1.getText().trim();
         String v = jTextField2.getText().trim();
 
@@ -184,9 +182,9 @@ public class P_Ejercicio6 extends javax.swing.JPanel {
             jTextArea1.setText("");
             limpiarCampos();
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         String n = jTextField1.getText().trim();
         String nuevasVentas = jTextField2.getText().trim();
 
@@ -199,9 +197,9 @@ public class P_Ejercicio6 extends javax.swing.JPanel {
             jTextArea1.setText("");
             limpiarCampos();
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
         String n = jTextField1.getText().trim();
 
         if (n.isEmpty()) {
@@ -210,9 +208,9 @@ public class P_Ejercicio6 extends javax.swing.JPanel {
         }
 
         jTextArea1.setText(backend.imprimirVendedor(n));
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
         javax.swing.JFrame ventana = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
 
         if (ventana != null) {
@@ -220,14 +218,12 @@ public class P_Ejercicio6 extends javax.swing.JPanel {
             ventana.revalidate();
             ventana.repaint();
         }
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {
         System.exit(0);
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }
 
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -240,5 +236,4 @@ public class P_Ejercicio6 extends javax.swing.JPanel {
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    // End of variables declaration//GEN-END:variables
 }

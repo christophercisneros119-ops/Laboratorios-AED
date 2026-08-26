@@ -6,7 +6,7 @@ import javax.swing.*;
 public class P_Ejercicio3 extends javax.swing.JPanel {
 
     private final Ejercicio3 backend;
-    
+
     public P_Ejercicio3() {
         initComponents();
         backend = new Ejercicio3(10);
@@ -15,12 +15,11 @@ public class P_Ejercicio3 extends javax.swing.JPanel {
     }
 
     private void limpiarCampos() {
-        jTextField1.setText(""); // Nombre
-        jTextField2.setText(""); // Sexo
-        jTextField3.setText(""); // Edad
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
     }
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
@@ -36,45 +35,42 @@ public class P_Ejercicio3 extends javax.swing.JPanel {
         jButton4 = new UI.Elementos.GlassButton("Imprimir registro de empleados varones", new java.awt.Color(51, 51, 51), java.awt.Color.WHITE, java.awt.Color.WHITE);
         jButton5 = new UI.Elementos.GlassButton("Salir", new java.awt.Color(51, 51, 51), java.awt.Color.WHITE, java.awt.Color.WHITE);
         jButton6 = new UI.Elementos.GlassButton("Imprimir registro", new java.awt.Color(51, 51, 51), java.awt.Color.WHITE, java.awt.Color.WHITE);
+        jButton7 = new UI.Elementos.GlassButton("Atr\u00e1s", new java.awt.Color(51, 51, 51), java.awt.Color.WHITE, java.awt.Color.WHITE);
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jButton7 = new UI.Elementos.GlassButton("Atr\u00e1s", new java.awt.Color(51, 51, 51), java.awt.Color.WHITE, java.awt.Color.WHITE);
 
         setBackground(new java.awt.Color(0, 51, 51));
 
-        jLabel1.setFont(new java.awt.Font("Swis721 Blk BT", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Swis721 Blk BT", 0, 24));
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Ejercicio #3");
 
-        jLabel2.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18));
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nombre:");
 
-        jLabel3.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18));
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Sexo:");
 
-        jLabel4.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18));
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Edad:");
 
         jTextField1.setBackground(new java.awt.Color(51, 51, 51));
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14));
         jTextField1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField1.setText("jTextField1");
 
         jTextField2.setBackground(new java.awt.Color(51, 51, 51));
-        jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 14));
         jTextField2.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField2.setText("jTextField2");
 
         jTextField3.setBackground(new java.awt.Color(51, 51, 51));
-        jTextField3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextField3.setFont(new java.awt.Font("Segoe UI", 0, 14));
         jTextField3.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField3.setText("jTextField3");
 
         jButton1.setBackground(new java.awt.Color(51, 51, 51));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Dar de alta");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -84,7 +80,7 @@ public class P_Ejercicio3 extends javax.swing.JPanel {
         });
 
         jButton2.setBackground(new java.awt.Color(51, 51, 51));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14));
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Dar de baja");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -94,7 +90,7 @@ public class P_Ejercicio3 extends javax.swing.JPanel {
         });
 
         jButton3.setBackground(new java.awt.Color(51, 51, 51));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton3.setFont(new java.awt.Font("Segoe UI", 0, 14));
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Actualizar edad");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -104,7 +100,7 @@ public class P_Ejercicio3 extends javax.swing.JPanel {
         });
 
         jButton4.setBackground(new java.awt.Color(51, 51, 51));
-        jButton4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton4.setFont(new java.awt.Font("Segoe UI", 0, 14));
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("Imprimir registro de empleados varones");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -114,17 +110,18 @@ public class P_Ejercicio3 extends javax.swing.JPanel {
         });
 
         jButton5.setBackground(new java.awt.Color(51, 51, 51));
-        jButton5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton5.setFont(new java.awt.Font("Segoe UI", 0, 14));
         jButton5.setForeground(new java.awt.Color(255, 255, 255));
         jButton5.setText("Salir");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
             }
         });
 
         jButton6.setBackground(new java.awt.Color(51, 51, 51));
-        jButton6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton6.setFont(new java.awt.Font("Segoe UI", 0, 14));
         jButton6.setForeground(new java.awt.Color(255, 255, 255));
         jButton6.setText("Imprimir registro");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -133,20 +130,18 @@ public class P_Ejercicio3 extends javax.swing.JPanel {
             }
         });
 
-        jTextArea1.setBackground(new java.awt.Color(51, 51, 51));
-        jTextArea1.setColumns(20);
-        jTextArea1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
-
         jButton7.setBackground(new java.awt.Color(51, 51, 51));
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("Atrás");
+        jButton7.setText("Atr\u00e1s");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
             }
         });
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -223,10 +218,9 @@ public class P_Ejercicio3 extends javax.swing.JPanel {
                     .addComponent(jButton5))
                 .addGap(15, 15, 15))
         );
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
-//Boton: Dar de alta
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         String nombre = jTextField1.getText().trim();
         String sexoText = jTextField2.getText().trim();
         String edadText = jTextField3.getText().trim();
@@ -241,17 +235,17 @@ public class P_Ejercicio3 extends javax.swing.JPanel {
             int edad = Integer.parseInt(edadText);
 
             if (backend.insertaDesordenado(nombre, sexo, edad)) {
-                JOptionPane.showMessageDialog(this, "Empleado registrado con éxito.");
-                jTextArea1.setText(""); // Mantiene limpia el área de texto
+                JOptionPane.showMessageDialog(this, "Empleado registrado con \u00e9xito.");
+                jTextArea1.setText("");
                 limpiarCampos();
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingresa un valor numérico válido para la edad.");
+            JOptionPane.showMessageDialog(this, "Ingresa un valor num\u00e9rico v\u00e1lido para la edad.");
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
-//Boton: Actualizar edad
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-       String nombre = jTextField1.getText().trim();
+    }
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
+        String nombre = jTextField1.getText().trim();
         String edadText = jTextField3.getText().trim();
 
         if (nombre.isEmpty() || edadText.isEmpty()) {
@@ -263,17 +257,17 @@ public class P_Ejercicio3 extends javax.swing.JPanel {
             int nuevaEdad = Integer.parseInt(edadText);
 
             if (backend.modificaEdadDesordenado(nombre, nuevaEdad)) {
-                JOptionPane.showMessageDialog(this, "Edad actualizada con éxito.");
-                jTextArea1.setText(""); // Limpia la pantalla
+                JOptionPane.showMessageDialog(this, "Edad actualizada con \u00e9xito.");
+                jTextArea1.setText("");
                 limpiarCampos();
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingresa un número válido para la edad.");
+            JOptionPane.showMessageDialog(this, "Ingresa un n\u00famero v\u00e1lido para la edad.");
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
-//Boton: Dar de baja
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-      String nombre = jTextField1.getText().trim();
+    }
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
+        String nombre = jTextField1.getText().trim();
 
         if (nombre.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Ingresa el nombre del empleado a eliminar en el campo Nombre.");
@@ -281,17 +275,17 @@ public class P_Ejercicio3 extends javax.swing.JPanel {
         }
 
         if (backend.eliminaDesordenado(nombre)) {
-            JOptionPane.showMessageDialog(this, "Empleado eliminado con éxito.");
-            jTextArea1.setText(""); // Limpia la pantalla
+            JOptionPane.showMessageDialog(this, "Empleado eliminado con \u00e9xito.");
+            jTextArea1.setText("");
             limpiarCampos();
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
-//Boton: Imprimir registro de empleados varones
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    }
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
         jTextArea1.setText(backend.imprimirVarones());
-    }//GEN-LAST:event_jButton4ActionPerformed
-//Boton:Imprimir registro
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    }
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {
         String nombre = jTextField1.getText().trim();
 
         if (nombre.isEmpty()) {
@@ -300,14 +294,13 @@ public class P_Ejercicio3 extends javax.swing.JPanel {
         }
 
         jTextArea1.setText(backend.imprimirRegistro(nombre));
-    }//GEN-LAST:event_jButton6ActionPerformed
-//Boton:Salir
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    }
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {
         System.exit(0);
-    }//GEN-LAST:event_jButton5ActionPerformed
-//Boton: Atras
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // Regresa al submenú de arreglos desordenados
+    }
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {
         javax.swing.JFrame ventana = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
 
         if (ventana != null) {
@@ -315,10 +308,8 @@ public class P_Ejercicio3 extends javax.swing.JPanel {
             ventana.revalidate();
             ventana.repaint();
         }
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }
 
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -335,5 +326,4 @@ public class P_Ejercicio3 extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
-    // End of variables declaration//GEN-END:variables
 }

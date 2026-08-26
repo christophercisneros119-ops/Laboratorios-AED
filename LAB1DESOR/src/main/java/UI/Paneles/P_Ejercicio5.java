@@ -5,7 +5,6 @@ import javax.swing.*;
 
 public class P_Ejercicio5 extends javax.swing.JPanel {
 
-    // Instancia de la logica con capacidad predeterminada de 100
     private final Ejercicio5 backend = new Ejercicio5(100);
 
     public P_Ejercicio5() {
@@ -15,17 +14,14 @@ public class P_Ejercicio5 extends javax.swing.JPanel {
         limpiarCampos();
     }
 
-    // Metodo auxiliar para vaciar las cajas de texto
     private void limpiarCampos() {
-        jTextField1.setText(""); // Area
-        jTextField2.setText(""); // Precio
-        jTextField3.setText(""); // Num. Apartamento
-        jTextField4.setText(""); // Arrendatario
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
         jTextField1.requestFocus();
     }
 
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
@@ -49,40 +45,40 @@ public class P_Ejercicio5 extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(0, 51, 51));
 
-        jLabel1.setFont(new java.awt.Font("Swis721 Blk BT", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Swis721 Blk BT", 0, 24));
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Ejercicio #5");
 
-        jLabel2.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18));
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Area:");
 
-        jLabel3.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18));
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Precio:");
 
-        jLabel4.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18));
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Num. Apartamento:");
 
-        jLabel5.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18));
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Arrendatario:");
 
         jTextField1.setBackground(new java.awt.Color(51, 51, 51));
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14));
         jTextField1.setForeground(new java.awt.Color(255, 255, 255));
 
         jTextField2.setBackground(new java.awt.Color(51, 51, 51));
-        jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 14));
         jTextField2.setForeground(new java.awt.Color(255, 255, 255));
 
         jTextField3.setBackground(new java.awt.Color(51, 51, 51));
-        jTextField3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextField3.setFont(new java.awt.Font("Segoe UI", 0, 14));
         jTextField3.setForeground(new java.awt.Color(255, 255, 255));
 
         jTextField4.setBackground(new java.awt.Color(51, 51, 51));
-        jTextField4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextField4.setFont(new java.awt.Font("Segoe UI", 0, 14));
         jTextField4.setForeground(new java.awt.Color(255, 255, 255));
 
         jButton1.setBackground(new java.awt.Color(51, 51, 51));
@@ -132,7 +128,7 @@ public class P_Ejercicio5 extends javax.swing.JPanel {
 
         jButton6.setBackground(new java.awt.Color(51, 51, 51));
         jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("Atrás");
+        jButton6.setText("Atr\u00e1s");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -233,10 +229,9 @@ public class P_Ejercicio5 extends javax.swing.JPanel {
                     .addComponent(jButton7))
                 .addGap(15, 15, 15))
         );
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
-    // Boton: Dar de alta
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         String a = jTextField1.getText().trim();
         String p = jTextField2.getText().trim();
         String numApt = jTextField3.getText().trim();
@@ -251,10 +246,9 @@ public class P_Ejercicio5 extends javax.swing.JPanel {
             jTextArea1.setText("");
             limpiarCampos();
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }
 
-    // Boton: Modificar Precio (por numero de apartamento)
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         String numApt = jTextField3.getText().trim();
         String nuevoPrecio = jTextField2.getText().trim();
 
@@ -267,10 +261,9 @@ public class P_Ejercicio5 extends javax.swing.JPanel {
             jTextArea1.setText("");
             limpiarCampos();
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }
 
-    // Boton: Dar de baja (por area)
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
         String a = jTextField1.getText().trim();
 
         if (a.isEmpty()) {
@@ -282,15 +275,13 @@ public class P_Ejercicio5 extends javax.swing.JPanel {
             jTextArea1.setText("");
             limpiarCampos();
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }
 
-    // Boton: Listar todos
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
         jTextArea1.setText(backend.listarDepartamentosOrdenados());
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }
 
-    // Boton: Listar uno (por numero de apartamento)
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {
         String numApt = jTextField3.getText().trim();
 
         if (numApt.isEmpty()) {
@@ -299,10 +290,9 @@ public class P_Ejercicio5 extends javax.swing.JPanel {
         }
 
         jTextArea1.setText(backend.listarDepartamentoOrdenado(numApt));
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }
 
-    // Boton: Atras
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {
         javax.swing.JFrame ventana = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
 
         if (ventana != null) {
@@ -310,14 +300,12 @@ public class P_Ejercicio5 extends javax.swing.JPanel {
             ventana.revalidate();
             ventana.repaint();
         }
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {
         System.exit(0);
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }
 
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -336,5 +324,4 @@ public class P_Ejercicio5 extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
-    // End of variables declaration//GEN-END:variables
 }
