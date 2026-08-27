@@ -2,6 +2,24 @@ package Arreglosordenados;
 
 import javax.swing.*;
 
+/*
+ENUNCIADO:
+
+Una compañía necesita almacenar en arreglos la siguiente información de cada uno
+de sus empleados ordenados alfabéticamente por el nombre: Nombre, Dirección, Edad,
+Sexo, Años de antigüedad.
+
+Escribir un programa que realice las siguientes operaciones:
+
+1. Listar los datos de todos los empleados
+2. Dar de alta a un empleado
+3. Dar de baja a un empleado
+4. Modificar los años de antigüedad de un empleado
+5. Listar los datos de un empleado determinado
+6. Salir.
+
+*/
+
 public class Ejercicio4 {
    private final String[] nombres;
     private final String[] direcciones;

@@ -1,16 +1,14 @@
-
+package com.mycompany.lab2;
 
 import UI.Paneles.UNI_Portada;
 import javax.swing.*;
 
-public class LAB1MAIN {
+public class LAB2 {
 
     public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            JFrame ventana = new JFrame("Laboratorio #2 - Métodos de Ordenación y Búsqueda");
 
-        SwingUtilities.invokeLater(() -> { // Event dispatch Thread
-            JFrame ventana = new JFrame("Laboratorio #1 - Arreglos desordenados y ordenados");
-
-            // La portada gestiona su propia navegacion (sidebar -> Opciones)
             UNI_Portada uni_portada = new UNI_Portada();
 
             ventana.add(uni_portada);
@@ -21,6 +19,5 @@ public class LAB1MAIN {
 
             ventana.setVisible(true);
         });
-
     }
 }
