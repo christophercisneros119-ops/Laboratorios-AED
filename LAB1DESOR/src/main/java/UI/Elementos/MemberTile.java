@@ -28,14 +28,6 @@ public class MemberTile extends GlassPanel {
         setPreferredSize(new Dimension(160, 160));
         setLayout(null);
 
-        try {
-            java.net.URL url = getClass().getResource("/img/user-temp.png");
-            if (url != null) {
-                photo = new ImageIcon(url).getImage();
-            }
-        } catch (Exception ignored) {
-        }
-
         nameLabel.setFont(new Font("Segoe UI", Font.BOLD, 15));
         nameLabel.setForeground(TEXT_COLOR);
         nameLabel.setBounds(8, 106, 144, 24);
