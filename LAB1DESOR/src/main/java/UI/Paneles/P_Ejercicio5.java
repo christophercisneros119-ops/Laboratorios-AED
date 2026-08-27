@@ -1,6 +1,6 @@
 package UI.Paneles;
 
-import Arraysordenados.Ejercicio5;
+import Arreglosordenados.Ejercicio5;
 import javax.swing.*;
 
 public class P_Ejercicio5 extends javax.swing.JPanel {
@@ -19,6 +19,7 @@ public class P_Ejercicio5 extends javax.swing.JPanel {
         jTextField2.setText("");
         jTextField3.setText("");
         jTextField4.setText("");
+        jTextField5.setText("");
         jTextField1.requestFocus();
     }
 
@@ -29,10 +30,12 @@ public class P_Ejercicio5 extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
+        jTextField5 = new javax.swing.JTextField();
         jButton1 = new UI.Elementos.GlassButton("Dar de alta", new java.awt.Color(51, 51, 51), java.awt.Color.WHITE, java.awt.Color.WHITE);
         jButton2 = new UI.Elementos.GlassButton("Modificar Precio", new java.awt.Color(51, 51, 51), java.awt.Color.WHITE, java.awt.Color.WHITE);
         jButton3 = new UI.Elementos.GlassButton("Dar de baja", new java.awt.Color(51, 51, 51), java.awt.Color.WHITE, java.awt.Color.WHITE);
@@ -51,19 +54,23 @@ public class P_Ejercicio5 extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18));
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Area:");
+        jLabel2.setText("Ubicacion:");
 
         jLabel3.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18));
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Precio:");
+        jLabel3.setText("Area:");
 
         jLabel4.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18));
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Num. Apartamento:");
+        jLabel4.setText("Precio:");
 
         jLabel5.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18));
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Arrendatario:");
+        jLabel5.setText("Num. Apartamento:");
+
+        jLabel6.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18));
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Arrendatario:");
 
         jTextField1.setBackground(new java.awt.Color(51, 51, 51));
         jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14));
@@ -80,6 +87,10 @@ public class P_Ejercicio5 extends javax.swing.JPanel {
         jTextField4.setBackground(new java.awt.Color(51, 51, 51));
         jTextField4.setFont(new java.awt.Font("Segoe UI", 0, 14));
         jTextField4.setForeground(new java.awt.Color(255, 255, 255));
+
+        jTextField5.setBackground(new java.awt.Color(51, 51, 51));
+        jTextField5.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        jTextField5.setForeground(new java.awt.Color(255, 255, 255));
 
         jButton1.setBackground(new java.awt.Color(51, 51, 51));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
@@ -181,13 +192,15 @@ public class P_Ejercicio5 extends javax.swing.JPanel {
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel5))
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextField1)
                             .addComponent(jTextField2)
                             .addComponent(jTextField3)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextField4)
+                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(25, 25, 25))
         );
@@ -212,6 +225,10 @@ public class P_Ejercicio5 extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -232,25 +249,26 @@ public class P_Ejercicio5 extends javax.swing.JPanel {
     }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-        String a = jTextField1.getText().trim();
-        String p = jTextField2.getText().trim();
-        String numApt = jTextField3.getText().trim();
-        String arr = jTextField4.getText().trim();
+        String u = jTextField1.getText().trim();
+        String a = jTextField2.getText().trim();
+        String p = jTextField3.getText().trim();
+        String numApt = jTextField4.getText().trim();
+        String arr = jTextField5.getText().trim();
 
-        if (a.isEmpty() || p.isEmpty() || numApt.isEmpty() || arr.isEmpty()) {
+        if (u.isEmpty() || a.isEmpty() || p.isEmpty() || numApt.isEmpty() || arr.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.");
             return;
         }
 
-        if (backend.darAltaOrdenado(a, p, numApt, arr)) {
+        if (backend.darAltaOrdenado(u, a, p, numApt, arr)) {
             jTextArea1.setText("");
             limpiarCampos();
         }
     }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
-        String numApt = jTextField3.getText().trim();
-        String nuevoPrecio = jTextField2.getText().trim();
+        String numApt = jTextField4.getText().trim();
+        String nuevoPrecio = jTextField3.getText().trim();
 
         if (numApt.isEmpty() || nuevoPrecio.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Ingresa el numero de apartamento y el nuevo precio.");
@@ -264,7 +282,7 @@ public class P_Ejercicio5 extends javax.swing.JPanel {
     }
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
-        String a = jTextField1.getText().trim();
+        String a = jTextField2.getText().trim();
 
         if (a.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Ingresa el area del departamento a liberar.");
@@ -282,7 +300,7 @@ public class P_Ejercicio5 extends javax.swing.JPanel {
     }
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {
-        String numApt = jTextField3.getText().trim();
+        String numApt = jTextField4.getText().trim();
 
         if (numApt.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Ingresa el numero de apartamento a buscar.");
@@ -318,10 +336,12 @@ public class P_Ejercicio5 extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
 }

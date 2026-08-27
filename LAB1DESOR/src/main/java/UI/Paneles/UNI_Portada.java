@@ -76,7 +76,7 @@ public class UNI_Portada extends javax.swing.JPanel {
         sidebar.getArreglosButton().addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
-                navegarA(new UI.Paneles.P_Arreglos());
+                navegarA(new UI.Paneles.P_MenuArreglos());
             }
         });
         sidebar.getAboutButton().addMouseListener(new java.awt.event.MouseAdapter() {

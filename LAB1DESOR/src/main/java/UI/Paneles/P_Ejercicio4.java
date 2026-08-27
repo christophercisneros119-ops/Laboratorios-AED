@@ -1,6 +1,6 @@
 package UI.Paneles;
 
-import Arraysordenados.Ejercicio4;
+import Arreglosordenados.Ejercicio4;
 import javax.swing.*;
 
 public class P_Ejercicio4 extends javax.swing.JPanel {

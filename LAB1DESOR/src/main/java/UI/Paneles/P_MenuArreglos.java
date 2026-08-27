@@ -1,10 +1,10 @@
 package UI.Paneles;
 
-public class P_Arreglos extends javax.swing.JPanel {
+public class P_MenuArreglos extends javax.swing.JPanel {
 
     private java.awt.Image fondoImage;
 
-    public P_Arreglos() {
+    public P_MenuArreglos() {
         setOpaque(false);
         fondoImage = loadFondo();
         initComponents();

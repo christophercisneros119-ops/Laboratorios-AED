@@ -1,4 +1,4 @@
-package Arraysordenados;
+package Arreglosordenados;
 
 import javax.swing.*;
 
@@ -22,6 +22,7 @@ import javax.swing.*;
 
 public class Ejercicio5 {
 
+    private final String[] ubicacion;
     private final String[] area;
     private final String[] precio;
     private final String[] num_apartamento;
@@ -31,6 +32,7 @@ public class Ejercicio5 {
 
     public Ejercicio5(int capacidad) {
         this.tam = capacidad;
+        this.ubicacion = new String[capacidad];
         this.area = new String[capacidad];
         this.precio = new String[capacidad];
         this.num_apartamento = new String[capacidad];
@@ -52,7 +54,7 @@ public class Ejercicio5 {
     }
 
     // Dar de alta a un departamento (InsertaOrdenado)
-    public boolean darAltaOrdenado(String a, String p, String numApt, String arr) {
+    public boolean darAltaOrdenado(String u, String a, String p, String numApt, String arr) {
         if (indice >= (tam - 1)) {
             JOptionPane.showMessageDialog(null, "No hay espacio en el array");
             return false;
@@ -67,11 +69,13 @@ public class Ejercicio5 {
         indice++;
         pos = Math.abs(pos);
         for (int i = indice; i >= pos + 1; i--) {
+            ubicacion[i] = ubicacion[i - 1];
             area[i] = area[i - 1];
             precio[i] = precio[i - 1];
             num_apartamento[i] = num_apartamento[i - 1];
             arrendatario[i] = arrendatario[i - 1];
         }
+        ubicacion[pos] = u;
         area[pos] = a;
         precio[pos] = p;
         num_apartamento[pos] = numApt;
@@ -94,11 +98,13 @@ public class Ejercicio5 {
         }
 
         for (int i = pos; i < indice; i++) {
+            ubicacion[i] = ubicacion[i + 1];
             area[i] = area[i + 1];
             precio[i] = precio[i + 1];
             num_apartamento[i] = num_apartamento[i + 1];
             arrendatario[i] = arrendatario[i + 1];
         }
+        ubicacion[indice] = null;
         area[indice] = null;
         precio[indice] = null;
         num_apartamento[indice] = null;
@@ -139,8 +145,17 @@ public class Ejercicio5 {
         if (i > indice)
             return "No se encontro el apartamento " + numApt;
 
-        return String.format("Area: %s | Precio: %s | Numero: %s | Arrendatario: %s",
-                area[i], precio[i], num_apartamento[i], arrendatario[i]);
+        String formatoCadena = "\t|%-18s|%-8s|%-10s|%-8s|%-20s|%n";
+        String separador     = "\t+------------------+--------+----------+--------+--------------------+%n";
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format(separador));
+        sb.append(String.format(formatoCadena, "Ubicacion", "Area", "Precio", "Numero", "Arrendatario"));
+        sb.append(String.format(separador));
+        sb.append(String.format(formatoCadena, ubicacion[i], area[i], precio[i], num_apartamento[i], arrendatario[i]));
+        sb.append(String.format(separador));
+
+        return sb.toString();
     }
 
     // Listar los datos de todos los registros
@@ -148,16 +163,16 @@ public class Ejercicio5 {
         if (indice == -1)
             return "No hay departamentos registrados.";
         
-        String formatoCadena = "\t|%-8s|%-10s|%-8s|%-20s|%n";
-        String separador     = "\t+--------+----------+--------+--------------------+%n";
+        String formatoCadena = "\t|%-18s|%-8s|%-10s|%-8s|%-20s|%n";
+        String separador     = "\t+------------------+--------+----------+--------+--------------------+%n";
 
         StringBuilder sb = new StringBuilder("\t\t--LISTA DE DEPARTAMENTOS--\n\n");
         sb.append(String.format(separador));
-        sb.append(String.format(formatoCadena, "Area", "Precio", "Numero", "Arrendatario"));
+        sb.append(String.format(formatoCadena, "Ubicacion", "Area", "Precio", "Numero", "Arrendatario"));
         sb.append(String.format(separador));
         for (int i = 0; i <= indice; i++)
             sb.append(String.format(formatoCadena,
-                    area[i], precio[i], num_apartamento[i], arrendatario[i]));
+                    ubicacion[i], area[i], precio[i], num_apartamento[i], arrendatario[i]));
         sb.append(String.format(separador));
 
         return sb.toString();

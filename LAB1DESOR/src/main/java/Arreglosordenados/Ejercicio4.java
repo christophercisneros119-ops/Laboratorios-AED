@@ -1,4 +1,4 @@
-package Arraysordenados;
+package Arreglosordenados;
 
 import javax.swing.*;
 
@@ -130,14 +130,17 @@ public class Ejercicio4 {
             return "No hay empleados registrados.";
         }
 
-        StringBuilder sb = new StringBuilder("--LISTA DE EMPLEADOS--\n\n");
-        for (int i = 0; i <= N; i++) {
-            sb.append("Nombre: ").append(nombres[i]).append("\n")
-              .append("Dirección: ").append(direcciones[i]).append("\n")
-              .append("Edad: ").append(edades[i]).append("\n")
-              .append("Sexo: ").append(sexos[i]).append("\n")
-              .append("Antigüedad: ").append(antiguedad[i]).append(" años\n");
-        }
+        String formatoCadena = "\t|%-20s|%-30s|%-8s|%-6s|%-12s|%n";
+        String separador     = "\t+--------------------+------------------------------+--------+------+------------+%n";
+
+        StringBuilder sb = new StringBuilder("\t\t--LISTA DE EMPLEADOS--\n\n");
+        sb.append(String.format(separador));
+        sb.append(String.format(formatoCadena, "Nombre", "Direccion", "Edad", "Sexo", "Antiguedad"));
+        sb.append(String.format(separador));
+        for (int i = 0; i <= N; i++)
+            sb.append(String.format(formatoCadena, nombres[i], direcciones[i], edades[i], sexos[i], antiguedad[i] + " a\u00f1os"));
+        sb.append(String.format(separador));
+
         return sb.toString();
     }
 
@@ -146,13 +149,17 @@ public class Ejercicio4 {
         if (N > -1) {
             int pos = busca(nombre);
             if (pos >= 0) {
-                return """
-                       ---DATOS DEL EMPLEADO---
-                       Nombre: """ + nombres[pos] + "\n" +
-                       "Dirección: " + direcciones[pos] + "\n" +
-                       "Edad: " + edades[pos] + "\n" +
-                       "Sexo: " + sexos[pos] + "\n" +
-                       "Antigüedad: " + antiguedad[pos] + " años";
+                String formatoCadena = "\t|%-20s|%-30s|%-8s|%-6s|%-12s|%n";
+                String separador     = "\t+--------------------+------------------------------+--------+------+------------+%n";
+
+                StringBuilder sb = new StringBuilder();
+                sb.append(String.format(separador));
+                sb.append(String.format(formatoCadena, "Nombre", "Direccion", "Edad", "Sexo", "Antiguedad"));
+                sb.append(String.format(separador));
+                sb.append(String.format(formatoCadena, nombres[pos], direcciones[pos], edades[pos], sexos[pos], antiguedad[pos] + " a\u00f1os"));
+                sb.append(String.format(separador));
+
+                return sb.toString();
             }
         }
         return "El empleado no existe en el sistema.";

@@ -1,11 +1,11 @@
-package Arraysordenados;
+package Arreglosordenados;
 
 import javax.swing.JOptionPane;
 
 /*
 *   ENUNCIADO:
 *   Una compania quiere almacenar en arreglos ordenados la siguiente informacion
-*   para cada vendedor: nombre y total de ventas. Inicialmente los arreglos estan vacios.
+*   para cada vendedor, la cual consiste en el nombre y total de ventas. Inicialmente los arreglos estan vacios.
 *
 *   Escribir un programa que permita realizar lo siguiente:
 *

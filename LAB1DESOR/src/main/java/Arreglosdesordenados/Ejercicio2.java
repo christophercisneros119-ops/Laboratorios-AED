@@ -103,7 +103,17 @@ public class Ejercicio2 {
         if (i > indice)
             return "No se encontro";
 
-        return String.format("%s - %s - %s - %b", nombre[i], telf[i], saldo[i], moroso[i]);
+        String formatoCadena = "\t|%-22s|%-15s|%-15s|%-15s|%n";
+        String separador     = "\t+----------------------+---------------+---------------+---------------+%n";
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format(separador));
+        sb.append(String.format(formatoCadena, "Nombre", "Telefono", "Saldo", "Estado"));
+        sb.append(String.format(separador));
+        sb.append(String.format(formatoCadena, nombre[i], telf[i], saldo[i], moroso[i] ? "Moroso" : "No moroso"));
+        sb.append(String.format(separador));
+
+        return sb.toString();
     }
 
     // Listar la informacion de todos los clientes
@@ -111,9 +121,16 @@ public class Ejercicio2 {
         if (indice == -1)
             return "No hay clientes registrados.";
 
-        StringBuilder sb = new StringBuilder("--LISTA DE CLIENTES--\n\n");
+        String formatoCadena = "\t|%-22s|%-15s|%-15s|%-15s|%n";
+        String separador     = "\t+----------------------+---------------+---------------+---------------+%n";
+
+        StringBuilder sb = new StringBuilder("\t\t--LISTA DE CLIENTES--\n\n");
+        sb.append(String.format(separador));
+        sb.append(String.format(formatoCadena, "Nombre", "Telefono", "Saldo", "Estado"));
+        sb.append(String.format(separador));
         for (int i = 0; i <= indice; i++)
-            sb.append(String.format("%s - %s - %s - %b%n", nombre[i], telf[i], saldo[i], moroso[i]));
+            sb.append(String.format(formatoCadena, nombre[i], telf[i], saldo[i], moroso[i] ? "Moroso" : "No moroso"));
+        sb.append(String.format(separador));
 
         return sb.toString();
     }

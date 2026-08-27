@@ -112,7 +112,7 @@ public class P_MenuOrdenados extends javax.swing.JPanel {
     }
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
-        navegarA(new P_Arreglos());
+        navegarA(new P_MenuArreglos());
     }
 
     private void navegarA(javax.swing.JPanel destino) {
