@@ -1,8 +1,7 @@
 package Algoritmos;
 
 public class BurbujaSenal implements IMetodoOrdenamiento {
-
-    @Override
+    
     public void ordenar(int[] A) {
         int N = A.length;
         int I = 1;

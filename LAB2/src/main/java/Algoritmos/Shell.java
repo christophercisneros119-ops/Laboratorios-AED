@@ -1,8 +1,7 @@
 package Algoritmos;
 
 public class Shell implements IMetodoOrdenamiento {
-
-    @Override
+    
     public void ordenar(int[] A) {
         int N = A.length;
         int ent = N + 1;

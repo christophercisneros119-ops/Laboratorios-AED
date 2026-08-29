@@ -1,8 +1,7 @@
 package Algoritmos;
 
 public class Seleccion implements IMetodoOrdenamiento {
-
-    @Override
+    
     public void ordenar(int[] A) {
         int N = A.length - 1;
         for (int I = 0; I < N; I++) {

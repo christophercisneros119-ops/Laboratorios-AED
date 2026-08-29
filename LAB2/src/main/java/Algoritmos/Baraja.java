@@ -1,8 +1,7 @@
 package Algoritmos;
 
 public class Baraja implements IMetodoOrdenamiento {
-
-    @Override
+    
     public void ordenar(int[] V) {
         int N = V.length - 1;
         for (int I = 1; I <= N; I++) {
