@@ -1,6 +1,7 @@
 package UI.Paneles;
 
 public class P_MenuArreglos extends javax.swing.JPanel {
+    
 
     private java.awt.Image fondoImage;
 

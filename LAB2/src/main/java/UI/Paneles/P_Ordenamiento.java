@@ -4,6 +4,7 @@ import Algoritmos.IMetodoOrdenamiento;
 import javax.swing.*;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle;
+import java.awt.*;
 
 public class P_Ordenamiento extends javax.swing.JPanel {
 
@@ -12,6 +13,13 @@ public class P_Ordenamiento extends javax.swing.JPanel {
     private int tamano;
     private boolean tamanoDefinido;
     private java.awt.Image fondoImage;
+    
+    // constant (color)
+    public static final Color WHITE = Color.white;
+    public static final Color DARK_AQUA = new Color(0, 51, 51);
+    
+    // constant (font)
+    public static final Font MAIN_FONT = new java.awt.Font("Monospaced", java.awt.Font.PLAIN, 12);
 
     public P_Ordenamiento(IMetodoOrdenamiento metodo, String tituloMetodo) {
         this.metodo = metodo;
@@ -21,8 +29,8 @@ public class P_Ordenamiento extends javax.swing.JPanel {
         initComponents();
         jTextArea1.setEditable(false);
         jTextArea2.setEditable(false);
-        jTextArea1.setFont(new java.awt.Font("Monospaced", java.awt.Font.PLAIN, 12));
-        jTextArea2.setFont(new java.awt.Font("Monospaced", java.awt.Font.PLAIN, 12));
+        jTextArea1.setFont(MAIN_FONT);
+        jTextArea2.setFont(MAIN_FONT);
         jLabel1.setText(tituloMetodo);
     }
 
@@ -35,15 +43,13 @@ public class P_Ordenamiento extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
-        jButton1 = new UI.Elementos.GlassButton("Guardar", new java.awt.Color(0, 51, 51), java.awt.Color.WHITE, java.awt.Color.WHITE);
-        jButton2 = new UI.Elementos.GlassButton("Guardar", new java.awt.Color(0, 51, 51), java.awt.Color.WHITE, java.awt.Color.WHITE);
-        jButton3 = new UI.Elementos.GlassButton("Atr\u00e1s", new java.awt.Color(0, 51, 51), java.awt.Color.WHITE, java.awt.Color.WHITE);
+        jButton1 = new UI.Elementos.GlassButton("Guardar", DARK_AQUA, WHITE, WHITE);
+        jButton2 = new UI.Elementos.GlassButton("Guardar", DARK_AQUA, WHITE, WHITE);
+        jButton3 = new UI.Elementos.GlassButton("Atr\u00e1s", DARK_AQUA, WHITE, WHITE);
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
-
-        setBackground(new java.awt.Color(0, 51, 51));
 
         jLabel1.setFont(new java.awt.Font("Swis721 Blk BT", 0, 24));
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -64,16 +70,13 @@ public class P_Ordenamiento extends javax.swing.JPanel {
         jLabel5.setFont(new java.awt.Font("Swis721 Blk BT", 0, 16));
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Arreglo ya ordenado");
-
-        jTextField1.setBackground(new java.awt.Color(51, 51, 51));
+        
         jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14));
         jTextField1.setForeground(new java.awt.Color(255, 255, 255));
-
-        jTextField2.setBackground(new java.awt.Color(51, 51, 51));
+        
         jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 14));
         jTextField2.setForeground(new java.awt.Color(255, 255, 255));
 
-        jButton1.setBackground(new java.awt.Color(0, 51, 51));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Guardar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -82,7 +85,6 @@ public class P_Ordenamiento extends javax.swing.JPanel {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(0, 51, 51));
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Guardar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -91,7 +93,6 @@ public class P_Ordenamiento extends javax.swing.JPanel {
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(0, 51, 51));
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Atr\u00e1s");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
