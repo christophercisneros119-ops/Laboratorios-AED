@@ -1,10 +1,13 @@
 package UI.Paneles;
 
 import Algoritmos.IMetodoOrdenamiento;
+import UI.Elementos.UIConstants;
+import static UI.Elementos.UIConstants.*;
 import javax.swing.*;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle;
 import java.awt.*;
+import javax.swing.ImageIcon;
 
 public class P_Ordenamiento extends javax.swing.JPanel {
 
@@ -13,24 +16,17 @@ public class P_Ordenamiento extends javax.swing.JPanel {
     private int tamano;
     private boolean tamanoDefinido;
     private java.awt.Image fondoImage;
-    
-    // constant (color)
-    public static final Color WHITE = Color.white;
-    public static final Color DARK_AQUA = new Color(0, 51, 51);
-    
-    // constant (font)
-    public static final Font MAIN_FONT = new java.awt.Font("Monospaced", java.awt.Font.PLAIN, 12);
 
     public P_Ordenamiento(IMetodoOrdenamiento metodo, String tituloMetodo) {
         this.metodo = metodo;
         this.tituloMetodo = tituloMetodo;
         setOpaque(false);
-        fondoImage = loadFondo();
+        fondoImage = new ImageIcon(getClass().getResource("/img/fondo2.jpg")).getImage();
         initComponents();
         jTextArea1.setEditable(false);
         jTextArea2.setEditable(false);
-        jTextArea1.setFont(MAIN_FONT);
-        jTextArea2.setFont(MAIN_FONT);
+        jTextArea1.setFont(FONT_CODE);
+        jTextArea2.setFont(FONT_CODE);
         jLabel1.setText(tituloMetodo);
     }
 
@@ -45,39 +41,39 @@ public class P_Ordenamiento extends javax.swing.JPanel {
         jTextField2 = new javax.swing.JTextField();
         jButton1 = new UI.Elementos.GlassButton("Guardar", DARK_AQUA, WHITE, WHITE);
         jButton2 = new UI.Elementos.GlassButton("Guardar", DARK_AQUA, WHITE, WHITE);
-        jButton3 = new UI.Elementos.GlassButton("Atr\u00e1s", DARK_AQUA, WHITE, WHITE);
+        jButton3 = new UI.Elementos.GlassButton("Atrás", DARK_AQUA, WHITE, WHITE);
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
 
-        jLabel1.setFont(new java.awt.Font("Swis721 Blk BT", 0, 24));
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setFont(FONT_TITLE);
+        jLabel1.setForeground(WHITE);
         jLabel1.setText("Método");
 
-        jLabel2.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18));
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Tama\u00f1o del arreglo:");
+        jLabel2.setFont(FONT_SUBTITLE);
+        jLabel2.setForeground(WHITE);
+        jLabel2.setText("Tamaño del arreglo:");
 
-        jLabel3.setFont(new java.awt.Font("Swis721 Blk BT", 0, 18));
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setFont(FONT_SUBTITLE);
+        jLabel3.setForeground(WHITE);
         jLabel3.setText("Elementos (separados por coma):");
 
-        jLabel4.setFont(new java.awt.Font("Swis721 Blk BT", 0, 16));
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Arreglo como fue le\u00eddo");
+        jLabel4.setFont(FONT_LABEL);
+        jLabel4.setForeground(WHITE);
+        jLabel4.setText("Arreglo como fue leído");
 
-        jLabel5.setFont(new java.awt.Font("Swis721 Blk BT", 0, 16));
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setFont(FONT_LABEL);
+        jLabel5.setForeground(WHITE);
         jLabel5.setText("Arreglo ya ordenado");
-        
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14));
-        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
-        
-        jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 14));
-        jTextField2.setForeground(new java.awt.Color(255, 255, 255));
 
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jTextField1.setFont(FONT_BODY);
+        jTextField1.setForeground(DARK_GRAY);
+
+        jTextField2.setFont(FONT_BODY);
+        jTextField2.setForeground(DARK_GRAY);
+
+        jButton1.setForeground(WHITE);
         jButton1.setText("Guardar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -85,7 +81,7 @@ public class P_Ordenamiento extends javax.swing.JPanel {
             }
         });
 
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setForeground(WHITE);
         jButton2.setText("Guardar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,8 +89,8 @@ public class P_Ordenamiento extends javax.swing.JPanel {
             }
         });
 
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Atr\u00e1s");
+        jButton3.setForeground(WHITE);
+        jButton3.setText("Atrás");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -207,7 +203,6 @@ public class P_Ordenamiento extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Ingresa los elementos del arreglo separados por coma.");
             return;
         }
-        String[] partes = texto.split(",");
         int[] arreglo;
         try {
             arreglo = IMetodoOrdenamiento.leerArreglo(texto);
@@ -227,7 +222,6 @@ public class P_Ordenamiento extends javax.swing.JPanel {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
         javax.swing.JFrame ventana = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
-
         if (ventana != null) {
             ventana.setContentPane(new P_MenuOrdenamiento());
             ventana.revalidate();
@@ -247,30 +241,6 @@ public class P_Ordenamiento extends javax.swing.JPanel {
         }
     }
 
-    private java.awt.Image loadFondo() {
-        String[] resources = {"/img/fondo2.jpg"};
-        for (String path : resources) {
-            try {
-                java.net.URL url = getClass().getResource(path);
-                if (url != null) {
-                    return new javax.swing.ImageIcon(url).getImage();
-                }
-            } catch (Exception ignored) {
-            }
-        }
-        String[] files = {"fondo2.jpg", "fondo2.png"};
-        for (String name : files) {
-            try {
-                java.io.File file = new java.io.File(name);
-                if (file.exists()) {
-                    return new javax.swing.ImageIcon(file.getAbsolutePath()).getImage();
-                }
-            } catch (Exception ignored) {
-            }
-        }
-        return null;
-    }
-
     @Override
     protected void paintComponent(java.awt.Graphics g) {
         super.paintComponent(g);
@@ -280,13 +250,7 @@ public class P_Ordenamiento extends javax.swing.JPanel {
         int w = getWidth();
         int h = getHeight();
 
-        if (fondoImage != null) {
-            drawCoverImage(g2, w, h);
-        } else {
-            g2.setColor(new java.awt.Color(12, 34, 31));
-            g2.fillRect(0, 0, w, h);
-        }
-
+        drawCoverImage(g2, w, h);
         drawVeil(g2, w, h);
 
         g2.dispose();
@@ -295,9 +259,6 @@ public class P_Ordenamiento extends javax.swing.JPanel {
     private void drawCoverImage(java.awt.Graphics2D g2, int w, int h) {
         int iw = fondoImage.getWidth(null);
         int ih = fondoImage.getHeight(null);
-        if (iw <= 0 || ih <= 0) {
-            return;
-        }
         double scale = Math.max(w / (double) iw, h / (double) ih);
         int dw = (int) (iw * scale);
         int dh = (int) (ih * scale);
@@ -310,10 +271,7 @@ public class P_Ordenamiento extends javax.swing.JPanel {
         java.awt.LinearGradientPaint veil = new java.awt.LinearGradientPaint(
                 0, 0, 0, h,
                 new float[]{0f, 0.6f, 1f},
-                new java.awt.Color[]{
-                        new java.awt.Color(4, 12, 16, 30),
-                        new java.awt.Color(4, 12, 16, 80),
-                        new java.awt.Color(4, 12, 16, 150)});
+                new java.awt.Color[]{VEIL_TOP, VEIL_MID, VEIL_BOTTOM});
         g2.setPaint(veil);
         g2.fillRect(0, 0, w, h);
     }
