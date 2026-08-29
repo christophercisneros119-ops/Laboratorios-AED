@@ -23,12 +23,9 @@ public class TaskbarMenuButton extends JComponent {
     public TaskbarMenuButton() {
         setOpaque(false);
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        try {
-            java.net.URL url = getClass().getResource("/img/menu-icon.png");
-            if (url != null) {
-                icon = new ImageIcon(url).getImage();
-            }
-        } catch (Exception ignored) {
+        java.net.URL url = getClass().getResource("/img/menu-icon.png");
+        if (url != null) {
+            icon = new ImageIcon(url).getImage();
         }
         addMouseListener(new MouseAdapter() {
             @Override

@@ -1,29 +1,28 @@
 package UI.Paneles;
 
+import UI.Elementos.UIConstants;
+import static UI.Elementos.UIConstants.*;
+import javax.swing.ImageIcon;
+
 public class P_MenuArreglos extends javax.swing.JPanel {
-    
 
     private java.awt.Image fondoImage;
 
     public P_MenuArreglos() {
         setOpaque(false);
-        fondoImage = loadFondo();
+        fondoImage = new ImageIcon(getClass().getResource("/img/fondo2.jpg")).getImage();
         initComponents();
     }
 
-    @SuppressWarnings("unchecked")
     private void initComponents() {
 
-        jButton1 = new UI.Elementos.GlassButton("Métodos de Ordenación", new java.awt.Color(0, 51, 51), java.awt.Color.WHITE, java.awt.Color.WHITE);
-        jButton2 = new UI.Elementos.GlassButton("Búsqueda", new java.awt.Color(0, 51, 51), java.awt.Color.WHITE, java.awt.Color.WHITE);
-        jButton3 = new UI.Elementos.GlassButton("Atr\u00e1s", new java.awt.Color(0, 51, 51), java.awt.Color.WHITE, java.awt.Color.WHITE);
+        jButton1 = new UI.Elementos.GlassButton("Métodos de Ordenación", DARK_AQUA, WHITE, WHITE);
+        jButton2 = new UI.Elementos.GlassButton("Búsqueda", DARK_AQUA, WHITE, WHITE);
+        jButton3 = new UI.Elementos.GlassButton("Atrás", DARK_AQUA, WHITE, WHITE);
         jLabel1 = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(0, 153, 255));
-
-        jButton1.setBackground(new java.awt.Color(0, 51, 51));
-        jButton1.setFont(new java.awt.Font("Swis721 Blk BT", 0, 24));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setFont(FONT_TITLE);
+        jButton1.setForeground(WHITE);
         jButton1.setText("Métodos de Ordenación");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -31,9 +30,8 @@ public class P_MenuArreglos extends javax.swing.JPanel {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(0, 51, 51));
-        jButton2.setFont(new java.awt.Font("Swis721 Blk BT", 0, 24));
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setFont(FONT_TITLE);
+        jButton2.setForeground(WHITE);
         jButton2.setText("Búsqueda");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -41,18 +39,17 @@ public class P_MenuArreglos extends javax.swing.JPanel {
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(0, 51, 51));
-        jButton3.setFont(new java.awt.Font("Swis721 Blk BT", 0, 24));
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Atr\u00e1s");
+        jButton3.setFont(FONT_TITLE);
+        jButton3.setForeground(WHITE);
+        jButton3.setText("Atrás");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Swis721 Blk BT", 0, 36));
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setFont(FONT_TITLE_XL);
+        jLabel1.setForeground(WHITE);
         jLabel1.setText("Laboratorio #2");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -105,36 +102,11 @@ public class P_MenuArreglos extends javax.swing.JPanel {
 
     private void navegarA(javax.swing.JPanel destino) {
         javax.swing.JFrame ventana = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
-
         if (ventana != null) {
             ventana.setContentPane(destino);
             ventana.revalidate();
             ventana.repaint();
         }
-    }
-
-    private java.awt.Image loadFondo() {
-        String[] resources = {"/img/fondo2.jpg"};
-        for (String path : resources) {
-            try {
-                java.net.URL url = getClass().getResource(path);
-                if (url != null) {
-                    return new javax.swing.ImageIcon(url).getImage();
-                }
-            } catch (Exception ignored) {
-            }
-        }
-        String[] files = {"fondo2.jpg", "fondo2.png"};
-        for (String name : files) {
-            try {
-                java.io.File file = new java.io.File(name);
-                if (file.exists()) {
-                    return new javax.swing.ImageIcon(file.getAbsolutePath()).getImage();
-                }
-            } catch (Exception ignored) {
-            }
-        }
-        return null;
     }
 
     @Override
@@ -146,13 +118,7 @@ public class P_MenuArreglos extends javax.swing.JPanel {
         int w = getWidth();
         int h = getHeight();
 
-        if (fondoImage != null) {
-            drawCoverImage(g2, w, h);
-        } else {
-            g2.setColor(new java.awt.Color(12, 34, 31));
-            g2.fillRect(0, 0, w, h);
-        }
-
+        drawCoverImage(g2, w, h);
         drawVeil(g2, w, h);
 
         g2.dispose();
@@ -161,9 +127,6 @@ public class P_MenuArreglos extends javax.swing.JPanel {
     private void drawCoverImage(java.awt.Graphics2D g2, int w, int h) {
         int iw = fondoImage.getWidth(null);
         int ih = fondoImage.getHeight(null);
-        if (iw <= 0 || ih <= 0) {
-            return;
-        }
         double scale = Math.max(w / (double) iw, h / (double) ih);
         int dw = (int) (iw * scale);
         int dh = (int) (ih * scale);
@@ -176,10 +139,7 @@ public class P_MenuArreglos extends javax.swing.JPanel {
         java.awt.LinearGradientPaint veil = new java.awt.LinearGradientPaint(
                 0, 0, 0, h,
                 new float[]{0f, 0.6f, 1f},
-                new java.awt.Color[]{
-                        new java.awt.Color(4, 12, 16, 30),
-                        new java.awt.Color(4, 12, 16, 80),
-                        new java.awt.Color(4, 12, 16, 150)});
+                new java.awt.Color[]{VEIL_TOP, VEIL_MID, VEIL_BOTTOM});
         g2.setPaint(veil);
         g2.fillRect(0, 0, w, h);
     }
