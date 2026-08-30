@@ -1,8 +1,8 @@
 package Algoritmos;
 
-public interface IMetodoOrdenamiento {
+public interface MetodoOrdenamiento {
 
-    void ordenar(int[] arreglo);
+    void ordenar(int[] arreglo, int N);
 
     static int[] leerArreglo(String texto) {
         String[] partes = texto.split(",");

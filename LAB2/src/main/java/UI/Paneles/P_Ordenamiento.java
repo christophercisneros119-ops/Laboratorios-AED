@@ -1,6 +1,6 @@
 package UI.Paneles;
 
-import Algoritmos.IMetodoOrdenamiento;
+import Algoritmos.MetodoOrdenamiento;
 import UI.Elementos.UIConstants;
 import static UI.Elementos.UIConstants.*;
 import javax.swing.*;
@@ -11,13 +11,13 @@ import javax.swing.ImageIcon;
 
 public class P_Ordenamiento extends javax.swing.JPanel {
 
-    private final IMetodoOrdenamiento metodo;
+    private final MetodoOrdenamiento metodo;
     private final String tituloMetodo;
     private int tamano;
     private boolean tamanoDefinido;
     private java.awt.Image fondoImage;
 
-    public P_Ordenamiento(IMetodoOrdenamiento metodo, String tituloMetodo) {
+    public P_Ordenamiento(MetodoOrdenamiento metodo, String tituloMetodo) {
         this.metodo = metodo;
         this.tituloMetodo = tituloMetodo;
         setOpaque(false);
@@ -205,19 +205,19 @@ public class P_Ordenamiento extends javax.swing.JPanel {
         }
         int[] arreglo;
         try {
-            arreglo = IMetodoOrdenamiento.leerArreglo(texto);
+            arreglo = MetodoOrdenamiento.leerArreglo(texto);
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "El arreglo solo debe contener valores numéricos.");
             return;
         }
-        if (arreglo.length > tamano) {
-            JOptionPane.showMessageDialog(this, "El arreglo no puede tener más de " + tamano + " elementos.");
+        if (arreglo.length != tamano) {
+            JOptionPane.showMessageDialog(this, "Debes ingresar exactamente " + tamano + " elementos.");
             return;
         }
         int[] ordenado = arreglo.clone();
-        metodo.ordenar(ordenado);
-        jTextArea1.setText(IMetodoOrdenamiento.formatear(arreglo));
-        jTextArea2.setText(IMetodoOrdenamiento.formatear(ordenado));
+        metodo.ordenar(ordenado, tamano);
+        jTextArea1.setText(MetodoOrdenamiento.formatear(arreglo));
+        jTextArea2.setText(MetodoOrdenamiento.formatear(ordenado));
     }
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
