@@ -1,8 +1,7 @@
 package UI.Paneles;
 
 import Algoritmos.Burbuja;
-import Algoritmos.BusquedaBinaria;
-import Algoritmos.IMetodoOrdenamiento;
+import Algoritmos.MetodoOrdenamiento;
 import UI.Elementos.UIConstants;
 import static UI.Elementos.UIConstants.*;
 import javax.swing.*;
@@ -233,13 +232,13 @@ public class P_BusquedaBinaria extends javax.swing.JPanel {
             return;
         }
         try {
-            arreglo = IMetodoOrdenamiento.leerArreglo(texto);
+            arreglo = MetodoOrdenamiento.leerArreglo(texto);
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "El arreglo solo debe contener valores numéricos.");
             return;
         }
-        if (arreglo.length > tamano) {
-            JOptionPane.showMessageDialog(this, "El arreglo no puede tener más de " + tamano + " elementos.");
+        if (arreglo.length != tamano) {
+            JOptionPane.showMessageDialog(this, "Debes ingresar exactamente " + tamano + " elementos.");
             return;
         }
         jTextArea2.setText("Arreglo cargado. Presiona Buscar.");
@@ -266,10 +265,10 @@ public class P_BusquedaBinaria extends javax.swing.JPanel {
         int x = Integer.parseInt(texto);
 
         int[] ordenado = arreglo.clone();
-        new Burbuja().ordenar(ordenado);
-        int posicion = BusquedaBinaria.buscar(ordenado, x);
+        new Burbuja().ordenar(ordenado, tamano);
+        int posicion = buscar(ordenado, tamano, x);
 
-        jTextArea1.setText(IMetodoOrdenamiento.formatear(ordenado));
+        jTextArea1.setText(MetodoOrdenamiento.formatear(ordenado));
         if (posicion >= 0) {
             jTextArea2.setText("El elemento " + x + " se encuentra en la posición " + (posicion + 1));
         } else {
@@ -296,6 +295,18 @@ public class P_BusquedaBinaria extends javax.swing.JPanel {
         } catch (NumberFormatException ex) {
             return false;
         }
+    }
+
+    private int buscar(int[] V, int N, int X) {
+        int inicio = 0;
+        int fin = N - 1;
+        while (inicio <= fin) {
+            int centro = (inicio + fin) / 2;
+            if (X == V[centro]) return centro;
+            if (X < V[centro]) fin = centro - 1;
+            else inicio = centro + 1;
+        }
+        return -1;
     }
 
     @Override

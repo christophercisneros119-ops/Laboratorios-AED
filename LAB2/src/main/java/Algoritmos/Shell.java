@@ -1,9 +1,8 @@
 package Algoritmos;
 
-public class Shell implements IMetodoOrdenamiento {
-    
-    public void ordenar(int[] A) {
-        int N = A.length;
+public class Shell implements MetodoOrdenamiento {
+
+    public void ordenar(int[] A, int N) {
         int ent = N + 1;
         while (ent > 0) {
             ent = (int) (ent / 2);

@@ -143,7 +143,7 @@ public class P_MenuOrdenamiento extends javax.swing.JPanel {
     }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
-        navegarA(new P_Ordenamiento(new Algoritmos.BurbujaSenal(), "Método Burbuja con Señal"));
+        navegarA(new P_Ordenamiento(new Algoritmos.Burbuja(true), "Método Burbuja con Señal"));
     }
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {

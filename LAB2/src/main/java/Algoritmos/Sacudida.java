@@ -1,9 +1,8 @@
 package Algoritmos;
 
-public class Sacudida implements IMetodoOrdenamiento {
-    
-    public void ordenar(int[] V) {
-        int N = V.length;
+public class Sacudida implements MetodoOrdenamiento {
+
+    public void ordenar(int[] V, int N) {
         int Izq = 0;
         int Der = N - 1;
         boolean band = true;
