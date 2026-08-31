@@ -12,6 +12,7 @@ public class Sonido {
     private static Clip fondo;
 
     private static final float HOVER_DB = -12f;
+    private static final float CLICK_DB = -15f;
     private static final float FONDO_DB = -20f;
 
     static {
@@ -19,6 +20,7 @@ public class Sonido {
         click = cargar("/snd/click.wav");
         fondo = cargar("/snd/bg.wav");
         bajarVolumen(hover, HOVER_DB);
+        bajarVolumen(click, CLICK_DB);
         bajarVolumen(fondo, FONDO_DB);
     }
 
