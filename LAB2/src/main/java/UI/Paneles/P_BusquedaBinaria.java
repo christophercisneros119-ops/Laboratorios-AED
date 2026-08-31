@@ -1,6 +1,7 @@
 package UI.Paneles;
 
 import Algoritmos.Burbuja;
+import Algoritmos.BusquedaBinaria;
 import Algoritmos.MetodoOrdenamiento;
 import UI.Elementos.UIConstants;
 import static UI.Elementos.UIConstants.*;
@@ -18,7 +19,7 @@ public class P_BusquedaBinaria extends javax.swing.JPanel {
 
     public P_BusquedaBinaria() {
         setOpaque(false);
-        fondoImage = new ImageIcon(getClass().getResource("/img/fondo4.jpg")).getImage();
+        fondoImage = new ImageIcon(getClass().getResource("/img/fondos/fondo11.jpg")).getImage();
         initComponents();
         jTextArea1.setEditable(false);
         jTextArea2.setEditable(false);
@@ -266,7 +267,7 @@ public class P_BusquedaBinaria extends javax.swing.JPanel {
 
         int[] ordenado = arreglo.clone();
         new Burbuja().ordenar(ordenado, tamano);
-        int posicion = buscar(ordenado, tamano, x);
+        int posicion = BusquedaBinaria.buscar(ordenado, tamano, x);
 
         jTextArea1.setText(MetodoOrdenamiento.formatear(ordenado));
         if (posicion >= 0) {
@@ -295,18 +296,6 @@ public class P_BusquedaBinaria extends javax.swing.JPanel {
         } catch (NumberFormatException ex) {
             return false;
         }
-    }
-
-    private int buscar(int[] V, int N, int X) {
-        int inicio = 0;
-        int fin = N - 1;
-        while (inicio <= fin) {
-            int centro = (inicio + fin) / 2;
-            if (X == V[centro]) return centro;
-            if (X < V[centro]) fin = centro - 1;
-            else inicio = centro + 1;
-        }
-        return -1;
     }
 
     @Override

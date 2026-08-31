@@ -50,7 +50,7 @@ public class DesktopDateWidget extends JComponent {
 
         g2.setFont(new Font("Segoe UI", Font.BOLD, 52));
         FontMetrics fm = g2.getFontMetrics();
-        String big = "27";
+        String big = "03";
         int x = (w - fm.stringWidth(big)) / 2;
         int y = (int) (h * 0.44);
 

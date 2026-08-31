@@ -17,11 +17,11 @@ public class P_Ordenamiento extends javax.swing.JPanel {
     private boolean tamanoDefinido;
     private java.awt.Image fondoImage;
 
-    public P_Ordenamiento(MetodoOrdenamiento metodo, String tituloMetodo) {
+    public P_Ordenamiento(MetodoOrdenamiento metodo, String tituloMetodo, String rutaFondo) {
         this.metodo = metodo;
         this.tituloMetodo = tituloMetodo;
         setOpaque(false);
-        fondoImage = new ImageIcon(getClass().getResource("/img/fondo2.jpg")).getImage();
+        fondoImage = new ImageIcon(getClass().getResource(rutaFondo)).getImage();
         initComponents();
         jTextArea1.setEditable(false);
         jTextArea2.setEditable(false);

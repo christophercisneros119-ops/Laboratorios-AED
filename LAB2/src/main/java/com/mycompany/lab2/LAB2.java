@@ -17,6 +17,8 @@ public class LAB2 {
             ventana.setSize(800, 600);
             ventana.setLocationRelativeTo(null);
 
+            UI.Elementos.Sonido.iniciarMusica();
+
             ventana.setVisible(true);
         });
     }

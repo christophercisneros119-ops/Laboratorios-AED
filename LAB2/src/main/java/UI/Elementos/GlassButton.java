@@ -40,6 +40,7 @@ public class GlassButton extends JButton {
             @Override
             public void mouseEntered(MouseEvent e) {
                 hovered = true;
+                Sonido.hover();
                 repaint();
             }
 
@@ -49,6 +50,7 @@ public class GlassButton extends JButton {
                 repaint();
             }
         });
+        addActionListener(e -> Sonido.click());
     }
 
     @Override

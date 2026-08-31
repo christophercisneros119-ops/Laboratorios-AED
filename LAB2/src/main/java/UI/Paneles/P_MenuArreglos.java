@@ -10,7 +10,7 @@ public class P_MenuArreglos extends javax.swing.JPanel {
 
     public P_MenuArreglos() {
         setOpaque(false);
-        fondoImage = new ImageIcon(getClass().getResource("/img/fondo2.jpg")).getImage();
+        fondoImage = new ImageIcon(getClass().getResource("/img/fondos/fondo2.jpg")).getImage();
         initComponents();
     }
 

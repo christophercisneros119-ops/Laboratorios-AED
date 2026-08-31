@@ -27,10 +27,11 @@ public class AboutWindow extends GlassPanel {
     private static final int BODY_TOP = 66;
     private static final int BODY_BOTTOM_GAP = 64;
 
-    private static final String TEXTO = "Esta es una app de estructuras de datos desarrollada "
-            + "en Java Swing con el objetivo de gestionar y comparar operaciones de "
-            + "inserci\u00f3n, baja y modificaci\u00f3n en arreglos ordenados y desordenados "
-            + "mediante una interfaz visual modular e intuitiva.";
+    private static final String TEXTO = "Aplicaci\u00f3n de estructuras de datos desarrollada en "
+            + "Java Swing con el objetivo de implementar y comparar los m\u00e9todos de "
+            + "ordenaci\u00f3n (Burbuja, Burbuja con Se\u00f1al, Shell, Selecci\u00f3n Directa, "
+            + "Sacudida y Baraja) y la b\u00fasqueda binaria sobre arreglos lineales, mediante "
+            + "una interfaz visual modular e intuitiva.";
 
     private final MenuButton regresarButton = new MenuButton("Regresar",
             new Color(236, 238, 239),

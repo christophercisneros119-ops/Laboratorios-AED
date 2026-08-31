@@ -13,6 +13,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.JComponent;
+import javax.swing.SwingUtilities;
 
 public class MenuButton extends JComponent {
 
@@ -51,6 +52,7 @@ public class MenuButton extends JComponent {
             @Override
             public void mouseEntered(MouseEvent e) {
                 hovered = true;
+                Sonido.hover();
                 repaint();
             }
 
@@ -58,6 +60,13 @@ public class MenuButton extends JComponent {
             public void mouseExited(MouseEvent e) {
                 hovered = false;
                 repaint();
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (SwingUtilities.isLeftMouseButton(e)) {
+                    Sonido.click();
+                }
             }
         });
     }

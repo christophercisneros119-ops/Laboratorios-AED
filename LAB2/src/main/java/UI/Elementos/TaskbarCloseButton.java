@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import javax.swing.JComponent;
+import javax.swing.SwingUtilities;
 
 public class TaskbarCloseButton extends JComponent {
 
@@ -24,6 +25,7 @@ public class TaskbarCloseButton extends JComponent {
             @Override
             public void mouseEntered(MouseEvent e) {
                 hovered = true;
+                Sonido.hover();
                 repaint();
             }
 
@@ -31,6 +33,13 @@ public class TaskbarCloseButton extends JComponent {
             public void mouseExited(MouseEvent e) {
                 hovered = false;
                 repaint();
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (SwingUtilities.isLeftMouseButton(e)) {
+                    Sonido.click();
+                }
             }
         });
     }

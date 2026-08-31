@@ -27,11 +27,11 @@ public class UNI_Portada extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(800, 600));
         setOpaque(false);
 
-        fondoImage = new javax.swing.ImageIcon(getClass().getResource("/img/fondo.jpg")).getImage();
+        fondoImage = new javax.swing.ImageIcon(getClass().getResource("/img/fondos/fondo.jpg")).getImage();
 
         memberTile1.setFullName("Janelly Romero");
         memberTile1.setCarnetNumber("2025-1905U");
-        memberTile1.setPhoto(new javax.swing.ImageIcon(getClass().getResource("/img/Cards/J.jpg")).getImage());
+        memberTile1.setPhoto(new javax.swing.ImageIcon(getClass().getResource("/img/Cards/Janeri.jpg")).getImage());
         memberTile2.setFullName("Moises Alemán");
         memberTile2.setCarnetNumber("2025-2560U");
         memberTile2.setPhoto(new javax.swing.ImageIcon(getClass().getResource("/img/Cards/M.jpg")).getImage());
@@ -220,7 +220,7 @@ public class UNI_Portada extends javax.swing.JPanel {
         g2.fillOval(x + 7, cy - 8, 11, 9);
         g2.setColor(new Color(255, 255, 255, 240));
         g2.setFont(FONT_TASKBAR);
-        g2.drawString("90°F", x + 22, cy + 4);
+        g2.drawString("92°F", x + 22, cy + 4);
         x += 86;
 
         // Search bar

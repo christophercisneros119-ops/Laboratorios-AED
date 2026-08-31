@@ -12,7 +12,7 @@ public class P_MenuOrdenamiento extends javax.swing.JPanel {
 
     public P_MenuOrdenamiento() {
         setOpaque(false);
-        fondoImage = new ImageIcon(getClass().getResource("/img/fondo3.jpg")).getImage();
+        fondoImage = new ImageIcon(getClass().getResource("/img/fondos/fondo3.jpg")).getImage();
         initComponents();
     }
 
@@ -139,27 +139,27 @@ public class P_MenuOrdenamiento extends javax.swing.JPanel {
     }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-        navegarA(new P_Ordenamiento(new Algoritmos.Burbuja(), "Método Burbuja"));
+        navegarA(new P_Ordenamiento(new Algoritmos.Burbuja(), "Método Burbuja", "/img/fondos/fondo5.jpg"));
     }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
-        navegarA(new P_Ordenamiento(new Algoritmos.Burbuja(true), "Método Burbuja con Señal"));
+        navegarA(new P_Ordenamiento(new Algoritmos.Burbuja(true), "Método Burbuja con Señal", "/img/fondos/fondo6.jpg"));
     }
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
-        navegarA(new P_Ordenamiento(new Algoritmos.Shell(), "Método Shell"));
+        navegarA(new P_Ordenamiento(new Algoritmos.Shell(), "Método Shell", "/img/fondos/fondo7.jpg"));
     }
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
-        navegarA(new P_Ordenamiento(new Algoritmos.Seleccion(), "Método Selección Directa"));
+        navegarA(new P_Ordenamiento(new Algoritmos.Seleccion(), "Método Selección Directa", "/img/fondos/fondo8.jpg"));
     }
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {
-        navegarA(new P_Ordenamiento(new Algoritmos.Sacudida(), "Método Sacudida"));
+        navegarA(new P_Ordenamiento(new Algoritmos.Sacudida(), "Método Sacudida", "/img/fondos/fondo9.jpg"));
     }
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {
-        navegarA(new P_Ordenamiento(new Algoritmos.Baraja(), "Método Baraja"));
+        navegarA(new P_Ordenamiento(new Algoritmos.Baraja(), "Método Baraja", "/img/fondos/fondo10.jpg"));
     }
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {
