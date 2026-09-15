@@ -3,14 +3,14 @@ package Arreglosordenados;
 import javax.swing.*;
 
 /*
-*   5. Una inmobiliaria necesita almacenar la siguiente información 
+*   Una inmobiliaria necesita almacenar la siguiente información 
 *   sobre los  departamentos rentados que se encuentran 
 *   ordenados ascendentemente por la extensión del departamento:   
-*   • Ubicación del departamento (dirección)
-*   • Extensión del departamento (superficie en metros cuadrados de cada departamento)
-*   • Precio
-*   • Número de apartamento
-*   • Nombre de la persona que rentó el departamento
+*   1. Ubicación del departamento (dirección)
+*   2. Extensión del departamento (superficie en metros cuadrados de cada departamento)
+*   3. Precio
+*   4. Número de apartamento
+*   5. Nombre de la persona que rentó el departamento
 *
 *   Escriba un programa que pueda llevar a cabo las siguientes operaciones.  
 *   1. Dar de alta a un departamento (Se renta y se pide la información)

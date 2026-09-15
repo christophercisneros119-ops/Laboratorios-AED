@@ -2,6 +2,22 @@ package Arreglosdesordenados;
 
 import javax.swing.*;
 
+/*
+ENUNCIADO:
+
+El departamento de personal de una empresa necesita almacenar en arreglos
+desordenados el nombre, sexo y edad de cada uno de los empleados adscritos al mismo.
+Escriba un programa que realice las siguientes operaciones:
+
+1. Dar de alta a un empleado.
+2. Dar de baja a un empleado.
+3. Actualizar la edad de un empleado determinado. (Modificar)
+4. Imprimir todos los registros de los empleados varones.
+5. Imprimir un registro determinado.
+6. Salir.
+
+*/
+
 public class Ejercicio3 {
   private final String[] nombres;
     private final char[] sexos;

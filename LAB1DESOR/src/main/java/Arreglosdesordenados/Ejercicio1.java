@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 
 /*
 *   ENUNCIADO:
-*   En una escuela se tienen que almacenar en arreglos los siguientes datos para cada alumno:
+*   En una escuela se tienen que almacenar en arreglos los siguientes datos para cada alumno:  
 *
 *   1. Nombre completo
 *   2. Numero de semestres cursados
