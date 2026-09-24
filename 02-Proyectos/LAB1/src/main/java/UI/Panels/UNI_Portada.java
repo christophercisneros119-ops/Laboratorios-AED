@@ -32,7 +32,7 @@ public class UNI_Portada extends javax.swing.JPanel {
 
         memberTile1.setFullName("Janelly Romero");
         memberTile1.setCarnetNumber("2025-1905U");
-        memberTile1.setPhoto(new javax.swing.ImageIcon(getClass().getResource("/img/Cards/J.jpg")).getImage());
+        memberTile1.setPhoto(new javax.swing.ImageIcon(getClass().getResource("/img/Cards/Janeri.jpg")).getImage());
         memberTile2.setFullName("Moises Alemán");
         memberTile2.setCarnetNumber("2025-2560U");
         memberTile2.setPhoto(new javax.swing.ImageIcon(getClass().getResource("/img/Cards/M.jpg")).getImage());
