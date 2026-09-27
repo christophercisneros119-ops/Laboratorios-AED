@@ -35,3 +35,7 @@ nbactions.xml
 
 # Obsidian
 .obsidian/
+
+# Backups de editores de imagenes (Krita deja queen.png~ al guardar)
+*~
+*.png~

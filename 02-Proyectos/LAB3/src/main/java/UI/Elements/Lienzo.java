@@ -28,8 +28,12 @@ public class Lienzo extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g.create();
+        // Sin antialiasing ni interpolacion suave: el pixel art necesita bordes
+        // duros para que los sprites escalados no se vean borrosos.
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
+                RenderingHints.VALUE_ANTIALIAS_OFF);
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
         pintor.pintar(g2, getWidth(), getHeight());
         g2.dispose();
     }

@@ -3,6 +3,7 @@ package UI.Panels;
 import Recursivos.Constantes;
 import Recursivos.PasoReina;
 import Recursivos.Reinas;
+import UI.Elements.Imagenes;
 import UI.Elements.UIConstants;
 
 import java.awt.Graphics2D;
@@ -48,10 +49,18 @@ public class P_Reinas extends P_EjercicioBase {
         columnaPorFila[paso.fila()] = paso.columna();
     }
 
+    /** Tamano base de una casilla. El sprite mide 18 para dejar 1px de margen. */
+    private static final int TAM_CASILLA = 16;
+
     @Override
     protected void pintarLienzo(Graphics2D g2, int ancho, int alto) {
         int lado = Math.max(Math.min(ancho, alto) - 2 * UIConstants.MARGEN, 10);
-        int casilla = lado / Constantes.LADO_TABLERO;
+        // La casilla se redondea hacia abajo a un multiplo de TAM_CASILLA para que
+        // el sprite siempre escale por un factor entero y no se deforme.
+        int casilla = (lado / Constantes.LADO_TABLERO / TAM_CASILLA) * TAM_CASILLA;
+        if (casilla < TAM_CASILLA) {
+            casilla = TAM_CASILLA;
+        }
         int tablero = casilla * Constantes.LADO_TABLERO;
         int origenX = (ancho - tablero) / 2;
         int origenY = (alto - tablero) / 2;
@@ -77,8 +86,10 @@ public class P_Reinas extends P_EjercicioBase {
             }
             int centroX = origenX + columna * casilla + casilla / 2;
             int centroY = origenY + fila * casilla + casilla / 2;
-            g2.setColor(UIConstants.PIEZA_ALT);
-            g2.fillOval(centroX - radio / 2, centroY - radio / 2, radio, radio);
+            if (!Imagenes.dibujarCentrado(g2, "queen", centroX, centroY, casilla)) {
+                g2.setColor(UIConstants.PIEZA_ALT);
+                g2.fillOval(centroX - radio / 2, centroY - radio / 2, radio, radio);
+            }
         }
     }
 }
