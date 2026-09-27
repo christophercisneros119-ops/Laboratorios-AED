@@ -27,6 +27,7 @@ public final class Imagenes {
     private static final String CARPETA = "/imagenes/";
     private static final Map<String, BufferedImage> CACHE = new HashMap<>();
     private static final Map<String, List<BufferedImage>> SECUENCIAS = new HashMap<>();
+    private static final Map<BufferedImage, int[]> ARTES = new HashMap<>();
 
     /**
      * Grosor del aro opaco que traen los sprites de pieza (1 en queen.png).
@@ -171,14 +172,96 @@ public final class Imagenes {
     }
 
     /**
+     * Caja del arte visible de un sprite: {@code {x0, x1, y0, y1}}.
+     *
+     * <p>Un sprite de escenario suele traer el lienzo transparente alrededor, y
+     * ese sobrante no siempre queda igual a cada lado: en {@code piedra.png} el
+     * arte ocupa las columnas 4 a 21 de una caja de 24, asi que su centro es
+     * 12.5 y no 11.5. Al escalar, ese medio pixel se convierte en varios pixeles
+     * y la piedra se ve corrida respecto del centro de la casilla.
+     *
+     * <p>Se cachea porque el recorrido es sobre todos los pixeles y solo hace
+     * falta una vez por imagen. Un sprite completamente transparente devuelve la
+     * caja entera, que es lo mismo que centrar por el lienzo.
+     */
+    private static int[] arte(BufferedImage original) {
+        int[] caja = ARTES.get(original);
+        if (caja != null) {
+            return caja;
+        }
+        int x0 = -1;
+        int y0 = -1;
+        int x1 = -1;
+        int y1 = -1;
+        for (int y = 0; y < original.getHeight(); y++) {
+            for (int x = 0; x < original.getWidth(); x++) {
+                if ((original.getRGB(x, y) >>> 24) > 0) {
+                    // Minimo y maximo de verdad. Con "el primer pixel que sale"
+                    // y "el ultimo" habria que tomar los extremos de la fila de
+                    // arriba y los de la de abajo, y en un nenufar, que es mas
+                    // ancho por el medio, eso no es la caja del dibujo.
+                    if (x0 < 0) {
+                        x0 = x;
+                        y0 = y;
+                    }
+                    x0 = Math.min(x0, x);
+                    y0 = Math.min(y0, y);
+                    x1 = Math.max(x1, x);
+                    y1 = Math.max(y1, y);
+                }
+            }
+        }
+        caja = x0 < 0
+                ? new int[]{0, original.getWidth() - 1, 0, original.getHeight() - 1}
+                : new int[]{x0, x1, y0, y1};
+        ARTES.put(original, caja);
+        return caja;
+    }
+
+    /**
+     * Dibuja un sprite centrado en un punto, a factor entero y sin recortar nada.
+     *
+     * <p>Es la variante sin el aro de {@link #dibujarPieza}: los nenufares, la
+     * piedra y las ranas llegan con su lienzo transparente alrededor y sin marco
+     * negro, asi que {@code sinMarco} no debe tocar a estos sprites. Recortales
+     * 1 px se comeria arte de verdad.
+     *
+     * <p>El centro se toma del arte visible y no del lienzo, con
+     * {@link #arte(BufferedImage)}, para que un dibujo que quede a un lado
+     * salga igual de centrado en la casilla. La altura se recalcula aparte para no
+     * deformar un sprite que no sea cuadrado, y el centro se redondea una sola
+     * vez, igual que en {@code dibujarPieza}.
+     *
+     * @param factor escala entera del sprite; mantiene el pixel art nitido
+     * @return {@code false} si el archivo no existe, para que quien dibuja caiga
+     *         en su representacion plana
+     */
+    public static boolean dibujarCentrado(Graphics2D g2, String nombre,
+                                          double centroX, double centroY, int factor) {
+        BufferedImage original = cargar(nombre);
+        if (original == null || factor < 1) {
+            return false;
+        }
+        int[] arte = arte(original);
+        double desvioX = (arte[0] + arte[1]) / 2.0 - (original.getWidth() - 1) / 2.0;
+        double desvioY = (arte[2] + arte[3]) / 2.0 - (original.getHeight() - 1) / 2.0;
+        int destinoAncho = original.getWidth() * factor;
+        int destinoAlto = original.getHeight() * factor;
+        int x = (int) Math.round(centroX - destinoAncho / 2.0 - desvioX * factor);
+        int y = (int) Math.round(centroY - destinoAlto / 2.0 - desvioY * factor);
+        g2.drawImage(original, x, y, destinoAncho, destinoAlto, null);
+        return true;
+    }
+
+    /**
      * Carga los cuadros de un fondo animado: {@code prefijo_00.png},
      * {@code prefijo_01.png}... y sigue hasta el primero que falta.
      *
      * <p>Se detiene en el primer hueco a proposito, asi agregar un cuadro nuevo es
-     * solo(drop) el archivo y no hay que tocar ningun numero en el codigo.
+     * solo dejar el archivo y no hay que tocar ningun numero en el codigo.
      *
-     * <p>Se cachean igual que los sprites, porque 24 imagenes de 960x540 abiertas
-     * de nuevo en cada repintado serian unos 36 MB por vuelta.
+     * <p>Se cachean igual que los sprites, porque 24 imagenes de 960x540 indexadas
+     * abiertas de nuevo en cada repintado serian unos 11.5 MB por vuelta.
      */
     public static List<BufferedImage> cargarSecuencia(String prefijo, int maximo) {
         String clave = prefijo.toLowerCase();
