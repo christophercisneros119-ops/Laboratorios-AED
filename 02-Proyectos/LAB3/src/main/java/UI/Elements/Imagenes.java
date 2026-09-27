@@ -5,7 +5,9 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
@@ -24,6 +26,7 @@ public final class Imagenes {
 
     private static final String CARPETA = "/imagenes/";
     private static final Map<String, BufferedImage> CACHE = new HashMap<>();
+    private static final Map<String, List<BufferedImage>> SECUENCIAS = new HashMap<>();
 
     /**
      * Grosor del aro opaco que traen los sprites de pieza (1 en queen.png).
@@ -70,7 +73,34 @@ public final class Imagenes {
      *         que Lienzo ya pinta de fondo
      */
     public static boolean dibujarFondo(Graphics2D g2, int ancho, int alto, String nombre) {
-        BufferedImage original = cargar(nombre);
+        return dibujarCubriendo(g2, ancho, alto, cargar(nombre));
+    }
+
+    /**
+     * Dibuja un fondo de varios cuadros y devuelve si se pudo pintar alguno.
+     *
+     * <p>El indice se acota por cantidad, asi que un cuadro que falta no rompe
+     * nada: el fondo animated se degrada solo a los cuadros que si estan.
+     *
+     * @return {@code false} si la lista esta vacia, para que asome el color plano
+     */
+    public static boolean dibujarSecuencia(Graphics2D g2, int ancho, int alto,
+                                            List<BufferedImage> cuadros, int indice) {
+        if (cuadros == null || cuadros.isEmpty()) {
+            return false;
+        }
+        int i = Math.floorMod(indice, cuadros.size());
+        return dibujarCubriendo(g2, ancho, alto, cuadros.get(i));
+    }
+
+    /**
+     * Escala la imagen hasta cubrir el lienzo y la centra, con interpolacion suave.
+     *
+     * <p>Se dibuja sobre una copia para no dejar NEAREST_NEIGHBOR cambiado: el
+     * tablero y las piezas que dibuja el mismo lienzo necesitan bordes duros.
+     */
+    private static boolean dibujarCubriendo(Graphics2D g2, int ancho, int alto,
+                                            BufferedImage original) {
         if (original == null) {
             return false;
         }
@@ -85,8 +115,6 @@ public final class Imagenes {
         int x = (ancho - destinoAncho) / 2;
         int y = (alto - destinoAlto) / 2;
 
-        // Se dibuja sobre una copia para no dejar la interpolacion suave puesta:
-        // el tablero y las piezas que dibuja el mismo lienzo necesitan bordes duros.
         Graphics2D suave = (Graphics2D) g2.create();
         suave.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                 RenderingHints.VALUE_INTERPOLATION_BILINEAR);
@@ -140,6 +168,33 @@ public final class Imagenes {
         int y = (int) Math.round(centroY - lado / 2.0);
         g2.drawImage(pieza, x, y, lado, lado, null);
         return true;
+    }
+
+    /**
+     * Carga los cuadros de un fondo animado: {@code prefijo_00.png},
+     * {@code prefijo_01.png}... y sigue hasta el primero que falta.
+     *
+     * <p>Se detiene en el primer hueco a proposito, asi agregar un cuadro nuevo es
+     * solo(drop) el archivo y no hay que tocar ningun numero en el codigo.
+     *
+     * <p>Se cachean igual que los sprites, porque 24 imagenes de 960x540 abiertas
+     * de nuevo en cada repintado serian unos 36 MB por vuelta.
+     */
+    public static List<BufferedImage> cargarSecuencia(String prefijo, int maximo) {
+        String clave = prefijo.toLowerCase();
+        if (SECUENCIAS.containsKey(clave)) {
+            return SECUENCIAS.get(clave);
+        }
+        List<BufferedImage> cuadros = new ArrayList<>();
+        for (int i = 0; i < maximo; i++) {
+            BufferedImage cuadro = cargar(clave + "_" + String.format("%02d", i));
+            if (cuadro == null) {
+                break;
+            }
+            cuadros.add(cuadro);
+        }
+        SECUENCIAS.put(clave, List.copyOf(cuadros));
+        return SECUENCIAS.get(clave);
     }
 
     private static BufferedImage cargar(String nombre) {

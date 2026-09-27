@@ -16,6 +16,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 /**
  * Estructura comun de los cuatro ejercicios: titulo, zona de ingreso opcional,
@@ -28,6 +29,9 @@ public abstract class P_EjercicioBase extends JPanel {
     private final JButton btnIniciar = new JButton("Iniciar");
     private final Lienzo lienzo = new Lienzo(this::pintarLienzo);
     private final Reproductor reproductor = new Reproductor(this::totalPasos, this::avanzar);
+    private Timer animacion;
+    private long inicioAnimacion;
+    private int intervaloAnimacion;
 
     protected P_EjercicioBase(String titulo, String instrucciones) {
         setLayout(new BorderLayout(0, UIConstants.MARGEN / 2));
@@ -126,12 +130,48 @@ public abstract class P_EjercicioBase extends JPanel {
         }
     }
 
+    /**
+     * Repinta el lienzo a ritmo fijo, para que un fondo de varios cuadros se vea
+     * moverse aunque el algoritmo este quieto.
+     *
+     * <p>Solo dispara el repintado: que cuadro toca lo decide el panel con
+     * {@link #cuadroActual(int)}, para que el fondo y las piezas avancen siempre
+     * en el mismo paint.
+     */
+    protected final void animar(int cuadrosPorSegundo) {
+        if (animacion != null) {
+            return;
+        }
+        inicioAnimacion = System.currentTimeMillis();
+        intervaloAnimacion = Math.max(1000 / Math.max(cuadrosPorSegundo, 1), 1);
+        animacion = new Timer(intervaloAnimacion, evento -> lienzo.repaint());
+        animacion.start();
+    }
+
+    /**
+     * Cuadro que toca del fondo animado.
+     *
+     * <p>Se deriva del reloj y no de un contador que se sume en cada paint: asi el
+     * fondo no se acelera si Swing agrupa varios repintados, y tampoco salta si
+     * falta alguno.
+     */
+    protected final int cuadroActual(int total) {
+        if (total <= 0) {
+            return 0;
+        }
+        long transcurrido = System.currentTimeMillis() - inicioAnimacion;
+        return (int) (transcurrido / intervaloAnimacion) % total;
+    }
+
     // Al salir de la ventana el temporizador debe morir, si no sigue
     // repintando un panel que ya no esta en pantalla.
     @Override
     public void removeNotify() {
         super.removeNotify();
         reproductor.detener();
+        if (animacion != null) {
+            animacion.stop();
+        }
     }
 
     protected static void caja(Graphics2D g2, int x, int y, int ancho, int alto,

@@ -7,6 +7,7 @@ import UI.Elements.UIConstants;
 
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -17,6 +18,11 @@ public class P_QuickSort extends P_EjercicioBase {
 
     private static final int[] VALORES_POR_DEFECTO = {9, 3, 7, 1, 5, 4};
 
+    /** Prefijo de los cuadros del fondo animado: fondo_quicksort_00.png y siguientes. */
+    private static final String FONDO = "fondo_quicksort";
+    /** Tope de carga, solo un guarda contra un prefijo mal escrito. */
+    private static final int MAXIMO_CUADROS = 64;
+
     private final JTextField txtCantidad =
             new JTextField(String.valueOf(VALORES_POR_DEFECTO.length), 4);
     private final JTextField txtValores =
@@ -25,9 +31,12 @@ public class P_QuickSort extends P_EjercicioBase {
     private List<PasoQuickSort> pasos = List.of();
     private int[] mostrados = VALORES_POR_DEFECTO;
     private int[] resaltados = new int[0];
+    private final List<BufferedImage> cuadros =
+            Imagenes.cargarSecuencia(FONDO, MAXIMO_CUADROS);
 
     public P_QuickSort() {
         super("QuickSort", "Partición de Lomuto: cada intercambio es un paso de la animación.");
+        animar(UIConstants.CUADROS_POR_SEGUNDO);
         JPanel fila = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
         fila.add(rotulo("Cantidad:"));
         fila.add(txtCantidad);
@@ -121,7 +130,11 @@ public class P_QuickSort extends P_EjercicioBase {
 
     @Override
     protected void pintarLienzo(Graphics2D g2, int ancho, int alto) {
-        Imagenes.dibujarFondo(g2, ancho, alto, "fondo_quicksort");
+        // El fondo va antes del corte por lista vacia, asi tambien se ve cuando
+        // todavia no se han generado valores.
+        if (!Imagenes.dibujarSecuencia(g2, ancho, alto, cuadros, cuadroActual(cuadros.size()))) {
+            Imagenes.dibujarFondo(g2, ancho, alto, FONDO);
+        }
 
         if (mostrados.length == 0) {
             return;

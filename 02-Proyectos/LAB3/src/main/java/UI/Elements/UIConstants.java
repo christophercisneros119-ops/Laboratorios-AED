@@ -42,6 +42,8 @@ public final class UIConstants {
     public static final int ANCHO_MINIMO = 720;
     public static final int ALTO_MINIMO = 520;
     public static final int DURACION_PASO = 500;
+    /** Ritmo del fondo animado de QuickSort. Va aparte del paso: es decorativo. */
+    public static final int CUADROS_POR_SEGUNDO = 12;
     public static final int ELEMENTOS_MAXIMOS = 12;
     public static final int MARGEN = 24;
 }
