@@ -3,6 +3,7 @@ package UI.Panels;
 import Recursivos.Constantes;
 import Recursivos.PasoRana;
 import Recursivos.SaltoRana;
+import UI.Elements.Imagenes;
 import UI.Elements.UIConstants;
 
 import java.awt.Color;
@@ -43,6 +44,8 @@ public class P_Rana extends P_EjercicioBase {
 
     @Override
     protected void pintarLienzo(Graphics2D g2, int ancho, int alto) {
+        Imagenes.dibujarFondo(g2, ancho, alto, "fondo_rana");
+
         int separacion = ancho / (Constantes.CASILLAS_TOTAL + 1);
         int diametro = Math.max(Math.min(separacion, alto) / 2 - UIConstants.MARGEN / 2, 8);
         int centroY = alto / 2;

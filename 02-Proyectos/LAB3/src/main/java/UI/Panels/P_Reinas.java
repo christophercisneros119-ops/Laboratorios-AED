@@ -75,6 +75,8 @@ public class P_Reinas extends P_EjercicioBase {
 
     @Override
     protected void pintarLienzo(Graphics2D g2, int ancho, int alto) {
+        Imagenes.dibujarFondo(g2, ancho, alto, "fondo_reinas");
+
         int disponible = Math.max(Math.min(ancho, alto) - 2 * UIConstants.MARGEN, 10);
         // La escala sale del lado del PNG completo, no del area jugable: el factor
         // tiene que ser entero para que el pixel art no se difumine.

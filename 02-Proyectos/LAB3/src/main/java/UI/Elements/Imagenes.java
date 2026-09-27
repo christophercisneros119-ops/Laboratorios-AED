@@ -11,8 +11,11 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 
 /**
- * Carga los sprites de {@code src/main/resources/imagenes} una sola vez y los
- * pinta con escalado entero.
+ * Carga los sprites y fondos de {@code src/main/resources/imagenes} una sola vez
+ * y los pinta.
+ *
+ * <p>Los sprites de tablero y pieza usan escalado entero para no deformar el pixel
+ * art; los fondos de escenario se estiran hasta cubrir el lienzo.
  *
  * <p>Si el archivo no existe devuelve {@code null}, para que quien dibuja pueda
  * seguir usando las formas planas de siempre y la aplicacion no se rompa.
@@ -49,6 +52,47 @@ public final class Imagenes {
         g2.drawImage(original, -MARGEN_SPRITE, -MARGEN_SPRITE, null);
         g2.dispose();
         return recorte;
+    }
+
+    /**
+     * Dibuja el fondo de un escenario hasta cubrir todo el lienzo, centrado.
+     *
+     * <p>Cada ejercicio tiene su propio fondo, asi que el nombre lo pasa quien
+     * dibuja. Se escala por el mayor de los dos ejes para que siempre cubra y
+     * nunca queden bandas vacias; lo que sobra en el eje que no domina se
+     * descarta centrado.
+     *
+     * <p>A diferencia de los sprites, aqui si se usa interpolacion suave: el
+     * fondo es una escena a pantalla completa, no pixel art, y Lienzo deja
+     * NEAREST_NEIGHBOR para que los bordes de tablero y piezas sigan duros.
+     *
+     * @return {@code false} si el archivo no existe, para que asome el color plano
+     *         que Lienzo ya pinta de fondo
+     */
+    public static boolean dibujarFondo(Graphics2D g2, int ancho, int alto, String nombre) {
+        BufferedImage original = cargar(nombre);
+        if (original == null) {
+            return false;
+        }
+        int iw = original.getWidth();
+        int ih = original.getHeight();
+        if (iw <= 0 || ih <= 0) {
+            return false;
+        }
+        double escala = Math.max(ancho / (double) iw, alto / (double) ih);
+        int destinoAncho = (int) Math.round(iw * escala);
+        int destinoAlto = (int) Math.round(ih * escala);
+        int x = (ancho - destinoAncho) / 2;
+        int y = (alto - destinoAlto) / 2;
+
+        // Se dibuja sobre una copia para no dejar la interpolacion suave puesta:
+        // el tablero y las piezas que dibuja el mismo lienzo necesitan bordes duros.
+        Graphics2D suave = (Graphics2D) g2.create();
+        suave.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        suave.drawImage(original, x, y, destinoAncho, destinoAlto, null);
+        suave.dispose();
+        return true;
     }
 
     /**

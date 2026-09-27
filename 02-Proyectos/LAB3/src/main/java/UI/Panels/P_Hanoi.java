@@ -3,6 +3,7 @@ package UI.Panels;
 import Recursivos.Constantes;
 import Recursivos.Hanoi;
 import Recursivos.PasoHanoi;
+import UI.Elements.Imagenes;
 import UI.Elements.UIConstants;
 
 import java.awt.FlowLayout;
@@ -100,6 +101,8 @@ public class P_Hanoi extends P_EjercicioBase {
 
     @Override
     protected void pintarLienzo(Graphics2D g2, int ancho, int alto) {
+        Imagenes.dibujarFondo(g2, ancho, alto, "fondo_hanoi");
+
         int base = alto - UIConstants.MARGEN;
         int altoDisco = alto / (discos + Constantes.TORRES_TOTAL);
         int grosor = Math.max(4, ancho / 200);

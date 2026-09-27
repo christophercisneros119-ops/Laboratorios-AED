@@ -2,6 +2,7 @@ package UI.Panels;
 
 import Recursivos.PasoQuickSort;
 import Recursivos.QuickSort;
+import UI.Elements.Imagenes;
 import UI.Elements.UIConstants;
 
 import java.awt.FlowLayout;
@@ -120,6 +121,8 @@ public class P_QuickSort extends P_EjercicioBase {
 
     @Override
     protected void pintarLienzo(Graphics2D g2, int ancho, int alto) {
+        Imagenes.dibujarFondo(g2, ancho, alto, "fondo_quicksort");
+
         if (mostrados.length == 0) {
             return;
         }
