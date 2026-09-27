@@ -32,10 +32,11 @@ public final class UIConstants {
     public static final Color TEXTO_SUAVE = new Color(0x9BB0BC);
 
     // ── Fuentes ──
-    public static final Font FONT_TITULO = new Font("Segoe UI", Font.BOLD, 20);
-    public static final Font FONT_SUBTITULO = new Font("Segoe UI", Font.PLAIN, 13);
-    public static final Font FONT_TEXTO = new Font("Segoe UI", Font.PLAIN, 13);
-    public static final Font FONT_NUMERO = new Font("Monospaced", Font.BOLD, 13);
+    // Silkscreen es pixel art: se pide en multiplos de su tamano nativo de 8 px.
+    public static final Font FONT_TITULO = Fuentes.obtener(true, 16);
+    public static final Font FONT_SUBTITULO = Fuentes.obtener(false, 8);
+    public static final Font FONT_TEXTO = Fuentes.obtener(false, 8);
+    public static final Font FONT_NUMERO = Fuentes.obtener(true, 8);
 
     // ── Medidas ──
     public static final int ANCHO_MINIMO = 720;
