@@ -23,55 +23,78 @@ public final class Imagenes {
     private static final Map<String, BufferedImage> CACHE = new HashMap<>();
 
     /**
-     * Pixels transparentes de borde que traen los sprites (1 en queen.png). La
-     * escala se calcula sobre el contenido, no sobre el sprite completo, para
-     * que el arte ocupe la casilla completa sin deformarse.
+     * Grosor del aro opaco que traen los sprites de pieza (1 en queen.png).
+     *
+     * <p>Las piezas vienen con un cuadro negro de 1px alrededor. Al escalarse ese
+     * cuadro crece con el factor y la pieza queda encerrada en un marco que se
+     * come la celda, asi que se recorta antes de dibujar.
      */
     private static final int MARGEN_SPRITE = 1;
 
     private Imagenes() {}
 
-    /**
-     * Devuelve el sprite ya escalado para ocupar un lado dado, o {@code null} si
-     * no esta. La escala se calcula sobre el contenido util del sprite, asi el
-     * factor siempre es entero y el pixel art no se deforma.
-     */
-    public static BufferedImage obtener(String nombre, int lado) {
-        BufferedImage original = cargar(nombre);
-        if (original == null || lado <= 0) {
+    /** Sprite sin el aro exterior, ya cacheado para no recalcularlo cada frame. */
+    private static BufferedImage sinMarco(BufferedImage original) {
+        if (original == null) {
             return null;
         }
-        int contenido = original.getWidth() - 2 * MARGEN_SPRITE;
-        int escala = lado / contenido;
-        if (escala < 1) {
-            escala = 1;
+        int util = original.getWidth() - 2 * MARGEN_SPRITE;
+        if (util <= 0) {
+            return original;
         }
-        int destino = original.getWidth() * escala;
-        BufferedImage escalada = new BufferedImage(destino, destino,
-                BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2 = escalada.createGraphics();
-        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-                RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
-        g2.drawImage(original, 0, 0, destino, destino, null);
+        // getSubImage comparte memoria con el original: se copia para que el
+        // recorte no dependa de la imagen que se cargo.
+        BufferedImage recorte = new BufferedImage(util, util, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = recorte.createGraphics();
+        g2.drawImage(original, -MARGEN_SPRITE, -MARGEN_SPRITE, null);
         g2.dispose();
-        return escalada;
+        return recorte;
     }
 
     /**
-     * Dibuja el sprite centrado en el punto indicado.
+     * Dibuja un sprite entero, sin recortar, escalado por un factor entero.
+     *
+     * <p>El tablero se dibuja de una sola vez y no repetido como casilla: su arte
+     * tiene textura propia y el marco debe quedar una unica vez alrededor.
      *
      * @return {@code false} si el archivo no existe, para que quien dibuja caiga
-     *         en su representacion plana.
+     *         en su representacion plana
      */
-    public static boolean dibujarCentrado(Graphics2D g2, String nombre,
-                                          int centroX, int centroY, int lado) {
-        BufferedImage sprite = obtener(nombre, lado);
-        if (sprite == null) {
+    public static boolean dibujarEscalado(Graphics2D g2, String nombre,
+                                          int x, int y, int factor) {
+        BufferedImage original = cargar(nombre);
+        if (original == null || factor < 1) {
             return false;
         }
-        int x = centroX - sprite.getWidth() / 2;
-        int y = centroY - sprite.getHeight() / 2;
-        g2.drawImage(sprite, x, y, null);
+        int lado = original.getWidth() * factor;
+        g2.drawImage(original, x, y, lado, lado, null);
+        return true;
+    }
+
+    /**
+     * Dibuja una pieza centrada en un punto, sin su marco, a factor entero.
+     *
+     * <p>El centro se recibe en coma flotante a proposito. El centro del pixel
+     * de indice {@code n} esta en {@code n + 0.5}, y como la celda del tablero
+     * tiene ancho impar su centro geometrico cae exacto en medio pixel, asi que
+     * redondear el centro antes de dibujar meteria un sesgo de medio pixel
+     * siempre hacia el mismo lado. Se mantiene la geometria en float y se
+     * redondea una sola vez, aqui, al calcular la esquina del blit.
+     *
+     * @param factor escala entera del sprite; mantiene el pixel art nitido
+     * @return {@code false} si el archivo no existe, para que quien dibuja caiga
+     *         en su representacion plana
+     */
+    public static boolean dibujarPieza(Graphics2D g2, String nombre,
+                                       double centroX, double centroY, int factor) {
+        BufferedImage pieza = sinMarco(cargar(nombre));
+        if (pieza == null || factor < 1) {
+            return false;
+        }
+        int lado = pieza.getWidth() * factor;
+        int x = (int) Math.round(centroX - lado / 2.0);
+        int y = (int) Math.round(centroY - lado / 2.0);
+        g2.drawImage(pieza, x, y, lado, lado, null);
         return true;
     }
 
