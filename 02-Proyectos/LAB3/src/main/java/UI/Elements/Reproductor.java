@@ -18,9 +18,13 @@ public class Reproductor {
     private int paso = -1;
 
     public Reproductor(IntSupplier totalPasos, Runnable alAvanzar) {
+        this(totalPasos, alAvanzar, UIConstants.DURACION_PASO);
+    }
+
+    public Reproductor(IntSupplier totalPasos, Runnable alAvanzar, int duracionPaso) {
         this.totalPasos = totalPasos;
         this.alAvanzar = alAvanzar;
-        this.temporizador = new Timer(UIConstants.DURACION_PASO, evento -> avanzar());
+        this.temporizador = new Timer(Math.max(duracionPaso, 1), evento -> avanzar());
     }
 
     private void avanzar() {

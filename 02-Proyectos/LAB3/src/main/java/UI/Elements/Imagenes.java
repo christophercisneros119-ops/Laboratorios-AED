@@ -100,26 +100,58 @@ public final class Imagenes {
      * <p>Se dibuja sobre una copia para no dejar NEAREST_NEIGHBOR cambiado: el
      * tablero y las piezas que dibuja el mismo lienzo necesitan bordes duros.
      */
-    private static boolean dibujarCubriendo(Graphics2D g2, int ancho, int alto,
-                                            BufferedImage original) {
+    /**
+     * Caja donde cae el fondo al cubrir el lienzo: {@code {x, y, ancho, alto}}.
+     *
+     * <p>Es la misma aritmetica del cover, expuesta para que un ejercicio pueda
+     * anclar sus piezas a un punto del recurso y no a {@code alto / 2}: como el
+     * fondo se escala para cubrir, la mitad del lienzo no cae en la misma fila
+     * de la foto cuando cambia la proporcion de la ventana.
+     *
+     * @return {@code null} si el archivo no existe
+     */
+    public static int[] rectanguloFondo(int ancho, int alto, String nombre) {
+        return encuadreCubriendo(ancho, alto, cargar(nombre));
+    }
+
+    /**
+     * Aritmetica compartida del cover: escala por el eje que mas crece y centra
+     * el sobrante del otro.
+     *
+     * @return {@code {x, y, ancho, alto}} o {@code null} si no hay nada que dibujar
+     */
+    private static int[] encuadreCubriendo(int ancho, int alto, BufferedImage original) {
         if (original == null) {
-            return false;
+            return null;
         }
         int iw = original.getWidth();
         int ih = original.getHeight();
         if (iw <= 0 || ih <= 0) {
-            return false;
+            return null;
         }
         double escala = Math.max(ancho / (double) iw, alto / (double) ih);
         int destinoAncho = (int) Math.round(iw * escala);
         int destinoAlto = (int) Math.round(ih * escala);
-        int x = (ancho - destinoAncho) / 2;
-        int y = (alto - destinoAlto) / 2;
+        return new int[]{(ancho - destinoAncho) / 2, (alto - destinoAlto) / 2,
+                destinoAncho, destinoAlto};
+    }
 
+    /**
+     * Escala la imagen hasta cubrir el lienzo y la centra, con interpolacion suave.
+     *
+     * <p>Se dibuja sobre una copia para no dejar NEAREST_NEIGHBOR cambiado: el
+     * tablero y las piezas que dibuja el mismo lienzo necesitan bordes duros.
+     */
+    private static boolean dibujarCubriendo(Graphics2D g2, int ancho, int alto,
+                                            BufferedImage original) {
+        int[] rect = encuadreCubriendo(ancho, alto, original);
+        if (rect == null) {
+            return false;
+        }
         Graphics2D suave = (Graphics2D) g2.create();
         suave.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                 RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        suave.drawImage(original, x, y, destinoAncho, destinoAlto, null);
+        suave.drawImage(original, rect[0], rect[1], rect[2], rect[3], null);
         suave.dispose();
         return true;
     }
@@ -216,6 +248,22 @@ public final class Imagenes {
                 : new int[]{x0, x1, y0, y1};
         ARTES.put(original, caja);
         return caja;
+    }
+
+    /**
+     * Caja del arte visible de un sprite: {@code {x0, x1, y0, y1}}.
+     *
+     * <p>Es la misma medida privada {@link #arte(BufferedImage)}, expuesta para
+     * que un panel pueda alinear una pieza por un borde del dibujo y no solo por
+     * el centro: la rana se apoya con los pies en el nenufar y necesita la
+     * altura real de su arte, no la de la caja de 27 px.
+     *
+     * @return {@code null} si el archivo no existe; se devuelve una copia para
+     *         no dejar que nadie escriba la cache
+     */
+    public static int[] cajaArte(String nombre) {
+        BufferedImage original = cargar(nombre);
+        return original == null ? null : arte(original).clone();
     }
 
     /**

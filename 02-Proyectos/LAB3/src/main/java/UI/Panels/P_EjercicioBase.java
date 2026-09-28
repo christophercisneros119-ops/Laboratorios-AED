@@ -28,7 +28,8 @@ public abstract class P_EjercicioBase extends JPanel {
     private final JLabel lblContador = new JLabel();
     private final JButton btnIniciar = new JButton("Iniciar");
     private final Lienzo lienzo = new Lienzo(this::pintarLienzo);
-    private final Reproductor reproductor = new Reproductor(this::totalPasos, this::avanzar);
+    private final Reproductor reproductor = new Reproductor(this::totalPasos, this::avanzar,
+            duracionPaso());
     private Timer animacion;
     private long inicioAnimacion;
     private int intervaloAnimacion;
@@ -201,6 +202,15 @@ public abstract class P_EjercicioBase extends JPanel {
     protected abstract boolean preparar();
 
     protected abstract int totalPasos();
+
+    /**
+     * Duracion de cada paso en milisegundos. Por defecto la comun de todos los
+     * ejercicios; el que necesite otro ritmo la sobreescribe. Va aparte de la
+     * geometria porque alimenta el temporizador y la fase del paso.
+     */
+    protected int duracionPaso() {
+        return UIConstants.DURACION_PASO;
+    }
 
     protected abstract void aplicarPaso(int indice);
 

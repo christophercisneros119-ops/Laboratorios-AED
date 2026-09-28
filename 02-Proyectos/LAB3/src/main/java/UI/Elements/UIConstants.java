@@ -42,6 +42,8 @@ public final class UIConstants {
     public static final int ANCHO_MINIMO = 720;
     public static final int ALTO_MINIMO = 520;
     public static final int DURACION_PASO = 500;
+    /** Salto de la rana: cada movimiento dura 800 ms en 4 fases de 200 ms. */
+    public static final int DURACION_PASO_RANA = 800;
     /** Ritmo del fondo animado de QuickSort. Va aparte del paso: es decorativo. */
     public static final int CUADROS_POR_SEGUNDO = 12;
     public static final int ELEMENTOS_MAXIMOS = 12;
