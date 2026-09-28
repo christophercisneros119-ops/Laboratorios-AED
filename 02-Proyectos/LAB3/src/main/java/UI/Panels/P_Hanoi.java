@@ -11,13 +11,12 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class P_Hanoi extends P_EjercicioBase {
 
-    private final JTextField txtDiscos =
+private final JTextField txtDiscos =
             new JTextField(String.valueOf(Constantes.DISCOS_MAXIMOS), 4);
 
     private List<PasoHanoi> pasos = List.of();
@@ -36,10 +35,12 @@ public class P_Hanoi extends P_EjercicioBase {
     public P_Hanoi() {
         super("Torres de Hanói",
                 "Mueve los discos de la torre 1 a la torre 3 usando la torre 2.");
-        JPanel fila = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
+JPanel fila = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
         fila.add(rotulo("Discos:"));
         fila.add(txtDiscos);
         JButton btnGenerar = new JButton("Generar");
+        btnGenerar.setFont(UIConstants.FONT_TEXTO);
+        txtDiscos.setFont(UIConstants.FONT_TEXTO);
         btnGenerar.addActionListener(evento -> reiniciar());
         fila.add(btnGenerar);
         addConfiguracion(fila);
@@ -62,7 +63,7 @@ public class P_Hanoi extends P_EjercicioBase {
         return true;
     }
 
-    private int leerDiscos() {
+private int leerDiscos() {
         int cantidad;
         try {
             cantidad = Integer.parseInt(txtDiscos.getText().trim());
@@ -76,11 +77,6 @@ public class P_Hanoi extends P_EjercicioBase {
             return -1;
         }
         return cantidad;
-    }
-
-    private void avisar(String mensaje) {
-        JOptionPane.showMessageDialog(this, mensaje, "Dato inválido",
-                JOptionPane.WARNING_MESSAGE);
     }
 
     @Override
@@ -124,10 +120,10 @@ public class P_Hanoi extends P_EjercicioBase {
                 int anchoDisco = ancho * disco / (Math.max(1, discos) * Constantes.TORRES_TOTAL);
                 int centro = posicionTorre(ancho, torre);
                 int y = base - (nivel + 1) * altoDisco;
-                caja(g2, centro - anchoDisco / 2, y, anchoDisco, altoDisco - 2, radio,
+caja(g2, centro - anchoDisco / 2, y, anchoDisco, altoDisco - 2, radio,
                         UIConstants.PIEZA, UIConstants.BORDE);
                 textoCentrado(g2, String.valueOf(disco), centro,
-                        y + altoDisco / 2 + 4, UIConstants.TEXTO);
+                        y + altoDisco / 2 + 4, alto, UIConstants.TEXTO);
             }
         }
     }

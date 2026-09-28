@@ -1,5 +1,6 @@
 package UI.Panels;
 
+import UI.Elements.FondoAnimado;
 import UI.Elements.Navegacion;
 import UI.Elements.UIConstants;
 
@@ -14,15 +15,21 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class P_Menu extends JPanel {
+public class P_Menu extends FondoAnimado {
 
-    private static final int ANCHO_BOTON = 300;
-    private static final int ALTO_BOTON = 44;
+    private static final int ANCHO_BOTON = 360;
+    private static final int ALTO_BOTON = 64;
     private static final int SEPARACION = 10;
+    /** Prefijo de los cuadros del fondo animado: fondo_menu_00.png y siguientes. */
+    private static final String FONDO = "fondo_menu";
+    /** Tope de carga, solo un guarda contra un prefijo mal escrito. */
+    private static final int MAXIMO_CUADROS = 64;
+    /** Ritmo propio del menú: los cuadros están muestreados cada ~0,1 s reales. */
+    private static final int FPS_FONDO = 8;
 
     public P_Menu() {
+        super(FONDO, MAXIMO_CUADROS, FPS_FONDO);
         setLayout(new GridBagLayout());
-        setBackground(UIConstants.FONDO);
         setBorder(BorderFactory.createEmptyBorder(UIConstants.MARGEN, UIConstants.MARGEN,
                 UIConstants.MARGEN, UIConstants.MARGEN));
 

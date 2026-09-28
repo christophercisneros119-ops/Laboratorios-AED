@@ -10,7 +10,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -23,7 +22,7 @@ public class P_QuickSort extends P_EjercicioBase {
     /** Tope de carga, solo un guarda contra un prefijo mal escrito. */
     private static final int MAXIMO_CUADROS = 64;
 
-    private final JTextField txtCantidad =
+private final JTextField txtCantidad =
             new JTextField(String.valueOf(VALORES_POR_DEFECTO.length), 4);
     private final JTextField txtValores =
             new JTextField(aTexto(VALORES_POR_DEFECTO), 22);
@@ -37,12 +36,15 @@ public class P_QuickSort extends P_EjercicioBase {
     public P_QuickSort() {
         super("QuickSort", "Partición de Lomuto: cada intercambio es un paso de la animación.");
         animar(UIConstants.CUADROS_POR_SEGUNDO);
-        JPanel fila = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
+JPanel fila = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
         fila.add(rotulo("Cantidad:"));
         fila.add(txtCantidad);
         fila.add(rotulo("Valores:"));
         fila.add(txtValores);
         JButton btnGenerar = new JButton("Generar");
+        btnGenerar.setFont(UIConstants.FONT_TEXTO);
+        txtCantidad.setFont(UIConstants.FONT_TEXTO);
+        txtValores.setFont(UIConstants.FONT_TEXTO);
         btnGenerar.addActionListener(evento -> reiniciar());
         fila.add(btnGenerar);
         addConfiguracion(fila);
@@ -99,12 +101,7 @@ public class P_QuickSort extends P_EjercicioBase {
         return valores;
     }
 
-    private void avisar(String mensaje) {
-        JOptionPane.showMessageDialog(this, mensaje, "Dato inválido",
-                JOptionPane.WARNING_MESSAGE);
-    }
-
-    @Override
+@Override
     protected boolean preparar() {
         int[] entrada = leerValores();
         if (entrada == null) {
@@ -161,10 +158,10 @@ public class P_QuickSort extends P_EjercicioBase {
             for (int indice : resaltados) {
                 resaltada = resaltada || indice == i;
             }
-            caja(g2, x, y, anchoBarra, altura, 4,
+caja(g2, x, y, anchoBarra, altura, 4,
                     resaltada ? UIConstants.RESALTADO : UIConstants.PIEZA, UIConstants.BORDE);
-            textoCentrado(g2, String.valueOf(mostrados[i]), x + anchoBarra / 2,
-                    y - 6, UIConstants.TEXTO);
+            textoEncima(g2, String.valueOf(mostrados[i]), x + anchoBarra / 2,
+                    y, alto, UIConstants.TEXTO);
         }
     }
 }

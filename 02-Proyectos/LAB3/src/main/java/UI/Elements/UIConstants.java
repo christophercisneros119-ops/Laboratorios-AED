@@ -30,13 +30,17 @@ public final class UIConstants {
     // ── Texto ──
     public static final Color TEXTO = new Color(0xE6EEF2);
     public static final Color TEXTO_SUAVE = new Color(0x9BB0BC);
+    /** Avisos de validacion, se muestran en linea dentro del panel. */
+    public static final Color ERROR = new Color(0xF28B82);
 
     // ── Fuentes ──
     // Silkscreen es pixel art: se pide en multiplos de su tamano nativo de 8 px.
-    public static final Font FONT_TITULO = Fuentes.obtener(true, 16);
-    public static final Font FONT_SUBTITULO = Fuentes.obtener(false, 8);
-    public static final Font FONT_TEXTO = Fuentes.obtener(false, 8);
-    public static final Font FONT_NUMERO = Fuentes.obtener(true, 8);
+    public static final Font FONT_TITULO = Fuentes.obtener(true, 32);
+    public static final Font FONT_SUBTITULO = Fuentes.obtener(false, 16);
+    public static final Font FONT_TEXTO = Fuentes.obtener(false, 16);
+    /** Numeros de la escena: el tamano lo decide el lienzo, no se fija aqui. */
+    public static final int NUMERO_MINIMO = 8;
+    public static final int NUMERO_MAXIMO = 32;
 
     // ── Medidas ──
     public static final int ANCHO_MINIMO = 720;
@@ -47,5 +51,5 @@ public final class UIConstants {
     /** Ritmo del fondo animado de QuickSort. Va aparte del paso: es decorativo. */
     public static final int CUADROS_POR_SEGUNDO = 12;
     public static final int ELEMENTOS_MAXIMOS = 12;
-    public static final int MARGEN = 24;
+    public static final int MARGEN = 32;
 }

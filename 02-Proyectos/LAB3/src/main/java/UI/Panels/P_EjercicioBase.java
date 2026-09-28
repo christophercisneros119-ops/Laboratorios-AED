@@ -1,5 +1,6 @@
 package UI.Panels;
 
+import UI.Elements.Fuentes;
 import UI.Elements.Lienzo;
 import UI.Elements.Navegacion;
 import UI.Elements.Reproductor;
@@ -8,6 +9,7 @@ import UI.Elements.UIConstants;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import javax.swing.BorderFactory;
@@ -26,6 +28,8 @@ public abstract class P_EjercicioBase extends JPanel {
 
     private final JPanel cabecera = new JPanel();
     private final JLabel lblContador = new JLabel();
+    /** Un espacio vacio reserva el alto de la linea de avisos sin mostrar nada. */
+    private final JLabel lblAviso = new JLabel(" ");
     private final JButton btnIniciar = new JButton("Iniciar");
     private final Lienzo lienzo = new Lienzo(this::pintarLienzo);
     private final Reproductor reproductor = new Reproductor(this::totalPasos, this::avanzar,
@@ -47,6 +51,10 @@ public abstract class P_EjercicioBase extends JPanel {
         cabecera.add(etiqueta(instrucciones, UIConstants.FONT_SUBTITULO, UIConstants.TEXTO_SUAVE));
         add(cabecera, BorderLayout.NORTH);
 
+        lblAviso.setFont(UIConstants.FONT_SUBTITULO);
+        lblAviso.setForeground(UIConstants.TEXTO_SUAVE);
+        lblAviso.setAlignmentX(LEFT_ALIGNMENT);
+
         add(lienzo, BorderLayout.CENTER);
         add(construirControles(), BorderLayout.SOUTH);
     }
@@ -62,6 +70,9 @@ public abstract class P_EjercicioBase extends JPanel {
     private JPanel construirControles() {
         JButton btnAtras = new JButton("Atrás");
         JButton btnReiniciar = new JButton("Reiniciar");
+        btnAtras.setFont(UIConstants.FONT_TEXTO);
+        btnReiniciar.setFont(UIConstants.FONT_TEXTO);
+        btnIniciar.setFont(UIConstants.FONT_TEXTO);
         btnAtras.addActionListener(evento -> Navegacion.irA(this, new P_Menu()));
         btnIniciar.addActionListener(evento -> alternar());
         btnReiniciar.addActionListener(evento -> reiniciar());
@@ -85,6 +96,25 @@ public abstract class P_EjercicioBase extends JPanel {
         fila.setAlignmentX(LEFT_ALIGNMENT);
         cabecera.add(Box.createVerticalStrut(8));
         cabecera.add(fila);
+        // La validacion se muestra en linea, nunca en un dialogo modal: con la
+        // pantalla completa exclusiva un JDialog puede hacer desaparecer la
+        // ventana. La linea siempre se reserva para que el diseno no salte.
+        cabecera.add(Box.createVerticalStrut(4));
+        cabecera.add(lblAviso);
+    }
+
+    /**
+     * Avisa un dato invalido sin abrir dialogo alguno. Reemplaza al
+     * JOptionPane: un dialogo modal sobre la ventana en pantalla completa
+     * exclusiva hace que Windows la oculte y la app parece cerrarse.
+     */
+    protected final void avisar(String mensaje) {
+        lblAviso.setForeground(UIConstants.ERROR);
+        lblAviso.setText(mensaje);
+    }
+
+    private void limpiarAviso() {
+        lblAviso.setText(" ");
     }
 
     private void alternar() {
@@ -100,6 +130,7 @@ public abstract class P_EjercicioBase extends JPanel {
         if (!preparar()) {
             return;
         }
+        limpiarAviso();
         lienzo.repaint();
         actualizarEstado();
     }
@@ -191,11 +222,35 @@ public abstract class P_EjercicioBase extends JPanel {
     }
 
     protected static void textoCentrado(Graphics2D g2, String texto, int centroX,
-                                        int baseY, Color color) {
-        g2.setFont(UIConstants.FONT_NUMERO);
+                                        int baseY, int alto, Color color) {
+        g2.setFont(fuenteNumeros(alto));
         g2.setColor(color);
         FontMetrics medidas = g2.getFontMetrics();
         g2.drawString(texto, centroX - medidas.stringWidth(texto) / 2, baseY);
+    }
+
+    /**
+     * Dibuja un numero centrado y ARRIBA de un borde (la barra de QuickSort),
+     * con el hueco justo para que el nuevo tamano de fuente no tape la pieza.
+     */
+    protected static void textoEncima(Graphics2D g2, String texto, int centroX,
+                                      int bordeArriba, int alto, Color color) {
+        g2.setFont(fuenteNumeros(alto));
+        g2.setColor(color);
+        FontMetrics medidas = g2.getFontMetrics();
+        g2.drawString(texto, centroX - medidas.stringWidth(texto) / 2,
+                bordeArriba - medidas.getAscent() - 4);
+    }
+
+    /**
+     * Numeros de la escena, escalados con el lienzo en multiplos de 8 como el
+     * resto de la geometria: crecen en pantalla grande y nunca desbordan discos
+     * o barras en una ventana chica.
+     */
+    protected static Font fuenteNumeros(int alto) {
+        int tamano = Math.max(UIConstants.NUMERO_MINIMO,
+                Math.min(UIConstants.NUMERO_MAXIMO, alto / 28));
+        return Fuentes.obtener(true, tamano);
     }
 
     /** Valida los datos ingresados, calcula la solucion y reinicia el estado. */
