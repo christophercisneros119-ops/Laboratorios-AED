@@ -1,16 +1,29 @@
-# Compiled class file
+# ── Java / Maven ─────────────────────────────────────────────
 *.class
+target/
+dist/
 
-# Log file
+# ── Logs y volcados ──────────────────────────────────────────
 *.log
+hs_err_pid*
+replay_pid*
 
-# BlueJ files
+# ── IDEs (NetBeans, IntelliJ, Eclipse) ───────────────────────
+nbproject/
+nbproject/private/
+nbdist/
+nbactions.xml
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+
+# ── BlueJ / J2ME ─────────────────────────────────────────────
 *.ctxt
-
-# Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
-# Package Files #
+# ── Paquetes de distribución ─────────────────────────────────
 *.jar
 *.war
 *.nar
@@ -19,23 +32,17 @@
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-replay_pid*
-target/
-
-# IDE
-.idea/
-*.iml
-nbproject/
-nbactions.xml
-.classpath
-.project
-.settings/
-
-# Obsidian
+# ── Obsidian (vault del repo) ────────────────────────────────
 .obsidian/
 
-# Backups de editores de imagenes (Krita deja queen.png~ al guardar)
+# ── Respaldo de editores de imágenes (Krita deja *.png~ y .kra autosave) ──
 *~
 *.png~
+*.kra
+*.autosave
+*.bak
+
+# ── Sistema operativo ────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
