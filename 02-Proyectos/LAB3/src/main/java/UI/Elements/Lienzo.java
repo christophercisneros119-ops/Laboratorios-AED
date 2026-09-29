@@ -1,5 +1,6 @@
 package UI.Elements;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -18,10 +19,14 @@ public class Lienzo extends JPanel {
 
     private final Pintor pintor;
 
-    public Lienzo(Pintor pintor) {
+    public Lienzo(Pintor pintor, Color fondo) {
         this.pintor = pintor;
         setOpaque(true);
-        setBackground(UIConstants.ESCENARIO);
+        setBackground(fondo);
+    }
+
+    public Lienzo(Pintor pintor) {
+        this(pintor, UIConstants.ESCENARIO);
     }
 
     @Override

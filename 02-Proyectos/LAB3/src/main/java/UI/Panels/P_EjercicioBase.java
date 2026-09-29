@@ -31,16 +31,17 @@ public abstract class P_EjercicioBase extends JPanel {
     /** Un espacio vacio reserva el alto de la linea de avisos sin mostrar nada. */
     private final JLabel lblAviso = new JLabel(" ");
     private final JButton btnIniciar = new JButton("Iniciar");
-    private final Lienzo lienzo = new Lienzo(this::pintarLienzo);
+    private final Lienzo lienzo;
     private final Reproductor reproductor = new Reproductor(this::totalPasos, this::avanzar,
             duracionPaso());
     private Timer animacion;
     private long inicioAnimacion;
     private int intervaloAnimacion;
 
-    protected P_EjercicioBase(String titulo, String instrucciones) {
+    protected P_EjercicioBase(String titulo, String instrucciones, Color colorFondo) {
+        lienzo = new Lienzo(this::pintarLienzo, colorFondo);
         setLayout(new BorderLayout(0, UIConstants.MARGEN / 2));
-        setBackground(UIConstants.FONDO);
+        setBackground(colorFondo);
         setBorder(BorderFactory.createEmptyBorder(UIConstants.MARGEN, UIConstants.MARGEN,
                 UIConstants.MARGEN, UIConstants.MARGEN));
 
@@ -152,13 +153,15 @@ public abstract class P_EjercicioBase extends JPanel {
     private void actualizarEstado() {
         int total = reproductor.total();
         boolean listo = reproductor.terminado();
-        btnIniciar.setText(reproductor.activo() ? "Pausa" : (listo ? "Repetir" : "Iniciar"));
         if (total <= 0) {
+            // Sin pasos (aun no se generaron valores) no ofrece Repetir.
+            btnIniciar.setText("Iniciar");
             lblContador.setText("No hay pasos que mostrar");
-        } else if (listo) {
-            lblContador.setText("Listo · " + total + " pasos");
         } else {
-            lblContador.setText("Paso " + (reproductor.paso() + 1) + " / " + total);
+            btnIniciar.setText(reproductor.activo() ? "Pausa" : (listo ? "Repetir" : "Iniciar"));
+            lblContador.setText(listo
+                    ? "Listo · " + total + " pasos"
+                    : "Paso " + (reproductor.paso() + 1) + " / " + total);
         }
     }
 

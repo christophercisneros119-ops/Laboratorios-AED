@@ -17,15 +17,19 @@ import javax.swing.JPanel;
 
 public class P_Menu extends FondoAnimado {
 
-    private static final int ANCHO_BOTON = 360;
-    private static final int ALTO_BOTON = 64;
-    private static final int SEPARACION = 10;
-    /** Prefijo de los cuadros del fondo animado: fondo_menu_00.png y siguientes. */
     private static final String FONDO = "fondo_menu";
     /** Tope de carga, solo un guarda contra un prefijo mal escrito. */
     private static final int MAXIMO_CUADROS = 64;
-    /** Ritmo propio del menú: los cuadros están muestreados cada ~0,1 s reales. */
-    private static final int FPS_FONDO = 8;
+    /**
+     * Ritmo del fondo del menú. Los cuadros salen muestreados cada 2 del video
+     * original, así que reproducirlos a 15 fps devuelve la velocidad real y el
+     * fondo deja de correr.
+     */
+    private static final int FPS_FONDO = 15;
+
+    private static final int ANCHO_BOTON = 360;
+    private static final int ALTO_BOTON = 64;
+    private static final int SEPARACION = 10;
 
     public P_Menu() {
         super(FONDO, MAXIMO_CUADROS, FPS_FONDO);
@@ -42,13 +46,13 @@ public class P_Menu extends FondoAnimado {
         interior.add(texto("Cada simulación reproduce su solución paso a paso.",
                 UIConstants.FONT_SUBTITULO, UIConstants.TEXTO_SUAVE));
         interior.add(Box.createVerticalStrut(6 * SEPARACION));
-        interior.add(boton("1.  Torres de Hanói", new P_Hanoi()));
+        interior.add(boton("Torres de Hanói", new P_Hanoi()));
         interior.add(Box.createVerticalStrut(SEPARACION));
-        interior.add(boton("2.  Salto de la rana", new P_Rana()));
+        interior.add(boton("Salto de la rana", new P_Rana()));
         interior.add(Box.createVerticalStrut(SEPARACION));
-        interior.add(boton("3.  8 Reinas", new P_Reinas()));
+        interior.add(boton("8 Reinas", new P_Reinas()));
         interior.add(Box.createVerticalStrut(SEPARACION));
-        interior.add(boton("4.  QuickSort", new P_QuickSort()));
+        interior.add(boton("QuickSort", new P_QuickSort()));
         interior.add(Box.createVerticalStrut(4 * SEPARACION));
         interior.add(boton("Atrás", new UNI_Portada()));
 

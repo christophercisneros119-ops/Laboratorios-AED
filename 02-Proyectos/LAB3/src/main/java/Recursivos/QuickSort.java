@@ -7,14 +7,14 @@ public class QuickSort {
 
     private QuickSort() {}
 
-    public static List<PasoQuickSort> resolver(int[] valores) {
-        int[] copia = valores.clone();
+    public static List<PasoQuickSort> resolver(double[] valores) {
+        double[] copia = valores.clone();
         List<PasoQuickSort> pasos = new ArrayList<>();
         ordenar(copia, 0, copia.length - 1, pasos);
         return pasos;
     }
 
-    private static void ordenar(int[] valores, int primero, int ultimo,
+    private static void ordenar(double[] valores, int primero, int ultimo,
                                 List<PasoQuickSort> pasos) {
         if (primero >= ultimo) {
             return;
@@ -25,9 +25,9 @@ public class QuickSort {
     }
 
     // Arma el subrange alrededor del pivote y devuelve el indice donde quedo.
-    private static int particionar(int[] valores, int primero, int ultimo,
+    private static int particionar(double[] valores, int primero, int ultimo,
                                    List<PasoQuickSort> pasos) {
-        int pivote = valores[ultimo];
+        double pivote = valores[ultimo];
         int limite = primero;
         for (int explorado = primero; explorado < ultimo; explorado++) {
             if (valores[explorado] <= pivote) {
@@ -43,9 +43,9 @@ public class QuickSort {
         return limite;
     }
 
-    private static void intercambiar(int[] valores, int origen, int destino,
+    private static void intercambiar(double[] valores, int origen, int destino,
                                      int primero, int ultimo, List<PasoQuickSort> pasos) {
-        int auxiliar = valores[origen];
+        double auxiliar = valores[origen];
         valores[origen] = valores[destino];
         valores[destino] = auxiliar;
         pasos.add(new PasoQuickSort(valores, origen, destino, primero, ultimo));

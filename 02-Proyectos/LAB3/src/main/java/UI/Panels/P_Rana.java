@@ -79,7 +79,8 @@ public class P_Rana extends P_EjercicioBase {
 
     public P_Rana() {
         super("Salto de la rana",
-                "Las ranas verdes cruzan hacia la derecha y las cafés hacia la izquierda.");
+                "Las ranas verdes cruzan hacia la derecha y las cafés hacia la izquierda.",
+                UIConstants.FONDO_RANA);
         preparar();
         animar(FPS_RANA);
         refrescar();

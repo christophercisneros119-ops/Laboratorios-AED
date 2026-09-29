@@ -78,6 +78,38 @@ public final class Imagenes {
     }
 
     /**
+     * Dibuja un fondo entero, sin recortar nada, apoyado en la base del lienzo.
+     *
+     * <p>Es el "contain" de los editores: el fondo se encaja completo dentro del
+     * lienzo y se deja apoyado abajo, de modo que la escena crece de abajo hacia
+     * arriba y lo que sobre de alto queda arriba. Sirve para escenarios anchos
+     * que, con {@link #dibujarFondo}, se recortarian de los costados.
+     *
+     * @return {@code false} si el archivo no existe, para que asome el color plano
+     */
+    public static boolean dibujarFondoPie(Graphics2D g2, int ancho, int alto, String nombre) {
+        BufferedImage original = cargar(nombre);
+        if (original == null) {
+            return false;
+        }
+        int iw = original.getWidth();
+        int ih = original.getHeight();
+        if (iw <= 0 || ih <= 0) {
+            return false;
+        }
+        double escala = Math.min(ancho / (double) iw, alto / (double) ih);
+        int destinoAncho = (int) Math.round(iw * escala);
+        int destinoAlto = (int) Math.round(ih * escala);
+        Graphics2D suave = (Graphics2D) g2.create();
+        suave.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        suave.drawImage(original, (ancho - destinoAncho) / 2, alto - destinoAlto,
+                destinoAncho, destinoAlto, null);
+        suave.dispose();
+        return true;
+    }
+
+    /**
      * Dibuja un fondo de varios cuadros y devuelve si se pudo pintar alguno.
      *
      * <p>El indice se acota por cantidad, asi que un cuadro que falta no rompe
@@ -302,6 +334,87 @@ public final class Imagenes {
     }
 
     /**
+     * Dibuja una espada como barra de QuickSort, a factor entero y sin deformar
+     * los extremos.
+     *
+     * <p>El sprite se parte en tres bandas horizontales, igual que un 9-slice: la
+     * punta (cuarto superior), la hoja (mitad central) y la empuñadura con la
+     * guarda (cuarto inferior). El lienzo promete, entonces, un sprite orientado
+     * con la punta arriba y la empuñadura abajo; la altura variable de la barra
+     * solo estira la hoja, que es una barra gris uniforme, asi ni la punta ni la
+     * agarradera se deforman cuando cambia el valor.
+     *
+     * <p>La hoja se toma de la mitad central, de modo que cualquier
+     * {@code espada.png} dibujado con esa misma forma de tres partes funciona sin
+     * tocar el codigo.
+     *
+     * @return {@code false} si el archivo no existe, para que quien dibuja caiga
+     *         en su barra plana
+     */
+    public static boolean dibujarEspada(Graphics2D g2, String nombre,
+                                        int centroX, int baseY,
+                                        int anchoBarra, int altoBarra) {
+        BufferedImage original = cargar(nombre);
+        if (original == null || altoBarra < 1) {
+            return false;
+        }
+        int ancho = original.getWidth();
+        int alto = original.getHeight();
+        if (ancho < 1 || alto < 1) {
+            return false;
+        }
+        int factor = Math.max(1, anchoBarra / ancho);
+        int punta = alto / 4;
+        int mango = alto / 4;
+        int finHoja = alto - mango;
+
+        int anchoDestino = ancho * factor;
+        int x = centroX - anchoDestino / 2;
+        int tope = baseY - altoBarra;
+        int altoPunta = Math.min(punta * factor, altoBarra);
+        int altoMango = Math.min(mango * factor, altoBarra - altoPunta);
+        int altoHoja = altoBarra - altoPunta - altoMango;
+
+        g2.drawImage(original, x, tope, x + anchoDestino, tope + altoPunta,
+                0, 0, ancho, punta, null);
+        if (altoHoja > 0) {
+            g2.drawImage(original, x, tope + altoPunta, x + anchoDestino,
+                    tope + altoPunta + altoHoja,
+                    0, punta, ancho, finHoja, null);
+        }
+        g2.drawImage(original, x, baseY - altoMango, x + anchoDestino, baseY,
+                0, finHoja, ancho, alto, null);
+        return true;
+    }
+
+    /**
+     * Dibuja un piso de tarta rellenando su rectangulo, sin recortar pintado.
+     *
+     * <p>El sprite trae el dibujo del piso en un lienzo transparente mas grande
+     * que el propio piso. Se recorta solo el margen transparente, ningun pixel
+     * dibujado se pierde, y la region visible se estira con vecino mas cercano
+     * hasta llenar el rectangulo que ocupa el piso en el lienzo. Asi los pisos
+     * de distinto ancho se arman a partir de un mismo sprite y quedan contiguos
+     * en la torre.
+     *
+     * @return {@code false} si el archivo no existe, para que quien dibuja caiga
+     *         en su caja plana
+     */
+    public static boolean dibujarPiso(Graphics2D g2, String nombre,
+                                      int x, int y, int ancho, int alto) {
+        BufferedImage original = cargar(nombre);
+        if (original == null || ancho < 1 || alto < 1) {
+            return false;
+        }
+        int[] caja = arte(original);
+        int anchoArte = caja[1] - caja[0] + 1;
+        int altoArte = caja[3] - caja[2] + 1;
+        g2.drawImage(original, x, y, x + ancho, y + alto,
+                caja[0], caja[2], caja[0] + anchoArte, caja[2] + altoArte, null);
+        return true;
+    }
+
+    /**
      * Carga los cuadros de un fondo animado: {@code prefijo_00.png},
      * {@code prefijo_01.png}... y sigue hasta el primero que falta.
      *
@@ -326,6 +439,10 @@ public final class Imagenes {
         }
         SECUENCIAS.put(clave, List.copyOf(cuadros));
         return SECUENCIAS.get(clave);
+    }
+
+    public static BufferedImage obtener(String nombre) {
+        return cargar(nombre);
     }
 
     private static BufferedImage cargar(String nombre) {

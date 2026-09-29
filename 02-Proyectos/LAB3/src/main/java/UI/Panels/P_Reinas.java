@@ -25,8 +25,9 @@ public class P_Reinas extends P_EjercicioBase {
     }
 
     public P_Reinas() {
-        super(Constantes.LADO_TABLERO + " Reinas",
-                "Una reina por fila y por columna, sin que se ataquen en diagonal.");
+super(Constantes.LADO_TABLERO + " Reinas",
+                "Una reina por fila y por columna, sin que se ataquen en diagonal.",
+                UIConstants.FONDO_REINAS);
         preparar();
         refrescar();
     }

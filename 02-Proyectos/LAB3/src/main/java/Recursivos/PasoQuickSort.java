@@ -1,6 +1,6 @@
 package Recursivos;
 
-public record PasoQuickSort(int[] valores, int indiceOrigen, int indiceDestino,
+public record PasoQuickSort(double[] valores, int indiceOrigen, int indiceDestino,
                             int primero, int ultimo) {
 
     public PasoQuickSort {

@@ -32,12 +32,22 @@ public final class UIConstants {
     public static final Color TEXTO_SUAVE = new Color(0x9BB0BC);
     /** Avisos de validacion, se muestran en linea dentro del panel. */
     public static final Color ERROR = new Color(0xF28B82);
+    /** Acento de marca: el cian del UNI, para el encabezado y los separadores. */
+    public static final Color ACENTO = new Color(0x6FD3E8);
+
+    // ── Fondo por ejercicio ──
+    public static final Color FONDO_HANOI = new Color(0x6B4A2E);
+    public static final Color FONDO_RANA = new Color(0x4A90B8);
+    public static final Color FONDO_REINAS = new Color(0x5C6674);
+    public static final Color FONDO_QUICKSORT = new Color(0x8A6C1E);
 
     // ── Fuentes ──
     // Silkscreen es pixel art: se pide en multiplos de su tamano nativo de 8 px.
     public static final Font FONT_TITULO = Fuentes.obtener(true, 32);
     public static final Font FONT_SUBTITULO = Fuentes.obtener(false, 16);
     public static final Font FONT_TEXTO = Fuentes.obtener(false, 16);
+    /** Nombre del UNI en la portada: el texto mas grande, en negrita. */
+    public static final Font FONT_UNI = Fuentes.obtener(true, 40);
     /** Numeros de la escena: el tamano lo decide el lienzo, no se fija aqui. */
     public static final int NUMERO_MINIMO = 8;
     public static final int NUMERO_MAXIMO = 32;
@@ -50,6 +60,5 @@ public final class UIConstants {
     public static final int DURACION_PASO_RANA = 800;
     /** Ritmo del fondo animado de QuickSort. Va aparte del paso: es decorativo. */
     public static final int CUADROS_POR_SEGUNDO = 12;
-    public static final int ELEMENTOS_MAXIMOS = 12;
     public static final int MARGEN = 32;
 }
