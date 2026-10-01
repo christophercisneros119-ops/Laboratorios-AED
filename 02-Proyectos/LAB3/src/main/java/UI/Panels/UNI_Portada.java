@@ -1,5 +1,6 @@
 package UI.Panels;
 
+import UI.Elements.BotonEstilizado;
 import UI.Elements.FondoAnimado;
 import UI.Elements.Navegacion;
 import UI.Elements.TarjetaMiembro;
@@ -12,7 +13,6 @@ import java.awt.GridBagLayout;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 /**
@@ -51,7 +51,7 @@ public class UNI_Portada extends FondoAnimado {
         interior.add(Box.createVerticalGlue());
         interior.add(Box.createVerticalStrut(10));
         interior.add(P_Menu.texto("Algoritmización y Estructuras de Datos",
-                UIConstants.FONT_SUBTITULO, UIConstants.TEXTO));
+                UIConstants.FONT_TITULO, UIConstants.NEGRO_PURO));
         interior.add(Box.createVerticalStrut(22));
         interior.add(P_Menu.texto("Laboratorio #3", UIConstants.FONT_TITULO, UIConstants.TEXTO));
         interior.add(Box.createVerticalStrut(4));
@@ -64,11 +64,9 @@ public class UNI_Portada extends FondoAnimado {
         interior.add(filaIntegrantes());
         interior.add(Box.createVerticalStrut(12));
 
-        JButton btnComenzar = new JButton("Comenzar");
-        btnComenzar.setFont(UIConstants.FONT_TEXTO);
-        btnComenzar.setPreferredSize(new Dimension(220, 64));
-        btnComenzar.setMinimumSize(new Dimension(220, 64));
-        btnComenzar.setMaximumSize(new Dimension(220, 64));
+        BotonEstilizado btnComenzar = BotonEstilizado.textoAjustado("Comenzar",
+                UIConstants.BLANCO_HUESO, UIConstants.LILA_SUAVE,
+                UIConstants.AMARILLO_PASTEL);
         btnComenzar.addActionListener(evento -> Navegacion.irA(this, new P_Menu()));
 
         JPanel fila = new JPanel(new FlowLayout(FlowLayout.CENTER));

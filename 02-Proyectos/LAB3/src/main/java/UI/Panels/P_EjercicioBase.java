@@ -1,5 +1,6 @@
 package UI.Panels;
 
+import UI.Elements.BotonEstilizado;
 import UI.Elements.Fuentes;
 import UI.Elements.Lienzo;
 import UI.Elements.Navegacion;
@@ -15,7 +16,7 @@ import java.awt.Graphics2D;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -30,16 +31,48 @@ public abstract class P_EjercicioBase extends JPanel {
     private final JLabel lblContador = new JLabel();
     /** Un espacio vacio reserva el alto de la linea de avisos sin mostrar nada. */
     private final JLabel lblAviso = new JLabel(" ");
-    private final JButton btnIniciar = new JButton("Iniciar");
+    private final BotonEstilizado btnIniciar;
+    private final BotonEstilizado btnReiniciar;
     private final Lienzo lienzo;
+    private final BotonEstilizado btnAtras;
+    private final JPanel centro = new JPanel(new BorderLayout());
     private final Reproductor reproductor = new Reproductor(this::totalPasos, this::avanzar,
-            duracionPaso());
+            UIConstants.DURACION_PASO);
+    private final Color colorMarco;
+    private final Color colorTexto;
+    private final Color colorSubtexto;
     private Timer animacion;
     private long inicioAnimacion;
     private int intervaloAnimacion;
+    private JComboBox<String> velocidad;
 
     protected P_EjercicioBase(String titulo, String instrucciones, Color colorFondo) {
+        this(titulo, instrucciones, colorFondo, UIConstants.TEXTO, UIConstants.TEXTO_SUAVE);
+    }
+
+    /**
+     * Variante que deja elegir el color de los textos: sobre el marco beige de
+     * Hanói, las letras claras no tienen contraste, asi que ese panel pasa su
+     * cafe oscuro.
+     */
+    protected P_EjercicioBase(String titulo, String instrucciones, Color colorFondo,
+                              Color colorTexto, Color colorSubtexto) {
+        this.colorMarco = colorFondo;
+        this.colorTexto = colorTexto;
+        this.colorSubtexto = colorSubtexto;
         lienzo = new Lienzo(this::pintarLienzo, colorFondo);
+        // Los tres botones de control comparten la misma paleta gris en los
+        // cuatro ejercicios: reposo claro, hover oscuro, clic aun mas oscuro.
+        btnIniciar = BotonEstilizado.texto("Iniciar", 150,
+                UIConstants.GRIS_SUAVE, UIConstants.GRIS_OSCURO, UIConstants.GRIS_PRESION);
+        btnReiniciar = BotonEstilizado.texto("Reiniciar", 170,
+                UIConstants.GRIS_SUAVE, UIConstants.GRIS_OSCURO, UIConstants.GRIS_PRESION);
+        // El Atras es un boton de texto en la fila de controles, no una flecha
+        // gigante flotando sobre la foto del escenario.
+        btnAtras = BotonEstilizado.textoAjustado("Regresar",
+                UIConstants.CELESTE, UIConstants.AZULITO, UIConstants.AZUL_PRESION);
+        btnAtras.addActionListener(evento -> Navegacion.irA(this, new P_Menu()));
+
         setLayout(new BorderLayout(0, UIConstants.MARGEN / 2));
         setBackground(colorFondo);
         setBorder(BorderFactory.createEmptyBorder(UIConstants.MARGEN, UIConstants.MARGEN,
@@ -47,16 +80,18 @@ public abstract class P_EjercicioBase extends JPanel {
 
         cabecera.setLayout(new BoxLayout(cabecera, BoxLayout.Y_AXIS));
         cabecera.setOpaque(false);
-        cabecera.add(etiqueta(titulo, UIConstants.FONT_TITULO, UIConstants.TEXTO));
+        cabecera.add(etiqueta(titulo, UIConstants.FONT_TITULO, colorTexto));
         cabecera.add(Box.createVerticalStrut(4));
-        cabecera.add(etiqueta(instrucciones, UIConstants.FONT_SUBTITULO, UIConstants.TEXTO_SUAVE));
+        cabecera.add(etiqueta(instrucciones, UIConstants.FONT_SUBTITULO, colorSubtexto));
         add(cabecera, BorderLayout.NORTH);
 
         lblAviso.setFont(UIConstants.FONT_SUBTITULO);
-        lblAviso.setForeground(UIConstants.TEXTO_SUAVE);
+        lblAviso.setForeground(UIConstants.ERROR);
         lblAviso.setAlignmentX(LEFT_ALIGNMENT);
 
-        add(lienzo, BorderLayout.CENTER);
+        centro.setOpaque(false);
+        centro.add(lienzo, BorderLayout.CENTER);
+        add(centro, BorderLayout.CENTER);
         add(construirControles(), BorderLayout.SOUTH);
     }
 
@@ -69,26 +104,29 @@ public abstract class P_EjercicioBase extends JPanel {
     }
 
     private JPanel construirControles() {
-        JButton btnAtras = new JButton("Atrás");
-        JButton btnReiniciar = new JButton("Reiniciar");
-        btnAtras.setFont(UIConstants.FONT_TEXTO);
-        btnReiniciar.setFont(UIConstants.FONT_TEXTO);
-        btnIniciar.setFont(UIConstants.FONT_TEXTO);
-        btnAtras.addActionListener(evento -> Navegacion.irA(this, new P_Menu()));
-        btnIniciar.addActionListener(evento -> alternar());
         btnReiniciar.addActionListener(evento -> reiniciar());
+        btnIniciar.addActionListener(evento -> alternar());
 
         lblContador.setFont(UIConstants.FONT_TEXTO);
-        lblContador.setForeground(UIConstants.TEXTO_SUAVE);
+        lblContador.setForeground(colorSubtexto);
+
+        // El Regresar vive solo a la izquierda: si va en la misma fila centrada
+        // con Iniciar/Reiniciar se confunde con los botones de la ejecucion.
+        JPanel izquierda = new JPanel(new FlowLayout(FlowLayout.LEFT, 12, 8));
+        izquierda.setOpaque(false);
+        izquierda.add(btnAtras);
 
         JPanel fila = new JPanel(new FlowLayout(FlowLayout.CENTER, 12, 8));
         fila.setOpaque(false);
         fila.add(btnIniciar);
         fila.add(btnReiniciar);
         fila.add(lblContador);
-        fila.add(Box.createHorizontalStrut(24));
-        fila.add(btnAtras);
-        return fila;
+
+        JPanel controles = new JPanel(new BorderLayout(12, 0));
+        controles.setOpaque(false);
+        controles.add(izquierda, BorderLayout.WEST);
+        controles.add(fila, BorderLayout.CENTER);
+        return controles;
     }
 
     /** Fila de ingreso opcional, la agrega el ejercicio que necesite datos. */
@@ -102,6 +140,32 @@ public abstract class P_EjercicioBase extends JPanel {
         // ventana. La linea siempre se reserva para que el diseno no salte.
         cabecera.add(Box.createVerticalStrut(4));
         cabecera.add(lblAviso);
+    }
+
+    /** Selector de velocidad compartido (1 Lenta / 2 Media / 3 Rapida). */
+    protected final JComboBox<String> velocidad() {
+        if (velocidad == null) {
+            velocidad = new JComboBox<>(UIConstants.VELOCIDADES);
+            velocidad.setSelectedIndex(UIConstants.VELOCIDAD_MEDIA);
+            velocidad.setFont(UIConstants.FONT_TEXTO);
+            velocidad.addActionListener(evento -> {
+                reproductor.cambiarRitmo(duracionPaso());
+                iniciarPasoSiCorre();
+            });
+        }
+        return velocidad;
+    }
+
+    /**
+     * Si el combo cambia el ritmo con la reproduccion en curso, se reinicia la
+     * temporizacion del paso en vuelo para que la nueva velocidad aplique ya.
+     */
+    private void iniciarPasoSiCorre() {
+        if (!reproductor.activo()) {
+            return;
+        }
+        reproductor.detener();
+        reproductor.iniciar();
     }
 
     /**
@@ -160,7 +224,7 @@ public abstract class P_EjercicioBase extends JPanel {
         } else {
             btnIniciar.setText(reproductor.activo() ? "Pausa" : (listo ? "Repetir" : "Iniciar"));
             lblContador.setText(listo
-                    ? "Listo · " + total + " pasos"
+                    ? "Listo · " + total + (total == 1 ? " paso" : " pasos")
                     : "Paso " + (reproductor.paso() + 1) + " / " + total);
         }
     }
@@ -217,10 +281,10 @@ public abstract class P_EjercicioBase extends JPanel {
         g2.drawRoundRect(x, y, ancho, alto, radio, radio);
     }
 
-    protected static JLabel rotulo(String contenido) {
+    protected JLabel rotulo(String contenido) {
         JLabel etiqueta = new JLabel(contenido);
         etiqueta.setFont(UIConstants.FONT_TEXTO);
-        etiqueta.setForeground(UIConstants.TEXTO_SUAVE);
+        etiqueta.setForeground(colorTexto);
         return etiqueta;
     }
 
@@ -256,20 +320,32 @@ public abstract class P_EjercicioBase extends JPanel {
         return Fuentes.obtener(true, tamano);
     }
 
+    /**
+     * Duracion de cada paso segun la velocidad elegida. Por defecto la comun de
+     * todos los ejercicios (Hanoi, Reinas y QuickSort); el que toque otro ritmo
+     * solo cambia {@link #duracionesVelocidades()}.
+     */
+    protected int[] duracionesVelocidades() {
+        return new int[]{1000, 500, 250};
+    }
+
+    protected int duracionPaso() {
+        int[] duraciones = duracionesVelocidades();
+        if (velocidad != null) {
+            int indice = velocidad.getSelectedIndex();
+            if (indice >= 0 && indice < duraciones.length) {
+                return duraciones[indice];
+            }
+        }
+        return UIConstants.DURACION_PASO;
+    }
+
     /** Valida los datos ingresados, calcula la solucion y reinicia el estado. */
     protected abstract boolean preparar();
 
     protected abstract int totalPasos();
 
-    /**
-     * Duracion de cada paso en milisegundos. Por defecto la comun de todos los
-     * ejercicios; el que necesite otro ritmo la sobreescribe. Va aparte de la
-     * geometria porque alimenta el temporizador y la fase del paso.
-     */
-    protected int duracionPaso() {
-        return UIConstants.DURACION_PASO;
-    }
-
+    /** Aplica en el estado dibujado el paso dado de la reproduccion. */
     protected abstract void aplicarPaso(int indice);
 
     /**

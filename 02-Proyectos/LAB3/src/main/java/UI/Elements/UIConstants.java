@@ -34,12 +34,70 @@ public final class UIConstants {
     public static final Color ERROR = new Color(0xF28B82);
     /** Acento de marca: el cian del UNI, para el encabezado y los separadores. */
     public static final Color ACENTO = new Color(0x6FD3E8);
+    /** Texto de la portada: rojo coral, fuera de la paleta prohibida. */
+    public static final Color CORAL = new Color(0xFF6B5E);
+    /**
+     * Subtitulo de la portada: negro casi puro. Va sobre las nubes claras del
+     * fondo animado, donde cualquier tono claro se camufla; con este contraste
+     * se lee en todos los cuadros del video.
+     */
+    public static final Color NEGRO_PURO = new Color(0x101418);
+    /** Texto sobre el marco beige de Hanói: cafe oscuro para que tenga contraste. */
+    public static final Color CAFE_OSCURO = new Color(0x4A3220);
+
+    // ── Botones estilizados ──
+    /** Comenzar de la portada: blanco hueso de reposo. */
+    public static final Color BLANCO_HUESO = new Color(0xF4E9DA);
+    /** Hover del Comenzar: lila suave. */
+    public static final Color LILA_SUAVE = new Color(0xCBB6E4);
+    /** Click del Comenzar: amarillo pastel. */
+    public static final Color AMARILLO_PASTEL = new Color(0xFFF2B0);
+    /** Atras: celeste de reposo, azulito al hover y azul apagado al clic. */
+    public static final Color CELESTE = new Color(0xA9DDF2);
+    public static final Color AZULITO = new Color(0x6699CC);
+    public static final Color AZUL_PRESION = new Color(0x3F6BA6);
+    /** Iniciar/Reiniciar/Generar: gris suave al hover, gris oscuro al clic. */
+    public static final Color GRIS_SUAVE = new Color(0xC9CFD5);
+    public static final Color GRIS_OSCURO = new Color(0x59626B);
+    /** Clic de los botones de control: el gris oscuro aun mas apagado. */
+    public static final Color GRIS_PRESION = new Color(0x3D444B);
+
+    // ── Boton ──
+    /**
+     * Radio de esquina de todos los botones, en todos sus estados. En Swing el
+     * argumento es la caja del arco, no el radio: con 20 la curva mide 10 px y
+     * la esquina se nota redondeada en un boton de 44 de alto.
+     */
+    public static final int RADIO_BOTON = 20;
+    /** Hueco que el reposo deja al borde del componente para crecer sin recortarse. */
+    public static final int RESERVA_BOTON = 3;
 
     // ── Fondo por ejercicio ──
-    public static final Color FONDO_HANOI = new Color(0x6B4A2E);
+    public static final Color FONDO_HANOI = new Color(0xE9DFC9);
     public static final Color FONDO_RANA = new Color(0x4A90B8);
     public static final Color FONDO_REINAS = new Color(0x5C6674);
-    public static final Color FONDO_QUICKSORT = new Color(0x8A6C1E);
+    /** Verde de QuickSort: casi negro, para que la foto sea la que ilumina. */
+    public static final Color FONDO_QUICKSORT = new Color(0x0F160D);
+    /** Borde del marco de la foto de cada escenario. */
+    public static final Color MARCO_FOTO = new Color(0x262A2E);
+
+    // ── Marco de foto congruente ──
+    /** El marco de la foto mide la menor dimension del lienzo / 18. */
+    public static final int MARCO_FOTO_DIVISION = 18;
+    public static final int MARCO_FOTO_MIN = 16;
+    public static final int MARCO_FOTO_MAX = 72;
+
+    // ── Menu ──
+    /** Banda del borde inferior derecho que se recorta para ocultar el @ del autor. */
+    public static final double RECORTE_MENU = 0.07;
+
+    // ── QuickSort ──
+    /** Las espadas se oscurecen para estar a tono con la luz del fondo. */
+    public static final double OSCURIDAD_ESPADA = 0.72;
+
+    // ── Velocidades ──
+    public static final String[] VELOCIDADES = {"1 · Lenta", "2 · Media", "3 · Rápida"};
+    public static final int VELOCIDAD_MEDIA = 1;
 
     // ── Fuentes ──
     // Silkscreen es pixel art: se pide en multiplos de su tamano nativo de 8 px.

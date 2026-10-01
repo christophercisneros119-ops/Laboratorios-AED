@@ -7,8 +7,10 @@ import UI.Elements.Imagenes;
 import UI.Elements.UIConstants;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.util.List;
+import javax.swing.JPanel;
 
 public class P_Rana extends P_EjercicioBase {
 
@@ -81,14 +83,19 @@ public class P_Rana extends P_EjercicioBase {
         super("Salto de la rana",
                 "Las ranas verdes cruzan hacia la derecha y las cafés hacia la izquierda.",
                 UIConstants.FONDO_RANA);
+        JPanel fila = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
+        fila.add(rotulo("Velocidad:"));
+        fila.add(velocidad());
+        addConfiguracion(fila);
         preparar();
         animar(FPS_RANA);
         refrescar();
     }
 
+    /** El salto de la rana es mas largo: las mismas velocidades, mas lentas. */
     @Override
-    protected int duracionPaso() {
-        return UIConstants.DURACION_PASO_RANA;
+    protected int[] duracionesVelocidades() {
+        return new int[]{1200, 800, 400};
     }
 
     @Override
@@ -117,11 +124,17 @@ public class P_Rana extends P_EjercicioBase {
 
     @Override
     protected void pintarLienzo(Graphics2D g2, int ancho, int alto) {
-        Imagenes.dibujarFondo(g2, ancho, alto, "fondo_rana");
+        int[] ventana = Imagenes.ventanaFoto(ancho, alto);
+        int vx = ventana[0];
+        int vy = ventana[1];
+        int aw = ventana[2];
+        int ah = ventana[3];
+        Imagenes.dibujarFondoVentana(g2, ventana, "fondo_rana");
 
-        int separacion = ancho / (Constantes.CASILLAS_TOTAL + 1);
-        int diametro = Math.max(Math.min(separacion, alto) / 2 - UIConstants.MARGEN / 2, 8);
-        int centroY = centroAgua(ancho, alto);
+        int ox = vx;
+        int separacion = aw / (Constantes.CASILLAS_TOTAL + 1);
+        int diametro = Math.max(Math.min(separacion, ah) / 2 - UIConstants.MARGEN / 2, 8);
+        int centroY = centroAgua(aw, ah) + vy;
         int factor = factorEscenario(diametro);
         int factorRana = factorRana(factor);
         int relleno = diametro * 3 / 4;
@@ -134,7 +147,7 @@ public class P_Rana extends P_EjercicioBase {
         // seis. El factor se comparte para que los dos sprites caigan en la
         // misma grilla de pixeles y no se desfasen entre si al redimensionar.
         for (int casilla = 0; casilla < Constantes.CASILLAS_TOTAL; casilla++) {
-            int centroX = centroDe(casilla, separacion);
+            int centroX = ox + centroDe(casilla, separacion);
             String nombre = casilla == CENTRO ? "piedra" : "nenufar";
             if (!Imagenes.dibujarCentrado(g2, nombre, centroX, centroY, factor)) {
                 g2.setColor(UIConstants.CASILLA_ALT);
@@ -151,7 +164,7 @@ public class P_Rana extends P_EjercicioBase {
             if (rana == SaltoRana.CASILLA_VACIA) {
                 continue;
             }
-            int centroX = centroDe(casilla, separacion);
+            int centroX = ox + centroDe(casilla, separacion);
             String sprite = sprite(rana, false, miraIzquierda(rana, casilla));
             dibujarRana(g2, sprite, centroX, centroY, factorRana, relleno,
                     colorDe(rana));
@@ -159,8 +172,8 @@ public class P_Rana extends P_EjercicioBase {
 
         // La rana que se mueve en este paso.
         if (movida != null) {
-            int origenX = centroDe(movida.casillaOrigen(), separacion);
-            int destinoX = centroDe(movida.casillaDestino(), separacion);
+            int origenX = ox + centroDe(movida.casillaOrigen(), separacion);
+            int destinoX = ox + centroDe(movida.casillaDestino(), separacion);
             int distancia = Math.abs(movida.casillaDestino() - movida.casillaOrigen());
 
             // Fases de 800 ms (4 de 200): 0..200 quieta, 200..400 sube saltando,

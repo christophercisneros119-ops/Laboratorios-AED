@@ -35,28 +35,38 @@ public class SaltoRana {
         if (pasos.size() == Constantes.MOVIMIENTOS_RANA) {
             return true;
         }
-        for (int posicion = 0; posicion < Constantes.CASILLAS_TOTAL; posicion++) {
-            if (estado[posicion] == RANA_VERDE) {
-                if (puedeAvanzar(estado, posicion + AVANCE)
-                        && intentar(estado, pasos, posicion, posicion + AVANCE)) {
-                    return true;
-                }
-                if (puedeSaltar(estado, posicion + AVANCE, posicion + SALTO, RANA_CAFE)
-                        && intentar(estado, pasos, posicion, posicion + SALTO)) {
-                    return true;
-                }
-            } else if (estado[posicion] == RANA_CAFE) {
-                if (puedeAvanzar(estado, posicion - AVANCE)
-                        && intentar(estado, pasos, posicion, posicion - AVANCE)) {
-                    return true;
-                }
-                if (puedeSaltar(estado, posicion - AVANCE, posicion - SALTO, RANA_VERDE)
-                        && intentar(estado, pasos, posicion, posicion - SALTO)) {
-                    return true;
-                }
+        return probarDesde(estado, pasos, 0);
+    }
+
+    /**
+     * Recorre las casillas en diagonal recursivo, sin bucles: prueba los
+     * movimientos de la casilla {@code posicion} y, si no llegan a ninguna
+     * solucion, baja a la siguiente con {@code posicion + 1}.
+     */
+    private static boolean probarDesde(char[] estado, List<PasoRana> pasos, int posicion) {
+        if (posicion >= Constantes.CASILLAS_TOTAL) {
+            return false;
+        }
+        if (estado[posicion] == RANA_VERDE) {
+            if (puedeAvanzar(estado, posicion + AVANCE)
+                    && intentar(estado, pasos, posicion, posicion + AVANCE)) {
+                return true;
+            }
+            if (puedeSaltar(estado, posicion + AVANCE, posicion + SALTO, RANA_CAFE)
+                    && intentar(estado, pasos, posicion, posicion + SALTO)) {
+                return true;
+            }
+        } else if (estado[posicion] == RANA_CAFE) {
+            if (puedeAvanzar(estado, posicion - AVANCE)
+                    && intentar(estado, pasos, posicion, posicion - AVANCE)) {
+                return true;
+            }
+            if (puedeSaltar(estado, posicion - AVANCE, posicion - SALTO, RANA_VERDE)
+                    && intentar(estado, pasos, posicion, posicion - SALTO)) {
+                return true;
             }
         }
-        return false;
+        return probarDesde(estado, pasos, posicion + 1);
     }
 
     private static boolean intentar(char[] estado, List<PasoRana> pasos, int origen, int destino) {

@@ -66,6 +66,14 @@ public class Reproductor {
         temporizador.stop();
     }
 
+    /**
+     * Cambia la velocidad en vivo: aplica el nuevo intervalo al temporizador
+     * aunque la reproduccion este en marcha.
+     */
+    public void cambiarRitmo(int duracionPaso) {
+        temporizador.setDelay(Math.max(duracionPaso, 1));
+    }
+
     public boolean activo() {
         return temporizador.isRunning();
     }

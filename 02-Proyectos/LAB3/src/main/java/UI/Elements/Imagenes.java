@@ -28,6 +28,8 @@ public final class Imagenes {
     private static final Map<String, BufferedImage> CACHE = new HashMap<>();
     private static final Map<String, List<BufferedImage>> SECUENCIAS = new HashMap<>();
     private static final Map<BufferedImage, int[]> ARTES = new HashMap<>();
+    /** Variantes oscurecidas de sprites, una por factor, para las espadas. */
+    private static final Map<String, BufferedImage> OSCURAS = new HashMap<>();
 
     /**
      * Grosor del aro opaco que traen los sprites de pieza (1 en queen.png).
@@ -127,11 +129,104 @@ public final class Imagenes {
     }
 
     /**
-     * Escala la imagen hasta cubrir el lienzo y la centra, con interpolacion suave.
+     * Dibuja un fondo animado recortando una banda de la esquina inferior derecha.
      *
-     * <p>Se dibuja sobre una copia para no dejar NEAREST_NEIGHBOR cambiado: el
-     * tablero y las piezas que dibuja el mismo lienzo necesitan bordes duros.
+     * <p>El menú deja visible el @ con el que firmó el autor del arte, abajo a la
+     * derecha. En vez de pedirle re-exportar todo, se descarta una fraccion del
+     * borde inferior y de la derecha de cada cuadro y lo restante se escala a
+     * cubrir: la esquina firmada queda fuera y el resto del escenario intacto.
+     *
+     * @param recorte fraccion (0-0.9) que se corta de cada borde
+     * @return {@code false} si la lista esta vacia, para que asome el color plano
      */
+    public static boolean dibujarSecuenciaRecortada(Graphics2D g2, int ancho, int alto,
+            List<BufferedImage> cuadros, int indice, double recorte) {
+        if (cuadros == null || cuadros.isEmpty()) {
+            return false;
+        }
+        int i = Math.floorMod(indice, cuadros.size());
+        BufferedImage original = cuadros.get(i);
+        if (original == null) {
+            return false;
+        }
+        return dibujarRecortando(g2, ancho, alto, original, recorte);
+    }
+
+    /**
+     * Cover sobre una region de origen recortada: descarta la banda derecha y la
+     * inferior de la foto y escala el resto hasta cubrir todo el lienzo.
+     */
+    private static boolean dibujarRecortando(Graphics2D g2, int ancho, int alto,
+                                             BufferedImage original, double recorte) {
+        int iw = original.getWidth();
+        int ih = original.getHeight();
+        if (iw <= 0 || ih <= 0) {
+            return false;
+        }
+        double fraccion = Math.max(0.0, Math.min(0.9, recorte));
+        int sw = iw - (int) Math.round(iw * fraccion);
+        int sh = ih - (int) Math.round(ih * fraccion);
+        if (sw < 1 || sh < 1) {
+            return false;
+        }
+        double escala = Math.max(ancho / (double) sw, alto / (double) sh);
+        int dw = (int) Math.round(sw * escala);
+        int dh = (int) Math.round(sh * escala);
+        if (dw < 1 || dh < 1) {
+            return false;
+        }
+        int dx = (ancho - dw) / 2;
+        int dy = (alto - dh) / 2;
+        Graphics2D suave = (Graphics2D) g2.create();
+        suave.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        suave.drawImage(original, dx, dy, dx + dw, dy + dh, 0, 0, sw, sh, null);
+        suave.dispose();
+        return true;
+    }
+
+    /**
+     * Ventana de la foto de un escenario: el rectangulo {@code {x, y, ancho, alto}}
+     * donde todos los algoritmos dibujan su fondo, con el mismo marco alrededor.
+     *
+     * <p>La congruencia pedida: la foto siempre cae dentro de la misma ventana
+     * (igual metrica en los cuatro ejercicios), rodeada por el color solido del
+     * marco del panel. La escena del ejercicio se ancla a esta ventana y no al
+     * lienzo completo, para que tarta, ranas, tablero o espadas queden dentro de
+     * la foto.
+     */
+    public static int[] ventanaFoto(int ancho, int alto) {
+        int marco = Math.max(UIConstants.MARCO_FOTO_MIN,
+                Math.min(UIConstants.MARCO_FOTO_MAX,
+                        Math.min(ancho, alto) / UIConstants.MARCO_FOTO_DIVISION));
+        return new int[]{marco, marco, ancho - 2 * marco, alto - 2 * marco};
+    }
+
+    /**
+     * Dibuja la foto de un escenario en cover dentro de la ventana de foto.
+     *
+     * @return {@code false} si el archivo no existe, para que asome el color plano
+     */
+    public static boolean dibujarFondoVentana(Graphics2D g2, int[] ventana, String nombre) {
+        return dibujarCubriendo(g2, ventana[2], ventana[3],
+                cargar(nombre), ventana[0], ventana[1]);
+    }
+
+    /**
+     * Dibuja un cuadro animado de fondo en cover dentro de la ventana de foto.
+     *
+     * @return {@code false} si la lista esta vacia, para que asome el color plano
+     */
+    public static boolean dibujarFondoVentana(Graphics2D g2, int[] ventana,
+                                              List<BufferedImage> cuadros, int indice) {
+        if (cuadros == null || cuadros.isEmpty()) {
+            return false;
+        }
+        int i = Math.floorMod(indice, cuadros.size());
+        return dibujarCubriendo(g2, ventana[2], ventana[3],
+                cuadros.get(i), ventana[0], ventana[1]);
+    }
+
     /**
      * Caja donde cae el fondo al cubrir el lienzo: {@code {x, y, ancho, alto}}.
      *
@@ -176,6 +271,17 @@ public final class Imagenes {
      */
     private static boolean dibujarCubriendo(Graphics2D g2, int ancho, int alto,
                                             BufferedImage original) {
+        return dibujarCubriendo(g2, ancho, alto, original, 0, 0);
+    }
+
+    /**
+     * Version con desplazamiento: el cover se calcula sobre un area de
+     * {@code ancho x alto} y el rectangulo destino se corre {@code origenX,
+     * origenY}, para dibujar dentro de la ventana de foto de un escenario.
+     */
+    private static boolean dibujarCubriendo(Graphics2D g2, int ancho, int alto,
+                                            BufferedImage original,
+                                            int origenX, int origenY) {
         int[] rect = encuadreCubriendo(ancho, alto, original);
         if (rect == null) {
             return false;
@@ -183,7 +289,8 @@ public final class Imagenes {
         Graphics2D suave = (Graphics2D) g2.create();
         suave.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                 RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        suave.drawImage(original, rect[0], rect[1], rect[2], rect[3], null);
+        suave.drawImage(original, rect[0] + origenX, rect[1] + origenY,
+                rect[2], rect[3], null);
         suave.dispose();
         return true;
     }
@@ -354,7 +461,9 @@ public final class Imagenes {
     public static boolean dibujarEspada(Graphics2D g2, String nombre,
                                         int centroX, int baseY,
                                         int anchoBarra, int altoBarra) {
-        BufferedImage original = cargar(nombre);
+        // Las espadas llegan mas claras que el fondo del escenario; se oscurecen
+        // con un factor fijo para que la iluminacion de la escena sea congruente.
+        BufferedImage original = oscurecer(nombre, UIConstants.OSCURIDAD_ESPADA);
         if (original == null || altoBarra < 1) {
             return false;
         }
@@ -443,6 +552,37 @@ public final class Imagenes {
 
     public static BufferedImage obtener(String nombre) {
         return cargar(nombre);
+    }
+
+    /**
+     * Copia oscurecida de un sprite, cacheada por factor: multiplica cada canal
+     * de color sin tocar el alfa, para que el arte se apague a tono con la luz
+     * del escenario y no se borre el contorno.
+     */
+    private static BufferedImage oscurecer(String nombre, double factor) {
+        String clave = nombre.toLowerCase() + "~" + Math.round(factor * 100);
+        if (OSCURAS.containsKey(clave)) {
+            return OSCURAS.get(clave);
+        }
+        BufferedImage original = cargar(nombre);
+        if (original == null) {
+            return null;
+        }
+        int ancho = original.getWidth();
+        int alto = original.getHeight();
+        BufferedImage oscura = new BufferedImage(ancho, alto, BufferedImage.TYPE_INT_ARGB);
+        for (int y = 0; y < alto; y++) {
+            for (int x = 0; x < ancho; x++) {
+                int rgb = original.getRGB(x, y);
+                int a = (rgb >>> 24) & 0xFF;
+                int r = (int) Math.round(((rgb >>> 16) & 0xFF) * factor);
+                int g = (int) Math.round(((rgb >>> 8) & 0xFF) * factor);
+                int b = (int) Math.round((rgb & 0xFF) * factor);
+                oscura.setRGB(x, y, (a << 24) | (r << 16) | (g << 8) | b);
+            }
+        }
+        OSCURAS.put(clave, oscura);
+        return oscura;
     }
 
     private static BufferedImage cargar(String nombre) {

@@ -21,9 +21,21 @@ public class FondoAnimado extends JPanel {
     private final Timer animacion;
     private final long inicio;
     private final int intervalo;
+    /** Banda de la esquina inferior derecha que se recorta del cover. */
+    private final double recorte;
 
     protected FondoAnimado(String prefijo, int maximo, int cuadrosPorSegundo) {
+        this(prefijo, maximo, cuadrosPorSegundo, 0.0);
+    }
+
+    /**
+     * Variante con recorte: descarta una banda de la esquina inferior derecha de
+     * cada cuadro (el @ del autor del arte), ved {@link Imagenes#dibujarSecuenciaRecortada}.
+     */
+    protected FondoAnimado(String prefijo, int maximo, int cuadrosPorSegundo,
+                           double recorte) {
         cuadros = Imagenes.cargarSecuencia(prefijo, maximo);
+        this.recorte = recorte;
         setOpaque(true);
         setBackground(UIConstants.FONDO);
         if (cuadros.isEmpty()) {
@@ -40,8 +52,12 @@ public class FondoAnimado extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-        if (!Imagenes.dibujarSecuencia((Graphics2D) g, getWidth(), getHeight(),
-                cuadros, cuadroActual())) {
+        boolean pintado = recorte > 0.0
+                ? Imagenes.dibujarSecuenciaRecortada((Graphics2D) g, getWidth(), getHeight(),
+                        cuadros, cuadroActual(), recorte)
+                : Imagenes.dibujarSecuencia((Graphics2D) g, getWidth(), getHeight(),
+                        cuadros, cuadroActual());
+        if (!pintado) {
             super.paintComponent(g);
         }
     }

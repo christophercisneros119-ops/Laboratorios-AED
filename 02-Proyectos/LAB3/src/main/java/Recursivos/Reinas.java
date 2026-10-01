@@ -26,21 +26,37 @@ public class Reinas {
         if (fila == TOTAL_REINAS) {
             return pasos;
         }
-        for (int columna = 0; columna < TOTAL_REINAS; columna++) {
-            if (!puedeColocar(fila, columna, columnas, diagonalesPrincipal, diagonalesSecundaria)) {
-                continue;
-            }
-            marcar(fila, columna, columnas, diagonalesPrincipal, diagonalesSecundaria);
-            pasos.add(new PasoReina(fila, columna));
-            List<PasoReina> solucion = colocar(fila + 1, columnas, diagonalesPrincipal,
-                    diagonalesSecundaria, pasos);
-            if (solucion != null) {
-                return solucion;
-            }
-            pasos.remove(pasos.size() - 1);
-            desmarcar(fila, columna, columnas, diagonalesPrincipal, diagonalesSecundaria);
+        return probarColumna(fila, 0, columnas, diagonalesPrincipal,
+                diagonalesSecundaria, pasos);
+    }
+
+    /**
+     * Recorre las columnas en diagonal recursivo, sin bucles: intenta colocar
+     * la reina en {@code columna} y, si no hay solucion por ahi, prueba la
+     * siguiente con {@code columna + 1}.
+     */
+    private static List<PasoReina> probarColumna(int fila, int columna, boolean[] columnas,
+                                                 boolean[] diagonalesPrincipal,
+                                                 boolean[] diagonalesSecundaria,
+                                                 List<PasoReina> pasos) {
+        if (columna >= TOTAL_REINAS) {
+            return null;
         }
-        return null;
+        if (!puedeColocar(fila, columna, columnas, diagonalesPrincipal, diagonalesSecundaria)) {
+            return probarColumna(fila, columna + 1, columnas, diagonalesPrincipal,
+                    diagonalesSecundaria, pasos);
+        }
+        marcar(fila, columna, columnas, diagonalesPrincipal, diagonalesSecundaria);
+        pasos.add(new PasoReina(fila, columna));
+        List<PasoReina> solucion = colocar(fila + 1, columnas, diagonalesPrincipal,
+                diagonalesSecundaria, pasos);
+        if (solucion != null) {
+            return solucion;
+        }
+        pasos.remove(pasos.size() - 1);
+        desmarcar(fila, columna, columnas, diagonalesPrincipal, diagonalesSecundaria);
+        return probarColumna(fila, columna + 1, columnas, diagonalesPrincipal,
+                diagonalesSecundaria, pasos);
     }
 
     private static boolean puedeColocar(int fila, int columna, boolean[] columnas,

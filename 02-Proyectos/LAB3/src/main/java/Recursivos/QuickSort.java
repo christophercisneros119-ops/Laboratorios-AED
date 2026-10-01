@@ -28,19 +28,33 @@ public class QuickSort {
     private static int particionar(double[] valores, int primero, int ultimo,
                                    List<PasoQuickSort> pasos) {
         double pivote = valores[ultimo];
-        int limite = primero;
-        for (int explorado = primero; explorado < ultimo; explorado++) {
-            if (valores[explorado] <= pivote) {
-                if (limite != explorado) {
-                    intercambiar(valores, limite, explorado, primero, ultimo, pasos);
-                }
-                limite = limite + 1;
+        int[] limite = {primero};
+        explorar(valores, primero, primero, ultimo, pivote, limite, pasos);
+        if (limite[0] != ultimo) {
+            intercambiar(valores, limite[0], ultimo, primero, ultimo, pasos);
+        }
+        return limite[0];
+    }
+
+    /**
+     * Rastreo del pivote en diagonal recursivo, sin bucles: compara la casilla
+     * {@code explorado} contra el pivote y baja a la siguiente con
+     * {@code explorado + 1}. El limite vive en un arreglo de una celda para que
+     * la recursion pueda acumularlo sin devolverlo paso a paso.
+     */
+    private static void explorar(double[] valores, int explorado, int primero,
+                                 int ultimo, double pivote, int[] limite,
+                                 List<PasoQuickSort> pasos) {
+        if (explorado >= ultimo) {
+            return;
+        }
+        if (valores[explorado] <= pivote) {
+            if (limite[0] != explorado) {
+                intercambiar(valores, limite[0], explorado, primero, ultimo, pasos);
             }
+            limite[0] = limite[0] + 1;
         }
-        if (limite != ultimo) {
-            intercambiar(valores, limite, ultimo, primero, ultimo, pasos);
-        }
-        return limite;
+        explorar(valores, explorado + 1, primero, ultimo, pivote, limite, pasos);
     }
 
     private static void intercambiar(double[] valores, int origen, int destino,

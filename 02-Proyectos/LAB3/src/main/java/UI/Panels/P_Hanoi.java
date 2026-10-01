@@ -3,6 +3,7 @@ package UI.Panels;
 import Recursivos.Constantes;
 import Recursivos.Hanoi;
 import Recursivos.PasoHanoi;
+import UI.Elements.BotonEstilizado;
 import UI.Elements.Imagenes;
 import UI.Elements.UIConstants;
 
@@ -10,7 +11,6 @@ import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -32,15 +32,17 @@ private final JTextField txtDiscos =
         return lista;
     }
 
-    public P_Hanoi() {
+public P_Hanoi() {
 super("Torres de Hanói",
                 "Mueve los discos de la columna A a la columna C usando la columna B.",
-                UIConstants.FONDO_HANOI);
-JPanel fila = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
+                UIConstants.FONDO_HANOI, UIConstants.CAFE_OSCURO, UIConstants.CAFE_OSCURO);
+        JPanel fila = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
         fila.add(rotulo("Discos:"));
         fila.add(txtDiscos);
-        JButton btnGenerar = new JButton("Generar");
-        btnGenerar.setFont(UIConstants.FONT_TEXTO);
+        fila.add(rotulo("Velocidad:"));
+        fila.add(velocidad());
+        BotonEstilizado btnGenerar = BotonEstilizado.texto("Generar", 150,
+                UIConstants.GRIS_SUAVE, UIConstants.GRIS_OSCURO, UIConstants.GRIS_PRESION);
         txtDiscos.setFont(UIConstants.FONT_TEXTO);
         btnGenerar.addActionListener(evento -> reiniciar());
         fila.add(btnGenerar);
@@ -103,14 +105,19 @@ private int leerDiscos() {
 
 @Override
     protected void pintarLienzo(Graphics2D g2, int ancho, int alto) {
-        Imagenes.dibujarFondoPie(g2, ancho, alto, "fondo_hanoi");
+        int[] ventana = Imagenes.ventanaFoto(ancho, alto);
+        int vx = ventana[0];
+        int vy = ventana[1];
+        int aw = ventana[2];
+        int ah = ventana[3];
+        Imagenes.dibujarFondoVentana(g2, ventana, "fondo_hanoi");
 
         // La tarta se apoya unos pixeles mas abajo que el margen, asi queda mas
         // cerca del borde y las letras A/B/C siguen apoyadas en el fondo.
-        int base = alto - UIConstants.MARGEN + 10;
+        int base = vy + ah - UIConstants.MARGEN + 10;
         // Piso de tarta de altura fija: divido siempre por 10, asi los 7 pisos
-        // maximos calzan en el lienzo y la tarta no se espesa si usas menos.
-        int altoPiso = alto / (Constantes.DISCOS_MAXIMOS + Constantes.TORRES_TOTAL);
+        // maximos calzan en la ventana y la tarta no se espesa si usas menos.
+        int altoPiso = ah / (Constantes.DISCOS_MAXIMOS + Constantes.TORRES_TOTAL);
         int grosor = Math.max(4, ancho / 200);
         int radio = Math.max(6, altoPiso / 3);
         // Pisos angostos: el piso mayor (disco 7) llega a ancho/7, para que la
@@ -146,9 +153,9 @@ private int leerDiscos() {
         for (int d = 1; d <= Constantes.DISCOS_MAXIMOS; d++) {
             pilaMaxima += altoDibujo[d] * escala;
         }
-        int topePoste = sprites ? (int) Math.round(base - pilaMaxima) : alto / 5;
+        int topePoste = sprites ? (int) Math.round(base - pilaMaxima) : vy + ah / 5;
         for (int torre = 0; torre < Constantes.TORRES_TOTAL; torre++) {
-            int centro = posicionTorre(ancho, torre);
+            int centro = posicionTorre(aw, torre);
             g2.fillRect(centro - grosor / 2, topePoste, grosor, base - topePoste);
         }
 
@@ -161,12 +168,11 @@ private int leerDiscos() {
             if (pila.isEmpty()) {
                 continue;
             }
-            int centro = posicionTorre(ancho, torre);
+            int centro = posicionTorre(aw, torre);
             if (!sprites) {
                 for (int nivel = 0; nivel < pila.size(); nivel++) {
                     int disco = pila.get(nivel);
-                    int anchoDisco = ancho * disco
-                            / divisorAncho;
+                    int anchoDisco = aw * disco / divisorAncho;
                     int y = base - (nivel + 1) * altoPiso;
                     caja(g2, centro - anchoDisco / 2, y, anchoDisco, altoPiso - 2, radio,
                             UIConstants.PIEZA, UIConstants.BORDE);
@@ -184,8 +190,7 @@ private int leerDiscos() {
             double y = base - totalPila;
             for (int nivel = pila.size() - 1; nivel >= 0; nivel--) {
                 int disco = pila.get(nivel);
-                int anchoDisco = ancho * disco
-                        / divisorAncho;
+                int anchoDisco = aw * disco / divisorAncho;
                 double altoTier = altoDibujo[disco] * escala;
                 int hTier = Math.max(1, (int) Math.round(altoTier));
                 int yTier = (int) Math.round(y);
@@ -198,7 +203,7 @@ private int leerDiscos() {
         // La velita: su llama es un sprite aparte que solo corona la torre C
         // cuando la secuencia termino y los discos ya estan todos ordenados.
         if (sprites && completa()) {
-            int centro = posicionTorre(ancho, Constantes.TORRE_DESTINO);
+            int centro = posicionTorre(aw, Constantes.TORRE_DESTINO);
             List<Integer> pila = torres.get(Constantes.TORRE_DESTINO);
             double totalPila = 0;
             for (int nivel = 0; nivel < pila.size(); nivel++) {
@@ -208,18 +213,18 @@ private int leerDiscos() {
             if (cajaVela != null) {
                 double altoVela = (cajaVela[3] - cajaVela[2] + 1) * escala;
                 int hVela = Math.max(1, (int) Math.round(altoVela));
-                int anchoVela = Math.max(1, ancho / divisorAncho);
+                int anchoVela = Math.max(1, aw / divisorAncho);
                 int yVela = (int) Math.round(base - totalPila) - hVela;
                 Imagenes.dibujarPiso(g2, "velita", centro - anchoVela / 2,
                         yVela, anchoVela, hVela);
             }
         }
 
-        // Columnas: A, B y C, debajo de cada poste, pegadas al borde del lienzo.
+        // Columnas: A, B y C, debajo de cada poste, pegadas al borde de la ventana.
         String[] columnas = {"A", "B", "C"};
         for (int torre = 0; torre < Constantes.TORRES_TOTAL; torre++) {
-            textoCentrado(g2, columnas[torre], posicionTorre(ancho, torre),
-                    alto - 4, alto, UIConstants.TEXTO_SUAVE);
+            textoCentrado(g2, columnas[torre], posicionTorre(aw, torre),
+                    vy + ah - 4, ah, UIConstants.CAFE_OSCURO);
         }
     }
 

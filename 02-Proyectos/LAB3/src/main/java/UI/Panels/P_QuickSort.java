@@ -2,6 +2,7 @@ package UI.Panels;
 
 import Recursivos.PasoQuickSort;
 import Recursivos.QuickSort;
+import UI.Elements.BotonEstilizado;
 import UI.Elements.Imagenes;
 import UI.Elements.UIConstants;
 
@@ -10,7 +11,6 @@ import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -34,15 +34,16 @@ public class P_QuickSort extends P_EjercicioBase {
 
     public P_QuickSort() {
         super("QuickSort",
-                "Partición de Lomuto: 10 barras fijas; escribe 10 números separados por coma"
-                        + " (los decimales, con punto).",
+                "Partición de Lomuto: 10 barras fijas; escribe 10 enteros positivos separados por coma.",
                 UIConstants.FONDO_QUICKSORT);
         animar(UIConstants.CUADROS_POR_SEGUNDO);
         JPanel fila = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
         fila.add(rotulo("Valores:"));
         fila.add(txtValores);
-        JButton btnGenerar = new JButton("Generar");
-        btnGenerar.setFont(UIConstants.FONT_TEXTO);
+        fila.add(rotulo("Velocidad:"));
+        fila.add(velocidad());
+        BotonEstilizado btnGenerar = BotonEstilizado.texto("Generar", 150,
+                UIConstants.GRIS_SUAVE, UIConstants.GRIS_OSCURO, UIConstants.GRIS_PRESION);
         txtValores.setFont(UIConstants.FONT_TEXTO);
         btnGenerar.addActionListener(evento -> reiniciar());
         fila.add(btnGenerar);
@@ -55,17 +56,29 @@ public class P_QuickSort extends P_EjercicioBase {
     }
 
     private double[] leerValores() {
-        // Primero lo mas molesto: cualquier caracter que no sea numero, coma,
-        // punto o espacio (letras, signos...) se avisa de inmediato, sin
-        // importar cuantos valores haya.
-        if (txtValores.getText().matches(".*[^\\d.,\\s].*")) {
-            avisar("Ingrese solo números; no escriba otros caracteres.");
+        String texto = txtValores.getText().trim();
+
+        // Signos: no existen en esta entrada, de un vistazo y con su propio aviso.
+        if (texto.contains("-")) {
+            avisar("Los números no deben llevar signo; escriba enteros positivos.");
+            return null;
+        }
+        // Decimales: el problema pide enteros, el punto se avisa antes que el
+        // resto de los simbolos para dar el mensaje mas util.
+        if (texto.contains(".")) {
+            avisar("Los números deben ser enteros; no escriba decimales.");
+            return null;
+        }
+        // Primero lo mas molesto: cualquier otro caracter (letras, simbolos...)
+        // se avisa de inmediato, sin importar cuantos valores haya.
+        if (texto.matches(".*[^\\d,\\s].*")) {
+            avisar("Ingrese solo números separados por coma; no escriba otros caracteres.");
             return null;
         }
 
         // split(patron, -1) conserva los vacios finales: "1,2,3" sin un numero
         // no debe contar como 9 valores.
-        String[] partes = txtValores.getText().split(",", -1);
+        String[] partes = texto.split(",", -1);
         if (partes.length != BARRAS_TOTAL) {
             avisar("Debe ingresar exactamente " + BARRAS_TOTAL
                     + " números separados por coma.");
@@ -74,19 +87,18 @@ public class P_QuickSort extends P_EjercicioBase {
 
         double[] valores = new double[BARRAS_TOTAL];
         for (int i = 0; i < BARRAS_TOTAL; i++) {
-            String texto = partes[i].trim();
-            if (texto.isEmpty()) {
+            String porcion = partes[i].trim();
+            if (porcion.isEmpty()) {
                 avisar("Hay un valor vacío; revise las comas.");
                 return null;
             }
-            // Enteros o decimales con punto, sin signo.
-            if (!texto.matches("\\d+(\\.\\d+)?")) {
-                avisar("El valor \"" + texto + "\" no es un número válido.");
+            if (!porcion.matches("\\d+")) {
+                avisar("El valor \"" + porcion + "\" no es un número entero.");
                 return null;
             }
-            valores[i] = Double.parseDouble(texto);
+            valores[i] = Double.parseDouble(porcion);
             if (valores[i] < 1.0) {
-                avisar("Los valores deben ser mayores o iguales a 1.");
+                avisar("Los valores deben ser enteros mayores que 0.");
                 return null;
             }
         }
@@ -119,25 +131,31 @@ public class P_QuickSort extends P_EjercicioBase {
 
     @Override
     protected void pintarLienzo(Graphics2D g2, int ancho, int alto) {
+        int[] ventana = Imagenes.ventanaFoto(ancho, alto);
+        int vx = ventana[0];
+        int vy = ventana[1];
+        int aw = ventana[2];
+        int ah = ventana[3];
         // El fondo va antes del corte por lista vacia, asi tambien se ve cuando
         // todavia no se han generado valores.
-        if (!Imagenes.dibujarSecuencia(g2, ancho, alto, cuadros, cuadroActual(cuadros.size()))) {
-            Imagenes.dibujarFondo(g2, ancho, alto, FONDO);
+        if (!Imagenes.dibujarFondoVentana(g2, ventana, cuadros,
+                cuadroActual(cuadros.size()))) {
+            Imagenes.dibujarFondoVentana(g2, ventana, FONDO);
         }
 
         if (mostrados.length == 0) {
             return;
         }
         int margen = UIConstants.MARGEN;
-        int base = alto - 2 * margen;
-        int separacion = (ancho - 2 * margen) / mostrados.length;
+        int base = vy + ah - margen;
+        int separacion = (aw - 2 * margen) / mostrados.length;
         int anchoBarra = Math.max(separacion * 2 / 3, 2);
 
-        g2.setFont(fuenteNumeros(alto));
+        g2.setFont(fuenteNumeros(ah));
         // El numero de cada barra se dibuja arriba de la punta; se reserva la
         // altura del glifo para que la espada mas alta no lo recorte en el borde.
         int cabeza = g2.getFontMetrics().getAscent() + 8;
-        int altoUtil = base - margen - cabeza;
+        int altoUtil = base - (vy + margen) - cabeza;
 
         double maximo = 1.0;
         for (double valor : mostrados) {
@@ -145,10 +163,10 @@ public class P_QuickSort extends P_EjercicioBase {
         }
 
         g2.setColor(UIConstants.BORDE);
-        g2.fillRect(margen, base, ancho - 2 * margen, 2);
+        g2.fillRect(vx + margen, base, aw - 2 * margen, 2);
 
         for (int i = 0; i < mostrados.length; i++) {
-            int x = margen + separacion * i + (separacion - anchoBarra) / 2;
+            int x = vx + margen + separacion * i + (separacion - anchoBarra) / 2;
             int altura = Math.max((int) Math.round(altoUtil * mostrados[i] / maximo), 2);
             int y = base - altura;
             boolean resaltada = false;
@@ -180,7 +198,7 @@ public class P_QuickSort extends P_EjercicioBase {
             }
 
             textoEncima(g2, rotular(mostrados[i]), x + anchoBarra / 2,
-                    y, alto, UIConstants.TEXTO);
+                    y, ah, UIConstants.TEXTO_SUAVE);
         }
     }
 

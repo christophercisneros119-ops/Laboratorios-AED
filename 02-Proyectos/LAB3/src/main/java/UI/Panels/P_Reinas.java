@@ -6,9 +6,11 @@ import Recursivos.Reinas;
 import UI.Elements.Imagenes;
 import UI.Elements.UIConstants;
 
+import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.util.Arrays;
 import java.util.List;
+import javax.swing.JPanel;
 
 public class P_Reinas extends P_EjercicioBase {
 
@@ -24,10 +26,14 @@ public class P_Reinas extends P_EjercicioBase {
         return columnas;
     }
 
-    public P_Reinas() {
+public P_Reinas() {
 super(Constantes.LADO_TABLERO + " Reinas",
                 "Una reina por fila y por columna, sin que se ataquen en diagonal.",
                 UIConstants.FONDO_REINAS);
+        JPanel fila = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
+        fila.add(rotulo("Velocidad:"));
+        fila.add(velocidad());
+        addConfiguracion(fila);
         preparar();
         refrescar();
     }
@@ -74,17 +80,22 @@ super(Constantes.LADO_TABLERO + " Reinas",
      */
     private static final double PROPORCION_PIEZA = 0.90;
 
-    @Override
+@Override
     protected void pintarLienzo(Graphics2D g2, int ancho, int alto) {
-        Imagenes.dibujarFondo(g2, ancho, alto, "fondo_reinas");
+        int[] ventana = Imagenes.ventanaFoto(ancho, alto);
+        int vx = ventana[0];
+        int vy = ventana[1];
+        int aw = ventana[2];
+        int ah = ventana[3];
+        Imagenes.dibujarFondoVentana(g2, ventana, "fondo_reinas");
 
-        int disponible = Math.max(Math.min(ancho, alto) - 2 * UIConstants.MARGEN, 10);
+        int disponible = Math.max(Math.min(aw, ah) - 2 * UIConstants.MARGEN, 10);
         // La escala sale del lado del PNG completo, no del area jugable: el factor
         // tiene que ser entero para que el pixel art no se difumine.
         int escala = Math.max(disponible / TABLERO_LADO, 1);
         int lado = TABLERO_LADO * escala;
-        int origenX = (ancho - lado) / 2;
-        int origenY = (alto - lado) / 2;
+        int origenX = vx + (aw - lado) / 2;
+        int origenY = vy + (ah - lado) / 2;
 
         // Escenario: el tablero, entero y una sola vez.
         if (!Imagenes.dibujarEscalado(g2, "tablero", origenX, origenY, escala)) {
