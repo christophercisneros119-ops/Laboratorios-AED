@@ -3,6 +3,7 @@ package UI.Panels;
 import Recursivos.Constantes;
 import Recursivos.PasoReina;
 import Recursivos.Reinas;
+import UI.Elements.BotonEstilizado;
 import UI.Elements.Imagenes;
 import UI.Elements.UIConstants;
 
@@ -33,6 +34,12 @@ super(Constantes.LADO_TABLERO + " Reinas",
         JPanel fila = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
         fila.add(rotulo("Velocidad:"));
         fila.add(velocidad());
+        // La guia pide un boton para que el usuario ingrese la siguiente
+        // reina: avanza un paso a mano mientras la reproduccion esta detenida.
+        BotonEstilizado btnSiguiente = BotonEstilizado.textoAjustado("Siguiente reina",
+                UIConstants.GRIS_SUAVE, UIConstants.GRIS_OSCURO, UIConstants.GRIS_PRESION);
+        btnSiguiente.addActionListener(evento -> siguientePaso());
+        fila.add(btnSiguiente);
         addConfiguracion(fila);
         preparar();
         refrescar();

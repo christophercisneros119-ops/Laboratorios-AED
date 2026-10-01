@@ -200,6 +200,15 @@ public abstract class P_EjercicioBase extends JPanel {
         actualizarEstado();
     }
 
+    /**
+     * Coloca un paso mas a mano, sin animacion. Lo usa el boton de Reinas para
+     * que el usuario ingrese la siguiente reina: solo avanza con la
+     * reproduccion detenida y nunca pasa del ultimo paso.
+     */
+    protected final void siguientePaso() {
+        reproductor.avanzarUno();
+    }
+
     private void avanzar() {
         aplicarPaso(reproductor.paso());
         lienzo.repaint();

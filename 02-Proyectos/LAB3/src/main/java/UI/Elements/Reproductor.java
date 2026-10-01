@@ -62,6 +62,22 @@ public class Reproductor {
         paso = -1;
     }
 
+    /**
+     * Avanza exactamente un paso cuando la reproduccion esta detenida: es el
+     * movimiento del boton "Siguiente reina", que deja al usuario colocar las
+     * reinas una a una. Con la animacion corriendo o ya terminada no hace nada.
+     */
+    public void avanzarUno() {
+        if (activo() || terminado() || total() <= 0) {
+            return;
+        }
+        paso++;
+        if (terminado()) {
+            temporizador.stop();
+        }
+        alAvanzar.run();
+    }
+
     public void detener() {
         temporizador.stop();
     }
