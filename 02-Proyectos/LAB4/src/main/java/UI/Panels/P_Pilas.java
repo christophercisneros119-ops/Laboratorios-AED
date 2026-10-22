@@ -14,15 +14,11 @@ import java.awt.Graphics2D;
 import javax.swing.Box;
 import javax.swing.JPanel;
 
-/**
- * Modulo de pilas (ejercicio 2 de la guia): los nombres de los centros
- * comerciales de una ciudad, insertados con Push y eliminados con Pop.
- */
+/** Modulo de pilas: centros comerciales de la ciudad (ejercicio 2). */
 public class P_Pilas extends P_ModuloBase {
 
     private static final int CAPACIDAD_MINIMA = 1;
     private static final int CAPACIDAD_MAXIMA = 16;
-    /** Tope de alto y ancho de cada celda de la pila. */
     private static final int ALTO_CELDA_MAXIMO = 64;
     private static final int ANCHO_CELDA_MAXIMO = 260;
     private static final int SEPARACION_CELDA = 6;
@@ -113,7 +109,7 @@ public class P_Pilas extends P_ModuloBase {
         refrescar();
     }
 
-    /** Empieza de nuevo: pila vacia con la misma capacidad. */
+    // Pila vacia con la misma capacidad.
     @Override
     protected void reiniciar() {
         if (pila != null) {

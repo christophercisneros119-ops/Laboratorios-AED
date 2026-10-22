@@ -8,12 +8,7 @@ import java.awt.event.FocusEvent;
 import javax.swing.BorderFactory;
 import javax.swing.JTextField;
 
-/**
- * Campo de texto con el look pixel art del laboratorio: caja oscura de esquinas
- * redondeadas, texto claro en Silkscreen y borde azul del mismo radio que los
- * botones. Ademas puede llevar una pista de ejemplo, que se ve tenue solo
- * mientras el campo esta vacio y no tiene el foco.
- */
+/** Campo de texto con look pixel art y pista de ejemplo opcional. */
 public class CampoTexto extends JTextField {
 
     private String pista;
@@ -26,14 +21,12 @@ public class CampoTexto extends JTextField {
         setCaretColor(UIConstants.TEXTO);
         setSelectionColor(UIConstants.BORDE);
         setSelectedTextColor(UIConstants.TEXTO);
-        // El aire interior hace de borde: el trazo se dibuja aparte, redondeado.
         setBorder(BorderFactory.createEmptyBorder(8, 12, 8, 12));
     }
 
-    /** Pista de ejemplo (Ej: Metro Centro) que desaparece al escribir. */
+    // Pista de ejemplo que desaparece al escribir o al tomar el foco.
     public void setPista(String texto) {
         pista = texto;
-        // Con y sin foco se repinta: la pista se oculta mientras se escribe.
         addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent evento) {
@@ -51,7 +44,6 @@ public class CampoTexto extends JTextField {
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
         int radio = UIConstants.RADIO_BOTON;
-        // Sin antialiasing: las esquinas duras siguen el estilo pixel art.
         g2.setColor(UIConstants.ESCENARIO);
         g2.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, radio, radio);
         g2.setColor(UIConstants.BORDE);

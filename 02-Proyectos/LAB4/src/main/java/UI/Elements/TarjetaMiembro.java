@@ -10,21 +10,9 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-/**
- * Tarjeta cuadrada de la portada con el marco de pixel art y la foto del
- * integrante adentro, a prueba de que la imagen no exista.
- *
- * <p>El marco es un bisel de dos tonos sin suavizado, igual que un frame de
- * pixel art: el tono exterior marca el contorno y el claro escala hacia
- * adentro. Dentro se estira la foto hasta cubrir el hueco, centrada y con
- * interpolacion suave, porque las fotos no son pixel art.
- *
- * <p>Si la imagen no esta, se pinta el hueco oscuro con las iniciales para que
- * la portada siga armada igual; las iniciales las pasa quien llama.
- */
+/** Tarjeta cuadrada de la portada: foto, o iniciales si falta. */
 public class TarjetaMiembro extends JPanel {
 
-    /** Borde del marco exterior, en pixeles del lado. */
     private static final int MARCO = 6;
     private static final Color BORDE_TARJETA = new Color(0x3A4754);
     private static final Color BISEL_TARJETA = new Color(0x9AA8B4);

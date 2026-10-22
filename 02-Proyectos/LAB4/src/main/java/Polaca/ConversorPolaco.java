@@ -7,21 +7,12 @@ import Estructuras.SubdesbordamientoException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Conversion de expresiones infijas a notacion polaca usando la clase Pila,
- * igual que los pseudocodigos del curso. La postfija lee de izquierda a
- * derecha y vacia la pila por prioridad menor o igual; la prefija lee de
- * derecha a izquierda, compara con prioridad estrictamente menor y escribe
- * su salida invertida.
- *
- * <p>Cada paso se registra en la traza con el simbolo leido, el contenido de
- * la pila y la salida acumulada, que es lo que la guia pide ir imprimiendo.
- */
+/** Conversion infija a prefija y postfija con una Pila, como el pseudocodigo del curso. */
 public final class ConversorPolaco {
 
     private ConversorPolaco() {}
 
-    /** Convierte la expresion infija a notacion postfija, con su traza. */
+    // Postfija: lee izquierda a derecha y vacia la pila por prioridad <=.
     public static ResultadoPolaco aPostfija(String infija) throws ExpresionInvalidaException {
         String expresion = validar(infija);
         List<PasoPolaco> pasos = new ArrayList<>();
@@ -66,7 +57,7 @@ public final class ConversorPolaco {
         return new ResultadoPolaco(expresion, salida.toString(), pasos);
     }
 
-    /** Convierte la expresion infija a notacion prefija, con su traza. */
+    // Prefija: lee derecha a izquierda con prioridad < y salida invertida.
     public static ResultadoPolaco aPrefija(String infija) throws ExpresionInvalidaException {
         String expresion = validar(infija);
         List<PasoPolaco> pasos = new ArrayList<>();
@@ -109,14 +100,13 @@ public final class ConversorPolaco {
                     salida.toString(), "vacia la pila al final"));
         }
 
-        // La prefija se construye al reves: la salida se invierte al final.
         String resultado = salida.reverse().toString();
         pasos.add(new PasoPolaco(numero, " ", List.of(), resultado,
                 "invierte la salida"));
         return new ResultadoPolaco(expresion, resultado, pasos);
     }
 
-    /** Push del conversor: no puede desbordar porque la pila nace con espacio de sobra. */
+    // Push que no puede desbordar: la pila nace con espacio de sobra.
     private static void apilar(Pila pila, String simbolo) {
         try {
             pila.push(simbolo);
@@ -125,7 +115,7 @@ public final class ConversorPolaco {
         }
     }
 
-    /** Pop del conversor: no puede subdesbordar porque todo sacado revisa estaVacia antes. */
+    // Pop que no puede subdesbordar: todo sacado revisa estaVacia antes.
     private static String sacar(Pila pila) {
         try {
             return pila.pop();
@@ -134,7 +124,7 @@ public final class ConversorPolaco {
         }
     }
 
-    /** Prioridad de los operadores, igual que el pseudocodigo del curso. */
+    // Prioridades del pseudocodigo del curso.
     private static int prioridad(String operador) {
         return switch (operador) {
             case "^" -> 4;
@@ -157,12 +147,7 @@ public final class ConversorPolaco {
                 || simbolo == '-';
     }
 
-    /**
-     * Quita los espacios y revisa que la expresion sea una infija bien
-     * formada: operandos A-Z, operadores validos, parentesis balanceados y
-     * alternancia correcta entre operandos y operadores. Sin esto, los
-     * algoritmos de conversion se saldrian del arreglo.
-     */
+    // Quita espacios y revisa formato infija: caracteres, parentesis y alternancia.
     private static String validar(String infija) throws ExpresionInvalidaException {
         if (infija == null || infija.isBlank()) {
             throw new ExpresionInvalidaException("escriba una expresion infija");

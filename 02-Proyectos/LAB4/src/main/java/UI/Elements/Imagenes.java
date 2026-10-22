@@ -12,13 +12,7 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-/**
- * Carga los fondos animados y las fotos de {@code src/main/resources/imagenes}
- * una sola vez y los pinta.
- *
- * <p>Si un archivo no existe devuelve {@code null} o una lista vacia, para que
- * quien dibuja siga con el color plano de siempre y la app no se rompa.
- */
+/** Carga fondos y fotos de resources una sola vez y los pinta. */
 public final class Imagenes {
 
     private static final String CARPETA = "/imagenes/";
@@ -27,16 +21,11 @@ public final class Imagenes {
 
     private Imagenes() {}
 
-    /** Foto o cuadro suelto ya cacheado. Devuelve null si no existe. */
     public static BufferedImage obtener(String nombre) {
         return cargar(nombre);
     }
 
-    /**
-     * Carga los cuadros de un fondo animado: {@code prefijo_00.png},
-     * {@code prefijo_01.png}... y sigue hasta el primero que falta, asi agregar
-     * un cuadro nuevo es solo dejar el archivo.
-     */
+    // Carga prefijo_00.png, prefijo_01.png... hasta el primer hueco.
     public static List<BufferedImage> cargarSecuencia(String prefijo, int maximo) {
         String clave = prefijo.toLowerCase();
         if (SECUENCIAS.containsKey(clave)) {
@@ -54,11 +43,6 @@ public final class Imagenes {
         return SECUENCIAS.get(clave);
     }
 
-    /**
-     * Dibuja un cuadro del fondo hasta cubrir el lienzo, centrado.
-     *
-     * @return false si la lista esta vacia, para que asome el color plano
-     */
     public static boolean dibujarSecuencia(Graphics2D g2, int ancho, int alto,
                                            List<BufferedImage> cuadros, int indice) {
         if (cuadros == null || cuadros.isEmpty()) {
@@ -68,13 +52,7 @@ public final class Imagenes {
         return dibujarCubriendo(g2, ancho, alto, cuadros.get(i), 0, 0);
     }
 
-    /**
-     * Variante del fondo de menu: descarta una banda de la esquina inferior
-     * derecha de cada cuadro para dejar fuera el @ del autor del arte.
-     *
-     * @param recorte fraccion (0-0.9) que se corta de cada borde
-     * @return false si la lista esta vacia, para que asome el color plano
-     */
+    // Recorta la esquina inferior derecha para dejar fuera el @ del autor del arte.
     public static boolean dibujarSecuenciaRecortada(Graphics2D g2, int ancho, int alto,
                                                     List<BufferedImage> cuadros, int indice,
                                                     double recorte) {
@@ -113,10 +91,7 @@ public final class Imagenes {
         return true;
     }
 
-    /**
-     * Cover: escala la imagen por el eje que mas crece, centra el sobrante del
-     * otro y usa interpolacion suave (los fondos son fotos, no pixel art).
-     */
+    // Escala hasta cubrir el lienzo y centra, con interpolacion suave.
     private static boolean dibujarCubriendo(Graphics2D g2, int ancho, int alto,
                                             BufferedImage original, int origenX, int origenY) {
         if (original == null || original.getWidth() <= 0 || original.getHeight() <= 0) {

@@ -13,14 +13,10 @@ import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
-/**
- * Modulo de cola circular (ejercicio 4 de la guia): los trabajos de impresion
- * de la empresa, con sus 10 estaciones. El final envuelve a la celda 0 y asi
- * reutiliza las celdas que el frente va liberando.
- */
+/** Modulo de cola circular: trabajos de impresion (ejercicio 4). */
 public class P_ColasCirculares extends P_ModuloBase {
 
-    /** La guia fija 10 estaciones de trabajo para imprimir. */
+    // La guia fija 10 estaciones de trabajo para imprimir.
     private static final int ESTACIONES = 10;
     private static final int ANCHO_CELDA_MAXIMO = 140;
     private static final int ALTO_CELDA_MAXIMO = 96;
@@ -78,7 +74,7 @@ public class P_ColasCirculares extends P_ModuloBase {
         refrescar();
     }
 
-    /** Empieza de nuevo: cola circular vacia de 10 estaciones. */
+    // Cola circular vacia de 10 estaciones.
     @Override
     protected void reiniciar() {
         cola = new ColaCircular(ESTACIONES);
@@ -120,7 +116,7 @@ public class P_ColasCirculares extends P_ModuloBase {
             DibujoArreglo.indice(g2, x + anchoCelda / 2, y + altoCelda + 16, i);
         }
 
-        // La flecha del envoltorio vive debajo de los indices: de la celda 9 a la 0.
+        // Flecha de envoltura debajo de los indices: de la celda 9 a la 0.
         DibujoArreglo.envoltura(g2, x0 + 9 * paso + anchoCelda / 2,
                 x0 + anchoCelda / 2, y + altoCelda + 34, acento());
 

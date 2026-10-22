@@ -14,12 +14,7 @@ import java.awt.Graphics2D;
 import javax.swing.Box;
 import javax.swing.JPanel;
 
-/**
- * Modulo de colas lineales (ejercicio 3 de la guia): las personas que visitan
- * el banco y esperan su turno, insertadas con Encolar y atendidas con
- * Desencolar. Las celdas que el frente deja atras se pintan atenuadas: son la
- * basura que la cola lineal nunca reutiliza.
- */
+/** Modulo de colas: turnos del banco (ejercicio 3). */
 public class P_Colas extends P_ModuloBase {
 
     private static final int CAPACIDAD_MINIMA = 1;
@@ -114,7 +109,7 @@ public class P_Colas extends P_ModuloBase {
         refrescar();
     }
 
-    /** Empieza de nuevo: cola vacia con la misma capacidad. */
+    // Cola vacia con la misma capacidad.
     @Override
     protected void reiniciar() {
         if (cola != null) {
@@ -153,6 +148,7 @@ public class P_Colas extends P_ModuloBase {
             String dato = cola.obtener(i);
             boolean activa = !cola.estaVacia()
                     && i >= cola.frente() && i <= cola.fin();
+            // Dato viejo de una celda desencolada: se pinta atenuado.
             boolean basura = dato != null && !activa;
             Color relleno = activa ? UIConstants.CASILLA
                     : (basura ? UIConstants.CASILLA_BASURA : UIConstants.CASILLA_VACIA);
@@ -175,10 +171,7 @@ public class P_Colas extends P_ModuloBase {
         }
     }
 
-    /**
-     * Geometria de la fila horizontal: celdas de ancho parejo centradas, con
-     * indices abajo y punteros arriba.
-     */
+    // Celdas de ancho parejo centradas, con indices abajo y punteros arriba.
     private int[] filaCeldas(int ancho, int alto, int cantidad) {
         int margen = UIConstants.MARGEN;
         int disponible = ancho - 2 * margen - (cantidad - 1) * SEPARACION_CELDA;
@@ -186,7 +179,6 @@ public class P_Colas extends P_ModuloBase {
         int altoCelda = Math.max(Math.min(anchoCelda + 16, ALTO_CELDA_MAXIMO), 44);
         int total = cantidad * anchoCelda + (cantidad - 1) * SEPARACION_CELDA;
         int x0 = (ancho - total) / 2;
-        // La fila sube un poco: abajo quedan los indices y arriba los punteros.
         int y = alto / 2 - altoCelda / 2 - 12;
         return new int[]{x0, y, anchoCelda, altoCelda};
     }

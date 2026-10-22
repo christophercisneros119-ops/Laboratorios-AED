@@ -3,12 +3,7 @@ package Estructuras;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Pila sobre un arreglo fijo, igual que el pseudocodigo del curso: el tope
- * parte en -1 cuando esta vacia y llega a capacidad-1 cuando esta llena.
- * Las operaciones no escriben mensajes: lanzan la excepcion que corresponde
- * y quien llama decide como mostrarla.
- */
+/** Pila con arreglo fijo, igual que el pseudocodigo del curso (tope en -1). */
 public class Pila {
 
     private final String[] elementos;
@@ -22,17 +17,17 @@ public class Pila {
         tope = -1;
     }
 
-    /** PilaLlena del pseudocodigo. */
+    // PilaLlena del pseudocodigo.
     public boolean estaLlena() {
         return tope == elementos.length - 1;
     }
 
-    /** PilaVacia del pseudocodigo. */
+    // PilaVacia del pseudocodigo.
     public boolean estaVacia() {
         return tope == -1;
     }
 
-    /** Push del pseudocodigo: si hay espacio sube el tope y guarda el dato. */
+    // Push del pseudocodigo.
     public void push(String dato) throws DesbordamientoException {
         if (estaLlena()) {
             throw new DesbordamientoException("Desbordamiento: pila llena");
@@ -41,7 +36,7 @@ public class Pila {
         elementos[tope] = dato;
     }
 
-    /** Pop del pseudocodigo: devuelve el dato de la cima y baja el tope. */
+    // Pop del pseudocodigo.
     public String pop() throws SubdesbordamientoException {
         if (estaVacia()) {
             throw new SubdesbordamientoException("Subdesbordamiento: pila vacia");
@@ -51,12 +46,11 @@ public class Pila {
         return dato;
     }
 
-    /** Dato de la cima sin sacarlo. Devuelve null si la pila esta vacia. */
+    // Dato de la cima sin sacarlo.
     public String cima() {
         return estaVacia() ? null : elementos[tope];
     }
 
-    /** Posicion del tope: -1 cuando la pila esta vacia. */
     public int tope() {
         return tope;
     }
@@ -65,12 +59,11 @@ public class Pila {
         return elementos.length;
     }
 
-    /** Cantidad de elementos guardados. */
     public int tamano() {
         return tope + 1;
     }
 
-    /** Dato de una posicion, de 0 (fondo) a tope (cima). Null fuera de rango. */
+    // Dato por posicion, de 0 (fondo) a tope (cima); null fuera de rango.
     public String obtener(int indice) {
         if (indice < 0 || indice > tope) {
             return null;
@@ -78,10 +71,7 @@ public class Pila {
         return elementos[indice];
     }
 
-    /**
-     * Copia de los elementos del fondo a la cima. Sirve para pintar la pila y
-     * para registrar la traza de una conversion polaca.
-     */
+    // Copia del fondo a la cima, para pintar o registrar la traza.
     public List<String> contenido() {
         List<String> copia = new ArrayList<>();
         for (int i = 0; i <= tope; i++) {

@@ -15,16 +15,10 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-/**
- * Portada del laboratorio. Los integrantes salen como tarjetas cuadradas con
- * su foto (marco de pixel art) en fila. Si una foto falta, la tarjeta muestra
- * las iniciales y la fila se mantiene.
- */
+/** Portada del laboratorio con las tarjetas de los integrantes. */
 public class UNI_Portada extends FondoAnimado {
 
-    /** Prefijo de los cuadros del fondo animado: fondo_portada_00.png y siguientes. */
     private static final String FONDO = "fondo_portada";
-    /** Lado de cada tarjeta de integrante, en pixeles. */
     private static final int LADO_TARJETA = 128;
 
     public UNI_Portada() {

@@ -7,31 +7,20 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-/**
- * Panel con fondo de video partido en cuadros, como el de QuickSort.
- *
- * <p>Carga la secuencia {@code prefijo_00.png}, {@code prefijo_01.png}... con
- * {@link Imagenes#cargarSecuencia} y la repinta a ritmo fijo derivado del
- * reloj, asi el fondo no se acelera si Swing agrupa repintados. Si no hay
- * cuadros pinta el color plano de siempre.
- */
+/** Panel con fondo de video en cuadros; si no hay cuadros pinta el color plano. */
 public class FondoAnimado extends JPanel {
 
     private final List<BufferedImage> cuadros;
     private final Timer animacion;
     private final long inicio;
     private final int intervalo;
-    /** Banda de la esquina inferior derecha que se recorta del cover. */
     private final double recorte;
 
     protected FondoAnimado(String prefijo, int maximo, int cuadrosPorSegundo) {
         this(prefijo, maximo, cuadrosPorSegundo, 0.0);
     }
 
-    /**
-     * Variante con recorte: descarta una banda de la esquina inferior derecha de
-     * cada cuadro (el @ del autor del arte), ved {@link Imagenes#dibujarSecuenciaRecortada}.
-     */
+    // Con recorte: descarta la esquina inferior derecha de cada cuadro (el @ del autor).
     protected FondoAnimado(String prefijo, int maximo, int cuadrosPorSegundo,
                            double recorte) {
         cuadros = Imagenes.cargarSecuencia(prefijo, maximo);
@@ -62,7 +51,7 @@ public class FondoAnimado extends JPanel {
         }
     }
 
-    /** Cuadro que toca, derivado del reloj y no de un contador que se sume. */
+    // Cuadro derivado del reloj: no se acelera si Swing agrupa repintados.
     private int cuadroActual() {
         if (cuadros.isEmpty()) {
             return 0;
@@ -74,6 +63,7 @@ public class FondoAnimado extends JPanel {
     @Override
     public void removeNotify() {
         super.removeNotify();
+        // El temporizador muere junto con el panel.
         if (animacion != null) {
             animacion.stop();
         }

@@ -10,31 +10,12 @@ import java.awt.Polygon;
 
 import javax.swing.JButton;
 
-/**
- * Boton de la interfaz con hover y click de color.
- *
- * <p>El boton es una pieza con su propia paleta: {@code idle} en reposo,
- * {@code hover} cuando el mouse pasa encima y {@code press} mientras se
- * mantiene el clic. Al hacer hover crece, pero nunca mas alla de sus propios
- * limites: en reposo se pinta con un hueco de {@link UIConstants#RESERVA_BOTON}
- * px y al pasar el mouse ocupa el componente completo. Antes el crecimiento era
- * de 1.10 y se salia del boton; Swing recorta a los bounds y las esquinas
- * redondeadas quedaban cortadas, rectas. Puede dibujar un icono de pixel art
- * (PLAY, FLECHA) o un texto.
- *
- * <p>El color del dibujo sale del fondo con contraste automatico: claro sobre
- * fondos oscuros y oscuro sobre fondos claros, asi mismo estilo sirve sobre el
- * marco beige de Hanói, sobre el celeste de la rana o sobre el verde de
- * QuickSort. El radio de esquina es el mismo en todos los estados y en todos
- * los botones de la aplicacion.
- */
+/** Boton con hover y click de color, esquinas redondeadas y glifos de pixel art. */
 public class BotonEstilizado extends JButton {
 
     public enum Glifo { NINGUNO, PLAY, FLECHA }
 
-    /** Hueco lateral que deja el texto para que el boton respire. */
     private static final int AIRE_TEXTO = 40;
-    /** Ancho minimo de un boton de texto, para que ninguno quede apretado. */
     private static final int ANCHO_MINIMO_TEXTO = 140;
 
     private final Glifo glifo;
@@ -61,14 +42,12 @@ public class BotonEstilizado extends JButton {
         setMaximumSize(tamano);
     }
 
-    /** Cuadrado con icono de pixel art, paleta {reposo, hover, press}. */
     public static BotonEstilizado icono(Glifo glifo, int lado,
             Color colorIdle, Color colorHover, Color colorPress) {
         Dimension tamano = new Dimension(lado, lado);
         return new BotonEstilizado(glifo, null, tamano, colorIdle, colorHover, colorPress);
     }
 
-    /** Boton de texto con la misma paleta y el mismo crecimiento al hover. */
     public static BotonEstilizado texto(String etiqueta, int ancho,
             Color colorIdle, Color colorHover, Color colorPress) {
         Dimension tamano = new Dimension(ancho, 44);
@@ -76,11 +55,7 @@ public class BotonEstilizado extends JButton {
                 colorIdle, colorHover, colorPress);
     }
 
-    /**
-     * Boton de texto con el ancho justo para su etiqueta: el texto queda
-     * centrado con {@link #AIRE_TEXTO} px de aire a cada lado, ni mas largo ni
-     * apretado. Es el estilo de "Comenzar" y de "Regresar".
-     */
+    // Ancho justo para la etiqueta, con aire a los lados.
     public static BotonEstilizado textoAjustado(String etiqueta,
             Color colorIdle, Color colorHover, Color colorPress) {
         BotonEstilizado boton = texto(etiqueta, ANCHO_MINIMO_TEXTO,
@@ -107,9 +82,7 @@ public class BotonEstilizado extends JButton {
 
         int bw = getWidth();
         int bh = getHeight();
-        // Reposo con hueco, hover y clic a hueso: el boton "crece" al pasar el
-        // mouse pero nunca pinta fuera de sus limites, asi las esquinas
-        // redondeadas no se recortan y el boton no se vuelve rectangular.
+        // Reposo con hueco: crece al hover sin salirse de sus limites.
         int reserva = (sobre || presionado) ? 0 : UIConstants.RESERVA_BOTON;
         int x = reserva;
         int y = reserva;
@@ -137,7 +110,6 @@ public class BotonEstilizado extends JButton {
         g2.dispose();
     }
 
-    /** Dibuja el icono de pixel art centrado en el cuadrado del boton. */
     private static void dibujarGlifo(Graphics2D g2, Glifo glifo, int centroX,
                                      int centroY, int lado, Color color) {
         int mitad = lado / 2;
@@ -158,7 +130,6 @@ public class BotonEstilizado extends JButton {
         g2.fillPolygon(poligono);
     }
 
-    /** Tono mas oscuro del fondo, para el borde del boton. */
     private static Color oscurecer(Color color) {
         int factor = 145;
         return new Color(color.getRed() * factor / 255,
@@ -166,7 +137,7 @@ public class BotonEstilizado extends JButton {
                 color.getBlue() * factor / 255);
     }
 
-    /** Tinta legible: oscura sobre fondos claros, clara sobre oscuros. */
+    // Tinta legible: oscura sobre fondos claros, clara sobre oscuros.
     private static Color contraste(Color fondo) {
         double brillo = 0.299 * fondo.getRed()
                 + 0.587 * fondo.getGreen()

@@ -8,30 +8,19 @@ import java.util.Map;
 
 import javax.swing.UIManager;
 
-/**
- * Carga Silkscreen desde {@code src/main/resources/fuentes}.
- *
- * <p>Silkscreen es una fuente de pixel art: solo se ve nitida en su tamano nativo
- * de 8 px y en sus multiplicos enteros. Pedirle 13 o 20 la deja borrosa, asi que
- * {@link #dePixel(int)} fuerza los multiplicos de 8.
- *
- * <p>Si el archivo no esta, se cae a la fuente del sistema para que la interfaz
- * siga siendo legible.
- */
+/** Carga Silkscreen desde resources. Solo se ve nitida en multiplos de 8 px. */
 public final class Fuentes {
 
     private static final String CARPETA = "/fuentes/";
     private static final String REGULAR = "Silkscreen-Regular";
     private static final String BOLD = "Silkscreen-Bold";
 
-    /** Tamano nativo de Silkscreen, en pixeles. */
     private static final int TAM_NATIVO = 8;
 
     private static final Map<String, Font> CACHE = new HashMap<>();
 
     private Fuentes() {}
 
-    /** Devuelve la fuente pedida, o la del sistema si el recurso no se pudo leer. */
     public static Font obtener(boolean negrita, int tamano) {
         int ajustado = dePixel(tamano);
         String clave = (negrita ? BOLD : REGULAR) + "-" + ajustado;
@@ -47,10 +36,7 @@ public final class Fuentes {
         return fuente;
     }
 
-    /**
-     * Ajusta el tamano al multiplo entero de 8 mas cercano por debajo. Asi cada
-     * pixel de la fuente cae sobre un pixel de pantalla y no se difumina.
-     */
+    // Baja al multiplo de 8 mas cercano para que la fuente no se difumine.
     public static int dePixel(int tamano) {
         int multiplo = tamano / TAM_NATIVO;
         if (multiplo < 1) {

@@ -6,11 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import javax.swing.JPanel;
 
-/**
- * Area de dibujo que se estira con la ventana. Le entrega al pintor su tamano
- * real en cada repintado, por eso ninguna geometria queda guardada y nada puede
- * desincronizarse al redimensionar.
- */
+/** Area de dibujo que entrega su tamano real en cada repintado. */
 public class Lienzo extends JPanel {
 
     public interface Pintor {
@@ -33,8 +29,7 @@ public class Lienzo extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g.create();
-        // Sin antialiasing ni interpolacion suave: el pixel art necesita bordes
-        // duros para que los sprites escalados no se vean borrosos.
+        // Sin antialiasing: el pixel art necesita bordes duros.
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_OFF);
         g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,

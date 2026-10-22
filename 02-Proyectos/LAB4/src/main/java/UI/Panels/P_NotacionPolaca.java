@@ -17,19 +17,12 @@ import java.awt.Shape;
 import java.util.List;
 import javax.swing.JPanel;
 
-/**
- * Modulo de notacion polaca (ejercicio 1 de la guia): convierte la expresion
- * infija a prefija o postfija mostrando el paso a paso. La traza numerada va
- * a la izquierda, la pila de operadores del paso resaltado a la derecha y los
- * botones Anterior/Siguiente recorren los pasos, que es lo que la guia pide
- * ir imprimiendo mientras se convierte.
- */
+/** Modulo de notacion polaca: conversion con traza navegable (ejercicio 1). */
 public class P_NotacionPolaca extends P_ModuloBase {
 
     private static final int ALTO_FILA_TRAZA = 26;
-    /** Franja inferior reservada para la nota del paso, nadie la pisa. */
+    // Franja inferior reservada para la nota del paso.
     private static final int ALTO_NOTA = 24;
-    /** Fraccion del ancho que ocupa la columna de la traza. */
     private static final double FRACCION_TRAZA = 0.56;
 
     private final CampoTexto txtExpresion = new CampoTexto(18);
@@ -86,7 +79,7 @@ public class P_NotacionPolaca extends P_ModuloBase {
         refrescar();
     }
 
-    /** Empieza de nuevo: sin conversion, sin traza y el campo limpio. */
+    // Sin conversion, sin traza y el campo limpio.
     @Override
     protected void reiniciar() {
         resultado = null;
@@ -129,7 +122,6 @@ public class P_NotacionPolaca extends P_ModuloBase {
         pintarPilaPaso(g2, ancho, alto);
     }
 
-    /** Las dos lineas de arriba: la infija original y la conversion lograda. */
     private void pintarResultado(Graphics2D g2, int ancho) {
         g2.setFont(UIConstants.FONT_TITULO);
         FontMetrics medidas = g2.getFontMetrics();
@@ -143,11 +135,7 @@ public class P_NotacionPolaca extends P_ModuloBase {
         g2.drawString(conversion, (ancho - medidas.stringWidth(conversion)) / 2, 84);
     }
 
-    /**
-     * Columna de la izquierda: la traza numerada con el simbolo leido, la
-     * pila y la salida. Solo se ven las filas que caben, corridas para que el
-     * paso resaltado siempre este en pantalla.
-     */
+    // Solo se ven las filas que caben, corridas al paso resaltado.
     private void pintarTraza(Graphics2D g2, int ancho, int alto) {
         int margen = UIConstants.MARGEN;
         int anchoTraza = (int) (ancho * FRACCION_TRAZA);
@@ -192,7 +180,6 @@ public class P_NotacionPolaca extends P_ModuloBase {
         }
     }
 
-    /** Columna de la derecha: la pila de operadores del paso resaltado. */
     private void pintarPilaPaso(Graphics2D g2, int ancho, int alto) {
         PasoPolaco paso = resultado.pasos().get(pasoActual);
         int margen = UIConstants.MARGEN;
@@ -207,7 +194,7 @@ public class P_NotacionPolaca extends P_ModuloBase {
 
         int capacidad = Math.max(resultado.infija().length(), 1);
         int separacion = 4;
-        // La pila vive entre el titulo (y 140) y la franja inferior de la nota.
+        // La pila vive entre el titulo y la franja inferior de la nota.
         int disponible = alto - 140 - ALTO_NOTA;
         int altoCelda = Math.max(Math.min(disponible / capacidad - separacion, 30), 12);
         int anchoCelda = Math.max(Math.min(anchoPanel - 70, 150), 60);
@@ -234,7 +221,7 @@ public class P_NotacionPolaca extends P_ModuloBase {
                 UIConstants.TEXTO_SUAVE);
     }
 
-    /** Texto centrado en 16 px que baja a 8 px si no cabe en el ancho dado. */
+    // Texto centrado en 16 px que baja a 8 px si no cabe.
     private void textoAjustado(Graphics2D g2, String texto, int x, int baseY,
                                 int anchoMax, Color color) {
         g2.setFont(UIConstants.FONT_TEXTO);
