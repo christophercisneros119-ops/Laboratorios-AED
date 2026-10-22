@@ -1,4 +1,4 @@
-package Ejercicio3;
+package Listas;
 
 import javax.swing.*;
 import java.awt.Font;
