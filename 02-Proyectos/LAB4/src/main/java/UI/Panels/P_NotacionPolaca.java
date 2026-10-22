@@ -36,7 +36,7 @@ public class P_NotacionPolaca extends P_ModuloBase {
         super("Notación polaca",
                 "Convierta la expresión infija a prefija o postfija, paso a paso con la pila de operadores.",
                 UIConstants.ACENTO_POLACA);
-        nota("Una letra A-Z por operando. Operadores ^ * / + - entre dos operandos. Paréntesis para agrupar: (A+B)*C. Espacios ignorados.");
+        nota("Una letra por operando (A-Z, mayúscula o minúscula). Operadores ^ * / + - entre dos operandos. Paréntesis para agrupar: (A+B)*C. Espacios ignorados.");
         txtExpresion.setPista("Ej: A+B*C");
 
         JPanel fila = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));

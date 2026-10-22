@@ -152,7 +152,8 @@ public final class ConversorPolaco {
         if (infija == null || infija.isBlank()) {
             throw new ExpresionInvalidaException("escriba una expresion infija");
         }
-        String expresion = infija.replace(" ", "");
+        // Se normaliza a mayusculas: el pseudocodigo trabaja con A-Z.
+        String expresion = infija.replace(" ", "").toUpperCase();
         int parentesis = 0;
         char anterior = 0;
         for (int i = 0; i < expresion.length(); i++) {
@@ -187,7 +188,7 @@ public final class ConversorPolaco {
                     }
                 }
             } else {
-                error = "caracter invalido: " + simbolo + " (solo A-Z y operadores)";
+                error = "caracter invalido: " + simbolo + " (solo letras y operadores)";
             }
             if (error != null) {
                 throw new ExpresionInvalidaException(
