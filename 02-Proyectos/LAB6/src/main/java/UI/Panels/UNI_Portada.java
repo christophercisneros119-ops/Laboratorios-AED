@@ -2,6 +2,7 @@ package UI.Panels;
 
 import UI.Elements.BotonEstilizado;
 import UI.Elements.FondoAnimado;
+import UI.Elements.Navegacion;
 import UI.Elements.TarjetaMiembro;
 import UI.Elements.UIConstants;
 
@@ -53,6 +54,7 @@ public class UNI_Portada extends FondoAnimado {
         BotonEstilizado btnComenzar = BotonEstilizado.textoAjustado("Comenzar",
                 UIConstants.BLANCO_HUESO, UIConstants.LILA_SUAVE,
                 UIConstants.AMARILLO_PASTEL);
+        btnComenzar.addActionListener(e -> Navegacion.irA(this, new P_Arboles()));
 
         JPanel fila = new JPanel(new FlowLayout(FlowLayout.CENTER));
         fila.setOpaque(false);
