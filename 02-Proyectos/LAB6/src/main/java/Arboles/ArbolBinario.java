@@ -8,7 +8,7 @@ import java.util.Queue;
 
 public class ArbolBinario {
 
-    public static final int MAX_NIVEL = 4;
+    public static final int MAX_NIVEL = 5;
 
     private Nodo raiz;
 
