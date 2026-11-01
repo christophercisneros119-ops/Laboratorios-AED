@@ -49,3 +49,5 @@ desktop.ini
 
 # ── Agents files (brain, mpc relateds) ───────────────────────
 .opencode
+PLAN.md
+/docs
