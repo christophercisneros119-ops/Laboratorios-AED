@@ -1,5 +1,6 @@
 package UI.Elements;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
@@ -16,11 +17,50 @@ public final class Imagenes {
     private static final String CARPETA = "/imagenes/";
     private static final Map<String, BufferedImage> CACHE = new HashMap<>();
     private static final Map<String, List<BufferedImage>> SECUENCIAS = new HashMap<>();
+    private static final Map<String, BufferedImage> CACHE_TINTADOS = new HashMap<>();
 
     private Imagenes() {}
 
     public static BufferedImage obtener(String nombre) {
         return cargar(nombre);
+    }
+
+    public static BufferedImage obtenerCirculoTintado(Color color, int tamano) {
+        String clave = color.getRGB() + "_" + tamano;
+        return CACHE_TINTADOS.computeIfAbsent(clave, k -> {
+            BufferedImage base = obtener("circle-base");
+            if (base == null) return null;
+
+            int w = base.getWidth();
+            int h = base.getHeight();
+            BufferedImage tintado = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+            float r = color.getRed() / 255.0f;
+            float g = color.getGreen() / 255.0f;
+            float b = color.getBlue() / 255.0f;
+
+            for (int y = 0; y < h; y++) {
+                for (int x = 0; x < w; x++) {
+                    int argb = base.getRGB(x, y);
+                    int a = (argb >> 24) & 0xFF;
+                    if (a == 0) continue;
+                    int nr = Math.round(((argb >> 16) & 0xFF) * r);
+                    int ng = Math.round(((argb >> 8) & 0xFF) * g);
+                    int nb = Math.round((argb & 0xFF) * b);
+                    tintado.setRGB(x, y, (a << 24) | (nr << 16) | (ng << 8) | nb);
+                }
+            }
+
+            if (w == tamano && h == tamano) {
+                return tintado;
+            }
+
+            BufferedImage escalado = new BufferedImage(tamano, tamano, BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g2 = escalado.createGraphics();
+            g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+            g2.drawImage(tintado, 0, 0, tamano, tamano, null);
+            g2.dispose();
+            return escalado;
+        });
     }
 
     public static List<BufferedImage> cargarSecuencia(String prefijo, int maximo) {

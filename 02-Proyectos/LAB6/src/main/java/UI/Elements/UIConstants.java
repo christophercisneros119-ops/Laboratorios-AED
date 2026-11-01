@@ -28,17 +28,29 @@ public final class UIConstants {
     public static final Color GRIS_OSCURO = new Color(0x59626B);
     public static final Color GRIS_PRESION = new Color(0x3D444B);
 
+    public static final Color[] PALETA_NODOS = {
+        new Color(0x6FD3E8),
+        new Color(0xF2C14E),
+        new Color(0x5BC46B),
+        new Color(0xFF6B5E),
+        new Color(0xCBB6E4),
+        new Color(0xF2994A),
+        new Color(0x6699CC)
+    };
+
     public static final int RADIO_BOTON = 20;
     public static final int RESERVA_BOTON = 3;
 
     public static final Font FONT_TITULO = Fuentes.obtener(true, 32);
     public static final Font FONT_SUBTITULO = Fuentes.obtener(false, 16);
     public static final Font FONT_TEXTO = Fuentes.obtener(false, 16);
+    public static final Font FONT_NODO = Fuentes.obtener(true, 16);
     public static final Font FONT_UNI = Fuentes.obtener(true, 40);
     public static final Font FONT_INDICE = Fuentes.obtener(false, 16);
     public static final Font FONT_CHICA = Fuentes.obtener(false, 8);
 
     public static final int MARGEN = 32;
+    public static final double RECORTE_MENU = 0.07;
     public static final int ANCHO_MINIMO = 720;
     public static final int ALTO_MINIMO = 520;
     public static final int CUADROS_POR_SEGUNDO = 15;
