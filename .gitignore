@@ -46,3 +46,6 @@ nbactions.xml
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# ── Agents files (brain, mpc relateds) ───────────────────────
+.opencode
