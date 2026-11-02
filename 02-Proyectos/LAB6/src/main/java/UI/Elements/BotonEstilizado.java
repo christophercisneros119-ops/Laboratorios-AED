@@ -1,5 +1,6 @@
 package UI.Elements;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -11,7 +12,7 @@ import javax.swing.JButton;
 
 public class BotonEstilizado extends JButton {
 
-    public enum Glifo { NINGUNO, PLAY, FLECHA }
+    public enum Glifo { NINGUNO, PLAY, FLECHA, RESET }
 
     private static final int AIRE_TEXTO = 40;
     private static final int ANCHO_MINIMO_TEXTO = 140;
@@ -86,8 +87,10 @@ public class BotonEstilizado extends JButton {
 
         g2.setColor(fondo);
         g2.fillRoundRect(x, y, ancho, alto, radio, radio);
-        g2.setColor(oscurecer(fondo));
-        g2.drawRoundRect(x, y, ancho - 1, alto - 1, radio, radio);
+        if (presionado) {
+            g2.setColor(oscurecer(fondo));
+            g2.drawRoundRect(x, y, ancho - 1, alto - 1, radio, radio);
+        }
 
         Color tinta = isEnabled() ? contraste(fondo) : UIConstants.TEXTO_SUAVE;
         if (glifo == Glifo.NINGUNO) {
@@ -109,19 +112,33 @@ public class BotonEstilizado extends JButton {
         int mitad = lado / 2;
         int punta = (int) Math.round(lado * 0.30);
         g2.setColor(color);
-        Polygon poligono;
         if (glifo == Glifo.PLAY) {
             int baseX = centroX - (int) Math.round(lado * 0.16);
-            poligono = new Polygon(
+            Polygon poligono = new Polygon(
                     new int[]{baseX, baseX, centroX + punta},
                     new int[]{centroY - mitad, centroY + mitad, centroY}, 3);
-        } else {
+            g2.fillPolygon(poligono);
+        } else if (glifo == Glifo.FLECHA) {
             int baseX = centroX + (int) Math.round(lado * 0.16);
-            poligono = new Polygon(
+            Polygon poligono = new Polygon(
                     new int[]{baseX, baseX, centroX - punta},
                     new int[]{centroY - mitad, centroY + mitad, centroY}, 3);
+            g2.fillPolygon(poligono);
+        } else if (glifo == Glifo.RESET) {
+            int radio = lado / 3;
+            g2.setColor(new Color(0x101418));
+            g2.setStroke(new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+            g2.drawArc(centroX - radio, centroY - radio, radio * 2, radio * 2, 45, 270);
+            int s = (int) Math.round(radio * 0.707);
+            int px = centroX + s;
+            int py = centroY + s;
+            int flecha = 12;
+            int fx = px + (int) Math.round(flecha * 0.707);
+            int fy = py + (int) Math.round(flecha * 0.707);
+            g2.drawLine(px, py, fx, fy);
+            g2.drawLine(fx, fy, fx - 5, fy - 5);
+            g2.drawLine(fx, fy, fx - 4, fy + 2);
         }
-        g2.fillPolygon(poligono);
     }
 
     private static Color oscurecer(Color color) {

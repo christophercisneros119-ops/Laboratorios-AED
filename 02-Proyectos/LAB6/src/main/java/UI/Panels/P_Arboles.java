@@ -3,9 +3,10 @@ package UI.Panels;
 import Arboles.ArbolBinario;
 import Arboles.Nodo;
 import Recorrido.Inorden;
-import Recorrido.Posorden;
+import Recorrido.Postorden;
 import Recorrido.Preorden;
 import UI.Elements.BotonEstilizado;
+import UI.Elements.BotonEstilizado.Glifo;
 import UI.Elements.Fuentes;
 import UI.Elements.Imagenes;
 import UI.Elements.Navegacion;
@@ -59,12 +60,14 @@ public class P_Arboles extends JPanel {
     private final JPanel panelRecorridos = new JPanel();
     private final JLabel lblPreorden = new JLabel(" ");
     private final JLabel lblInorden = new JLabel(" ");
-    private final JLabel lblPosorden = new JLabel(" ");
+    private final JLabel lblPostorden = new JLabel(" ");
 
     private final BotonEstilizado btnSi;
     private final BotonEstilizado btnNo;
     private final BotonEstilizado btnFinalizar;
     private final BotonEstilizado btnNuevo;
+    private final BotonEstilizado btnRegresar;
+    private final BotonEstilizado btnReiniciar;
 
     public P_Arboles() {
         setLayout(new BorderLayout(0, 12));
@@ -99,6 +102,14 @@ public class P_Arboles extends JPanel {
         btnFinalizar.addActionListener(e -> intentarFinalizar());
         btnNuevo.addActionListener(e -> reiniciar());
 
+        btnRegresar = BotonEstilizado.icono(Glifo.FLECHA, 70,
+                UIConstants.CELESTE, UIConstants.AZULITO, UIConstants.AZUL_PRESION);
+        btnRegresar.addActionListener(e -> Navegacion.irA(this, new UNI_Portada()));
+
+        btnReiniciar = BotonEstilizado.icono(Glifo.RESET, 70,
+                UIConstants.GRIS_SUAVE, UIConstants.GRIS_OSCURO, UIConstants.GRIS_PRESION);
+        btnReiniciar.addActionListener(e -> reiniciar());
+
         panelAcciones = crearPanelInferior();
         add(panelAcciones, BorderLayout.SOUTH);
 
@@ -125,14 +136,6 @@ public class P_Arboles extends JPanel {
     private JPanel crearCabecera() {
         JPanel cabecera = new JPanel(new BorderLayout());
         cabecera.setOpaque(false);
-
-        BotonEstilizado btnRegresar = BotonEstilizado.textoAjustado("Regresar",
-                UIConstants.CELESTE, UIConstants.AZULITO, UIConstants.AZUL_PRESION);
-        btnRegresar.addActionListener(e -> Navegacion.irA(this, new UNI_Portada()));
-
-        BotonEstilizado btnReiniciar = BotonEstilizado.textoAjustado("Reiniciar",
-                UIConstants.GRIS_SUAVE, UIConstants.GRIS_OSCURO, UIConstants.GRIS_PRESION);
-        btnReiniciar.addActionListener(e -> reiniciar());
 
         JLabel titulo = new JLabel("Laboratorio #6 · Árboles Binarios (Máx 5 Niveles)") {
             @Override
@@ -168,20 +171,21 @@ public class P_Arboles extends JPanel {
         centro.setOpaque(false);
         centro.add(contenedorTitulo);
 
-        cabecera.add(btnRegresar, BorderLayout.WEST);
         cabecera.add(centro, BorderLayout.CENTER);
-        cabecera.add(btnReiniciar, BorderLayout.EAST);
         return cabecera;
     }
 
     private JPanel crearPanelInferior() {
-        JPanel contenedor = new JPanel();
-        contenedor.setLayout(new BoxLayout(contenedor, BoxLayout.Y_AXIS));
-        contenedor.setOpaque(true);
-        contenedor.setBackground(UIConstants.ESCENARIO);
-        contenedor.setBorder(BorderFactory.createCompoundBorder(
+        JPanel raiz = new JPanel(new BorderLayout());
+        raiz.setOpaque(false);
+
+        JPanel rectangulo = new JPanel();
+        rectangulo.setLayout(new BoxLayout(rectangulo, BoxLayout.Y_AXIS));
+        rectangulo.setOpaque(true);
+        rectangulo.setBackground(UIConstants.ESCENARIO);
+        rectangulo.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(UIConstants.BORDE, 2, true),
-                BorderFactory.createEmptyBorder(10, 20, 10, 20)
+                BorderFactory.createEmptyBorder(10, 12, 10, 12)
         ));
 
         lblBadgeEstado.setFont(UIConstants.FONT_CHICA);
@@ -212,18 +216,23 @@ public class P_Arboles extends JPanel {
         panelRecorridos.add(Box.createVerticalStrut(4));
         panelRecorridos.add(crearFilaRecorrido("INORDEN", lblInorden, UIConstants.AMARILLO_PASTEL));
         panelRecorridos.add(Box.createVerticalStrut(4));
-        panelRecorridos.add(crearFilaRecorrido("POSORDEN", lblPosorden, UIConstants.LILA_SUAVE));
+        panelRecorridos.add(crearFilaRecorrido("POSTORDEN", lblPostorden, UIConstants.LILA_SUAVE));
 
-        contenedor.add(lblBadgeEstado);
-        contenedor.add(Box.createVerticalStrut(2));
-        contenedor.add(lblPregunta);
-        contenedor.add(lblAviso);
-        contenedor.add(Box.createVerticalStrut(6));
-        contenedor.add(filaBotones);
-        contenedor.add(Box.createVerticalStrut(6));
-        contenedor.add(panelRecorridos);
+        rectangulo.add(lblBadgeEstado);
+        rectangulo.add(Box.createVerticalStrut(2));
+        rectangulo.add(lblPregunta);
+        rectangulo.add(lblAviso);
+        rectangulo.add(Box.createVerticalStrut(6));
+        rectangulo.add(filaBotones);
+        rectangulo.add(Box.createVerticalStrut(6));
+        rectangulo.add(panelRecorridos);
+        rectangulo.setMaximumSize(new Dimension(520, Integer.MAX_VALUE));
 
-        return contenedor;
+        raiz.add(rectangulo, BorderLayout.CENTER);
+        raiz.add(btnRegresar, BorderLayout.WEST);
+        raiz.add(btnReiniciar, BorderLayout.EAST);
+
+        return raiz;
     }
 
     private JPanel crearFilaRecorrido(String etiqueta, JLabel lblValor, Color colorAcento) {
@@ -352,11 +361,11 @@ public class P_Arboles extends JPanel {
 
         List<Object> pre = Preorden.ejecutar(arbol.getRaiz());
         List<Object> in = Inorden.ejecutar(arbol.getRaiz());
-        List<Object> pos = Posorden.ejecutar(arbol.getRaiz());
+        List<Object> pos = Postorden.ejecutar(arbol.getRaiz());
 
         lblPreorden.setText(formatearRecorrido(pre));
         lblInorden.setText(formatearRecorrido(in));
-        lblPosorden.setText(formatearRecorrido(pos));
+        lblPostorden.setText(formatearRecorrido(pos));
 
         panelRecorridos.setVisible(true);
         lienzo.repaint();

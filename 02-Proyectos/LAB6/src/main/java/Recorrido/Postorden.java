@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public final class Posorden {
+public final class Postorden {
 
-    private Posorden() {}
+    private Postorden() {}
 
     public static List<Object> ejecutar(Nodo raiz) {
         List<Object> resultado = new ArrayList<>();
